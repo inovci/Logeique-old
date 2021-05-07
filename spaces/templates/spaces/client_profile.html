@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.0.1">
+    <title>Cover Template · Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/cover/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/dist/css/bootstrap.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    {% load static %}
+    <link href="{% static 'css/cover.css' %}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">{{user.username}}</h3>
+                {% if user.client.avatar %}
+                <img src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
+                {% endif %}
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link active" href="#">Acceuil</a>
+                    <a class="nav-link" href="{% url 'spaces:edit_profile' user.id %}">Profil</a>
+                    <a class="nav-link" href="#">Notification</a>
+                    <a class="nav-link" href="{% url 'spaces:logout' %}">Se deconnecter</a>
+                </nav>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover">
+            {% include 'search/search.html' %}
+            <p class="lead">Cliquer sur le bouton pour apprendre plus</p>
+            <p class="lead">
+                <a href="#" class="btn btn-lg btn-secondary">Tuto d'utilisation</a>
+            </p>
+        </main>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a
+                        href="https://twitter.com/mdo">@mdo</a>.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+{% extends 'spaces/base.html' %}
+
+{% block title %}Enregistrement{% endblock %}
+
+{% block navbarbrand1 %}
+    <a class="navbar-brand" id="navbarbrand1" href="{% url 'spaces:signin' %}">
+        Se connecter
+    </a>
+{% endblock %}
+
+{% block navlink1 %}
+    <a class="nav-link" href="#" id="navlink1">Nouveautés<span class="sr-only">(current)</span></a>
+{% endblock %}
+
+{% block navlink2 %}<a class="nav-link" href="#" id="navlink2">Forum</a>{% endblock navlink2 %}
+
+{% block navlinkdisabled1 %}
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true" id="navlinkdisabled1">
+        S'enregistrer
+    </a>
+{% endblock %}
+
+{% block mt51 %}
+    <h1 style="margin: 10% 0;" class="text-white" id="">
+        Mon nom c'est LOGEIQUE V1 et vous ?
+    </h1>
+{% endblock %}
+
+{% block lead1 %}
+    <p class="text-white" id="">
+        Présentez vous à moi ,ensemble nous ferons des exploits.
+    </p>
+{% endblock %}
+
+{% block content %}
+    <div style="margin-bottom: 10%;">
+        <form method='POST' action="{% url 'spaces:signup' %}">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <p class="text-white">
+                        {{form.username.label}}
+                    </p>
+                    {{form.username}}
+                </div>
+            </div>
+                
+            <div class="form-group">
+                <p class="text-white">
+                    {{form.first_name.label}}
+                </p>
+                {{form.first_name}}
+            </div>
+
+            <div class="form-group">
+                <p class="text-white">
+                    {{form.last_name.label}}
+                </p>
+                {{form.last_name}}
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <p class="text-white">
+                        {{form.contact.label}}
+                    </p>
+                    {{form.contact}}
+                </div>
+
+                {% if invalid_contact_err %}
+                    Le format de contact est invalide.
+                {% endif %}
+
+                {% if contact_exist_error %}
+                    Le contact que vous avez entré existe déja veuillez le changer.
+                {% endif %}
+
+                <div class="form-group col-md-6">
+                    <p class="text-white">
+                        {{form.email.label}}
+                    </p>
+                    {{form.email}}
+                </div>
+
+                {% if email_unique_error %}
+                    L'email que vous avez entré existe déja veuillez le changer.
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <p class="text-white">
+                        {{form.password.label}}
+                    </p>
+                    {{form.password}}
+                </div>
+
+                <div class="form-group col-md-6">
+                    <p class="text-white">
+                        {{form.password_verification.label}}
+                    </p>
+                    {{form.password_verification}}
+                </div>
+
+                {% if pass_different_err %}
+                    Les mots de passe entrés ne correspondent pas.
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <div class="form-check form-check-inline">
+                    <p class="text-white">
+                        {{form.client.label}}
+                        {{form.client}}
+                    </p>
+                    
+                    <p class="text-white">
+                        {{form.landlord.label}}
+                        {{form.landlord}}
+                    </p> 
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" name="Creer compte" value="Creer compte">
+                Creer votre compte
+            </button>    
+        </form>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+        const check_client = document.querySelector('#is_cl');
+        const check_landlord = document.querySelector('#is_la');
+        const choix = document.querySelectorAll('.stick');
+
+        function active(){
+            if (check_client.checked === true){
+                check_client.checked === false;
+                this.checked === true;
+            }
+            else if(check_landlord.checked === true){
+                check_client.checked === false
+            }
+        }
+
+        function handleCheck(e){
+            if (choix[0].checked === true && choix[1].checked === true){
+                for (let i = 0; i < choix.length; i++){
+                    choix[i].checked=false;
+                }
+            }
+            else if(check_client.checked===true){
+                check_landlord.checked===false
+            }
+            else if(check_landlord===true){
+                check_client===true
+            }
+            checkboxes.forEach(
+                checkbox=>checkbox.addEventListener('click', handleCheck)
+            );
+        }
+    </script>
+{% endblock %}

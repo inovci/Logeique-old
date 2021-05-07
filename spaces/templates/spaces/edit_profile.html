@@ -1,0 +1,127 @@
+{% extends 'spaces/base.html' %}
+
+{% block title %}Acceuil{% endblock %}
+
+{% block navbar %}{% endblock navbar %}
+
+{% block navbarbrand1 %}
+    <a class="navbar-brand" id="navbarbrand1" href="{% url 'spaces:see_client_profile' user.id %}"></a>
+{% endblock navbarbrand1 %}
+
+{% block navlink1 %}
+    <a class="nav-link" href="{% url 'spaces:signin' %}" id="navlink1"></a>
+{% endblock navlink1 %}
+
+{% block navlink2 %}
+    <a class="nav-link" href="#" id="navlink2"></a>
+{% endblock navlink2 %}
+
+{% block navlinkdisabled1 %}
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true" id="navlinkdisabled1"></a>
+{% endblock navlinkdisabled1 %}
+
+{% block container %}{% endblock container %}
+
+{% block mt51 %}Modifications{% endblock mt51 %}
+
+{% block lead1 %}{% endblock lead1 %}
+
+{% block content %}
+    {% if error %}
+        <p><strong>une erreur inhabituelle est survenue</strong></p>
+    {% endif %}
+
+    <form method="post" action="{% url 'spaces:edit_profile' user.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{form.username.label}}
+            {{form.username}}
+            {% if no_username_msg %}
+                <p><strong>Pseudo non changé</strong></p>
+            {% elif yes_username_msg %}
+                <p><strong>Pseudo changé</strong></p>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{form.first_name.label}}
+            {{form.first_name}}
+            {% if no_first_name_msg %}
+                <p><strong>Prenom non changé</strong></p>
+            {% elif yes_first_name_msg %}
+                <p><strong>Prenom changé</strong></p>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{form.last_name.label}}
+            {{form.last_name}}
+            {% if no_last_name_msg %}
+                <p><strong>Nom non changé</strong></p>
+            {% elif yes_last_name_msg %}
+                <p><strong>Nom changé</strong></p>
+            {% endif %}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{form.contact.label}}
+                {{form.contact}}
+                {% if no_contact_msg %}
+                    <p><strong>Contact non changé</strong></p>
+                {% elif yes_contact_msg %}
+                    <p><strong>Contact changé</strong></p>
+                {% endif %}
+            </div>
+            
+            <div class="form-group col-md-6">
+                {{form.email.label}}
+                {{form.email}}
+                {% if no_email_msg %}
+                    <p><strong>Email non changé</strong></p>
+                {% elif yes_email_msg %}
+                    <p><strong>Email changé</strong></p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{form.password.label}}
+                {{form.password}}
+                {% if no_pass_msg %}
+                    <p><strong>Mot de passe non changé</strong></p>
+                {% endif %}
+            </div>
+            
+        
+            <div class="form-group col-md-6">
+                {{form.password_verification.label}}
+                {{form.password_verification}}
+                {% if error_pass_no_match %}
+                    <p><strong>Les mots de passes entrés ne correspondent pas.</strong></p>
+                {% elif yes_pass_msg %}
+                    <p><strong>Mot de passe changé</strong></p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <p>
+            {{form.avatar.label}}
+            {{form.avatar}}
+            {% if avatar_added_err %}
+                <p><strong>Aucun avatar ajouté.</strong></p>
+            {% elif avatar_added %}
+                <p><strong>Avatar ajouté</strong></p>
+            {% endif %}
+        </p>
+        
+        <input type="submit" value="Modifier" />
+        {% if user.client.user_id != None %}
+            <a href="{% url 'spaces:see_client_profile' user.id %}"> Retournez à votre profil</a>
+        {% elif user.landlord.user_id != None %}
+            <a href="{% url 'spaces:see_client_profile' user.id %}"> Retournez à votre profil</a>
+        {% endif %}
+    </form>
+
+{% endblock %}

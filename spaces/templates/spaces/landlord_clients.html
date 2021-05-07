@@ -1,0 +1,27 @@
+{% extends "spaces/landlord_profile.html" %}
+
+{% block content %}
+    <div>
+        {% if no_client_err %}
+            <p>Vous n'avez aucun client pour l'instant</p>
+        {% endif %}
+        
+        {% for client in clients %}
+            {% if client.house_image %}
+                <div>
+                    <img src="{{house.house_image.url}}" alt="image de maison">
+                    <p>Commune: {{client.house_township}} {{area}}</p>
+                    <p>Loyer: {{client.house_rent}} FCFA</p>
+                    <p>Caution: {{client.house_deposit}} FCFA</p>
+                    <p>Type: {{client.house_kind}}</p>
+                    <p>{{client.house_rooms_number}} pieces</p>
+                    {% if house.house_available %}
+                        <P>Disponible</P>
+                    {% else %}
+                        <p>Indisponible</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}          
+    </div>
+{% endblock %}

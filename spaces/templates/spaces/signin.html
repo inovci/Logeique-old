@@ -1,0 +1,97 @@
+{% extends 'spaces/base.html' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block navbarbrand1 %}
+    <a class="navbar-brand" id="navbarbrand1" href="#">Nouveautés</a>
+{% endblock %}
+
+{% block navlink1 %}
+    <a class="nav-link" href="#" id="navlink1">Forum<span class="sr-only">(current)</span></a>
+{% endblock %}
+
+{% block navlink2 %}
+    <a class="nav-link" href="{% url 'spaces:signup' %}" id="navlink2">S'enregistrer</a>
+{% endblock %}
+
+{% block navlinkdisabled1 %}
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true" id="navlinkdisabled1">Se connecter</a>
+{% endblock %}
+
+{% block mt51 %}
+    <h1 class="text-white" id="">
+        LOGEIQUEMENT
+    </h1>
+{% endblock %}
+
+{% block lead1 %}
+    <p class="text-white" id="">
+        Connectez vous!
+    </p>
+{% endblock %}
+
+{% block content %}
+
+    {% if error %}
+        <p class="text-white">
+            <strong>Utilisateur inconnu ou mauvais de mot de passe.</strong>
+        </p>
+    {% endif %}
+
+    <form method="post" action="{% url 'spaces:signin' %}">
+        {% csrf_token %}
+        <div class="">
+            <p class="text-white">
+                {{form.username.label}}
+                {{form.username}}
+                <small id="emailHelp" class="form-text text-muted text-white">
+                    Nous ne partagerons pas votre email avec quelqu'un d'autre.
+                </small>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <p class="text-white">
+                {{form.password.label}}
+                {{form.password}}
+            </p>
+        </div>
+
+        <div class="form-group">
+            <div class="form-check form-check-inline">
+                <p class="text-white">
+                    {{form.client.label}}
+                    {{form.client}}
+                </p>
+
+                <p class="text-white">
+                    {{form.landlord.label}}
+                    {{form.landlord}}
+                </p>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" name="Connectez vous" value="Connectez vous">
+            Connectez vous
+        </button>
+    </form>
+
+    {% if client_user.is_authenticated %}
+        <p class="text-white">
+            Vous êtes connecté client, {{ client_user.username }} !
+        </p>
+        <P>
+            <a href="{% url 'spaces:see_client_profile' client_user.id %}" class="btn btn-lg btn-secondary">Allez à votre compte</a>
+        </P>
+    {% elif landlord_user.is_authenticated %}
+        <p class="text-white">
+            Vous êtes connecté propietaire, {{ landlord_user.username }}!
+        </p> 
+        <P>
+            <a href=" {% url 'spaces:landlord_profile' landlord_user.id %}" class="btn btn-lg btn-secondary">
+                Allez à votre compte
+            </a>
+        </P>
+    {% endif %}
+
+{% endblock %}

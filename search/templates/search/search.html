@@ -1,0 +1,29 @@
+<form class="align-self-center" method='GET' action="{% url 'search:search' %}">
+    <p>
+        {{form.query.label}}
+        {{form.query}}
+    </p>
+
+    <div class="form-check form-check-inline">
+        <p class="text-white">
+            {{form.query_for_all.label}}
+            {{form.query_for_all}}
+        </p>
+
+        <p class="text-white">
+            {{form.query_for_house.label}}
+            {{form.query_for_house}}
+        </p>
+
+        <p class="text-white">
+            {{form.query_for_client.label}}
+            {{form.query_for_client}}
+        </p>
+
+        <p class="text-white">
+            {{form.query_for_lanlord.label}}
+            {{form.query_for_lanlord}}
+        </p>
+    </div>
+</form>
+        

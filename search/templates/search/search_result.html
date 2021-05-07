@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <div>
+        {% if context.clients %}
+            <h3>Clients interessés par ce genre de maisons</h3>
+            {% for client in context.clients %}
+                <p>{{client.user.username}}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+        
+    <div>
+        {% if context.landlords %}
+        <h3>Proprietaires concernés</h3>
+            {% for landlord in context.landlords %}
+            <div>
+                {{landlord.user.username}}
+                {{landlord.contact}}
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+        
+    <div>
+        {% if context.houses %}
+            <h3>Maisons concernés</h3>
+            {% for house in context.houses %}
+                <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col mb-4">
+                        <div class="card">
+                            <img src="{{house.house_image.url}}" class="card-img-top" alt="pas d'image">
+                            <div class="card-body">
+                                <h5 class="card-title">TYpe: {{house.house_kind}}</h5>
+                                <p class="card-text">COmmune: {{house.house_township}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>       
+        <!--
+            <div>
+                
+               QUartier: {{house.house_area}} 
+                
+               LOyer: {{house.house_rent}}
+               CAution: {{house.house_deposit}}
+               NOmbre de pieces: {{house.house_rooms_number}}
+               {% if house.house_to_sell %}
+                    maison à vendre
+               {% else %}
+                    pas à vendre
+               {% endif %}
+               {% if house.house_available %}
+                    Maison disponible
+               {% else %}
+                    Maison occupée
+                {% endif %}
+            </div>
+        
+        {% if not context.clients and not context.landlords and not context.houses %}
+            <h1> Aucun resultat</h1>
+        {% endif %}
+        </div>
+        --> 
+</body>
+
+</html>
