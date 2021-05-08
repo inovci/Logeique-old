@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'logeique2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'logeique2_db',
+        'NAME': 'logeique_db',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
