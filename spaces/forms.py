@@ -111,7 +111,7 @@ class SignInForm(SignUpForm):
     password_verification = None
 
 
-class EditForm(forms.Form):
+class EditClientForm(forms.Form):
     username = forms.CharField(
         label='Pseudo : ',
         max_length=200,
@@ -209,6 +209,10 @@ class EditForm(forms.Form):
         required=False
     )
 
+class EditLandlordForm(EditClientForm):
+    deposit_proposal = None
+    rent_proposal = None
+
 
 class AddHouseForm(forms.Form):
     house_township = forms.CharField(
@@ -296,3 +300,8 @@ class AddHouseForm(forms.Form):
         label='Image',
         required=False
     )
+
+class ClientProposalForm(AddHouseForm):
+    house_available = None
+    house_to_sell = None
+    house_image = None

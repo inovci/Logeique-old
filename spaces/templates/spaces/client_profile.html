@@ -7,9 +7,11 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.0.1">
-    <title>Cover Template · Bootstrap</title>
+    <title>{% block title %}Profil Client{% endblock title %}</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/cover/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+    <link rel="stylesheet"
+        href="C:/Users/deoth/Downloads/Compressed/bootstrap-4.3.1-dist/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -34,41 +36,119 @@
     </style>
     <!-- Custom styles for this template -->
     {% load static %}
-    <link href="{% static 'css/cover.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
 </head>
 
-<body class="text-center">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="masthead mb-auto">
-            <div class="inner">
-                <h3 class="masthead-brand">{{user.username}}</h3>
-                {% if user.client.avatar %}
-                <img src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
-                {% endif %}
-                <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="#">Acceuil</a>
-                    <a class="nav-link" href="{% url 'spaces:edit_profile' user.id %}">Profil</a>
-                    <a class="nav-link" href="#">Notification</a>
-                    <a class="nav-link" href="{% url 'spaces:logout' %}">Se deconnecter</a>
-                </nav>
-            </div>
-        </header>
+<body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
+            href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="{% url 'spaces:logout' %}">Se deconnecter</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="sidebar-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a style="border: solid 1px red;" class="nav-link active"
+                                href="{% url 'spaces:client_profile' user.id %}">
+                                <span data-feather="home"></span>{{user.username}}
+                                Dashboard <span class="sr-only">(current)</span>
+                            </a>
+                            {% if user.landlord.avatar %}
+                            <img width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
+                            {% endif %}
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'spaces:edit_client_profile' user.id %}">
+                                <span data-feather="user"></span>
+                                Modifier profil
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'spaces:client_proposal' user.id %}">
+                                <span data-feather="plus"></span>
+                                Que désirez vous?
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'spaces:client_statistics' user.id %}">
+                                <span data-feather="bar-chart-2"></span>
+                                Statistiques
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'spaces:client_notifications' user.id %}">
+                                <span data-feather="bell"></span>
+                                Notifications
+                            </a>
+                        </li>
+                    </ul>
+                    <h6
+                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Statistiques enregistrées</span>
+                        <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Ce mois
+                            </a>
+                        </li>
 
-        <main role="main" class="inner cover">
-            {% include 'search/search.html' %}
-            <p class="lead">Cliquer sur le bouton pour apprendre plus</p>
-            <p class="lead">
-                <a href="#" class="btn btn-lg btn-secondary">Tuto d'utilisation</a>
-            </p>
-        </main>
+                    </ul>
+                </div>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">{% block h1 %}Espace Client{% endblock h1 %}</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                            <span data-feather="calendar"></span>
+                            This week
+                        </button>
+                    </div>
+                </div>
 
-        <footer class="mastfoot mt-auto">
-            <div class="inner">
-                <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a
-                        href="https://twitter.com/mdo">@mdo</a>.</p>
-            </div>
-        </footer>
+                <div>
+                    <p>
+                        {% block content %}
+                    <h1>Salutations</h1>
+                    {% endblock %}
+                    </p>
+                </div>
+            </main>
+        </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+    <script src="../assets/dist/js/bootstrap.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+    </div>
+    </div>
+
 </body>
 
 </html>

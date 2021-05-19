@@ -10,7 +10,9 @@ class Client(models.Model):
     rent_proposal = models.BigIntegerField(null=True)
     deposit_proposal = models.BigIntegerField(null=True)
     kind_desire = models.CharField(max_length=50 , null=True , default=None)
-    rooms_number_desire = models.IntegerField(null= True , default=None)
+    rooms_number_desire = models.IntegerField(null=True, default=None)
+    area_desire = models.CharField(max_length=50 , default=None)
+    township_desire = models.CharField(max_length=50 ,default = None )
     avatar = models.ImageField(null=True, blank=True, upload_to="img/avatars/")
 
     def __str__(self):

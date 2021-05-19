@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from .forms import SignUpForm, SignInForm, EditForm, AddHouseForm
+from .forms import SignUpForm, SignInForm, EditClientForm,EditLandlordForm, AddHouseForm , ClientProposalForm
 from django.contrib.auth.models import User
 from .models import Client, Landlord, House, Deal
 from django.shortcuts import get_object_or_404, Http404
@@ -267,11 +267,11 @@ def see_profile(request, id):
 
 
 @login_required()
-def edit_profile(request, id):
+def edit_client_profile(request, id):
     user = User.objects.get(id=id)
-    form = EditForm()
+    form = EditClientForm()
     if request.method == 'POST':
-        form = EditForm(request.POST , request.FILES)
+        form = EditClientForm(request.POST , request.FILES)
         if form.is_valid():
             username = form.cleaned_data['username']
             first_name = form.cleaned_data['first_name']
@@ -283,22 +283,12 @@ def edit_profile(request, id):
             rent_proposal = form.cleaned_data['rent_proposal']
             deposit_proposal = form.cleaned_data['deposit_proposal']
             avatar = request.FILES.get('avatar')
-
-        user = User.objects.get(id=id)
-        try:
             if avatar:
-                try:
-                    user.client.user_id != None
-                    client = Client.objects.get(user_id = id)
-                    client.avatar = avatar
-                    client.save()
-                    avatar_added = True
-                except:
-                    user.landlord.user_id != None
-                    landlord = Landlord.objects.get(user_id = id)
-                    landlord.avatar = avatar
-                    landlord.save()
-                    avatar_added= True
+                client = Client.objects.get(user_id = id)
+                client.avatar = avatar
+                client.save()
+                avatar_added = True
+                        
             else:
                 avatar_added_err = True
             if username:
@@ -323,25 +313,13 @@ def edit_profile(request, id):
             else:
                 no_email_msg = True
             if contact:
-                try:
-                    user.client.user_id != None
-                    if is_valid_contact(contact) == False:
-                        invalid_contact_err = True
-                        return render(request, 'spaces/edit_profile.html', locals())
+                if is_valid_contact(contact) == False:
+                    invalid_contact_err = True
+                    return render(request, 'spaces/edit_client_profile.html', locals())
 
-                    client = Client.objects.get(user_id = id)
-                    client.contact = contact
-                    client.save()
-
-                except:
-                    user.landlord.user_id != None
-                    if is_valid_contact(contact) == False:
-                        invalid_contact_err = True
-                        return render(request, 'spaces/edit_profile.html', locals())
-
-                    landlord = Landlord.objects.get(user_id = id)
-                    landlord.contact = contact
-                    landlord.save()
+                client = Client.objects.get(user_id = id)
+                client.contact = contact
+                client.save()
                 yes_contact_msg =   True
             else:
                 no_contact_msg = True
@@ -354,11 +332,71 @@ def edit_profile(request, id):
             else:
                 no_pass_msg = True
             user.save()
-        except:
-            error = True
+    return render(request, 'spaces/edit_client_profile.html', locals())
 
-    return render(request, 'spaces/edit_profile.html', locals())
+@login_required()
+def edit_landlord_profile(request, id):
+    user = User.objects.get(id=id)
+    form = EditLandlordForm()
+    if request.method == 'POST':
+        form = EditLandlordForm(request.POST , request.FILES)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            contact = form.cleaned_data['contact']
+            password1 = form.cleaned_data['password']
+            password2 = form.cleaned_data['password_verification']
+            avatar = request.FILES.get('avatar')
+        if avatar:
+            landlord = Landlord.objects.get(user_id = id)
+            landlord.avatar = avatar
+            landlord.save()
+            avatar_added = True
+        else:
+            avatar_added_err = True
+        if username:
+            user.username = username
+            yes_username_msg = True
+        else:
+            no_username_msg = True
+        if first_name:
+            user.first_name = first_name
+            yes_first_name_msg = True
+        else:
+            no_first_name_msg = True
+        if last_name:
+            user.last_name = last_name
+            yes_last_name_msg = True
+        else:
+            no_last_name_msg = True
 
+        if email:
+            user.email = email
+            yes_email_msg = True
+        else:
+            no_email_msg = True
+        if contact:
+            if is_valid_contact(contact) == False:
+                invalid_contact_err = True
+                return render(request, 'spaces/edit_landlord_profile.html', locals())
+
+            landlord = landlord.objects.get(user_id = id)
+            landlord.contact = contact
+            landlord.save()
+        else:
+            no_contact_msg = True
+        if password1 and password2:
+            if password1 == password2:
+                user.set_password(password1)
+                yes_pass_msg = True
+            else:
+                error_pass_no_match = True
+        else:
+            no_pass_msg = True
+        user.save()
+    return render(request, 'spaces/edit_landlord_profile.html', locals())
 
 def add_house(request, id):
     form = AddHouseForm()
@@ -395,6 +433,31 @@ def add_house(request, id):
     return render(request, 'spaces/add_house.html', locals())
 
 
+def client_proposal(request, id):
+    user = User.objects.get(id = id)
+    form = ClientProposalForm()
+    if request.method == 'POST':
+        form = ClientProposalForm(request.POST, request.FILES)
+        if form.is_valid():
+            house_area = form.cleaned_data['house_area']
+            house_township = form.cleaned_data['house_township']
+            house_rent = form.cleaned_data['house_rent']
+            house_deposit = form.cleaned_data['house_deposit']
+            house_kind = form.cleaned_data['house_kind']
+            house_rooms_number = form.cleaned_data['house_rooms_number']
+
+            client = Client.objects.get(user_id=id)
+            client.area_dire = house_area
+            client.township_desire = house_township
+            client.rent_proposal = house_rent
+            client.deposit_proposal = house_deposit
+            client.kind_desire = house_kind
+            client.rooms_number_desire = house_rooms_number
+    
+    return render(request, 'spaces/client_proposal.html', locals())
+
+
+
 def log_out(request):
     logout(request)
     return redirect(reverse("spaces:signin"))
@@ -411,12 +474,20 @@ def see_houses(request , id):
 
 @login_required()
 def landlordStatistics(request, id):
-    return render(request ,'spaces/landlord_statistics.html' , locals())
+    return render(request, 'spaces/landlord_statistics.html', locals())
+    
+@login_required()
+def clientStatistics(request, id):
+    return render(request ,'spaces/client_statistics.html' , locals())
 
 
 @login_required()
 def landlordNotifications(request, id):
-    return render(request ,'spaces/landlord_notifications.html' , locals())
+    return render(request, 'spaces/landlord_notifications.html', locals())
+    
+@login_required()
+def clientNotifications(request, id):
+    return render(request ,'spaces/client_notifications.html' , locals())
 
 
 def see_clients(request , id):

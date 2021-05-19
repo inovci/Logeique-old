@@ -1,59 +1,61 @@
 {% extends "spaces/landlord_profile.html" %}
 
 {% block content %}
-    <div>
-        <form method="post" action="{% url 'spaces:add_house' user.id %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group row">
-                <label for="" class="col-sm-4 col-form-label">{{form.house_township.label}}</label>
-                <div class="col-sm-8">
-                    {{form.house_township}}
-                </div>
+<div>
+    {% block form %}<form method="post" action="{% url 'spaces:add_house' user.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="" class="col-sm-4 col-form-label">{{form.house_township.label}}</label>
+            <div class="col-sm-8">
+                {{form.house_township}}
             </div>
-        
-            <div class="form-group row">
-                <label for="" class="col-sm-4 col-form-label">{{form.house_area.label}}</label>
-                <div class="col-sm-8">{{form.house_area}}</div>
-            </div>
-        
-            <div class="form-group row">
-                <label for="" class="col-sm-4 col-form-label">{{form.house_rent.label}}</label>
-                <div class="col-sm-8">{{form.house_rent}}</div>
-            </div>
-        
-            <div class="form-group row">
-                <label for="" class="col-sm-4 col-form-label">{{form.house_deposit.label}}</label>
-                <div class="col-sm-8">{{form.house_deposit}}</div>
-            </div>
-        
-            <div class="form-group row">
-                <label for="" class="col-sm-4 col-form-label">{{form.house_kind.label}}</label>
-                <div class="col-sm-8">{{form.house_kind}}</div>
-            </div>
-        
-            <div class="form-group row">
-                <label for="" class="col-sm-4 col-form-label">{{form.house_rooms_number.label}}</label>
-                <div class="col-sm-8">{{form.house_rooms_number}}</div>
-            </div>
-        
-            <div class="text-center">
-                <div class="form-check">
-                    {{form.house_available}}
-                    <label for="" class="form-check-label"
-                    style="margin-right: 10%;">{{form.house_available.label}}</label>  
+        </div>
 
-                    {{form.house_to_sell}}
-                    <label for="" class="form-check-label">{{form.house_to_sell.label}}</label>
-                </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-4 col-form-label">{{form.house_area.label}}</label>
+            <div class="col-sm-8">{{form.house_area}}</div>
+        </div>
+
+        <div class="form-group row">
+            <label for="" class="col-sm-4 col-form-label">{{form.house_rent.label}}</label>
+            <div class="col-sm-8">{{form.house_rent}}</div>
+        </div>
+
+        <div class="form-group row">
+            <label for="" class="col-sm-4 col-form-label">{{form.house_deposit.label}}</label>
+            <div class="col-sm-8">{{form.house_deposit}}</div>
+        </div>
+
+        <div class="form-group row">
+            <label for="" class="col-sm-4 col-form-label">{{form.house_kind.label}}</label>
+            <div class="col-sm-8">{{form.house_kind}}</div>
+        </div>
+
+        <div class="form-group row">
+            <label for="" class="col-sm-4 col-form-label">{{form.house_rooms_number.label}}</label>
+            <div class="col-sm-8">{{form.house_rooms_number}}</div>
+        </div>
+        {% block text-center %}
+        <div class="text-center">
+            <div class="form-check">
+                {{form.house_available}}
+                <label for="" class="form-check-label" style="margin-right: 10%;">{{form.house_available.label}}</label>
+
+                {{form.house_to_sell}}
+                <label for="" class="form-check-label">{{form.house_to_sell.label}}</label>
             </div>
-            
-            <p class="form-control-file">
-                {{form.house_image.label}}
-                {{form.house_image}}
-            </p>
-        
-            <input type="submit" class="btn btn-primary" value="Enregistrer" />
-            
-        </form>              
-    </div>
+        </div>
+        {% endblock text-center %}
+        {% block form-control-file %}
+        <p class="form-control-file">
+            {{form.house_image.label}}
+            {{form.house_image}}
+        </p>
+        {% endblock form-control-file %}
+
+        <input type="submit" class="btn btn-primary" value="Enregistrer" />
+
+    </form>
+    {% block form %}
+</div>
 {% endblock %}
