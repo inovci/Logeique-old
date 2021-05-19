@@ -1,13 +1,54 @@
-{% extends spaces/add_house.html %}
-{% block form %}
-<form method="post" action="{% url 'spaces:client_proposal' user.id %}" enctype="multipart/form-data"></form>
+{% extends "spaces/client_profile.html" %}
+{% block title %}Préférences clients{% endblock title %}
+{% block navitem1 %}
+<a class="nav-link active" href="{% url 'spaces:client_profile' user.id %}">
+    <span data-feather="home"></span>{{user.username}}
+    Dashboard <span class="sr-only"></span>
+</a>
+{% if user.landlord.avatar %}
+<img width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
+{% endif %}
+{% endblock navitem1 %}
+{% block navitem3 %}
+<a style="border: solid 1px red;" class="nav-link" href="{% url 'spaces:client_proposal' user.id %}">
+    <span data-feather="plus">(current)</span>
+    Que désirez vous?
+</a>
+{% endblock navitem3 %}
+{% block h1 %}Attentes du client{% endblock h1 %}
+{% block content %}
+<form method="post" action="{% url 'spaces:client_proposal' user.id %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group row">
+        <label for="" class="col-sm-4 col-form-label">{{form.house_township.label}}</label>
+        <div class="col-sm-8">
+            {{form.house_township}}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="" class="col-sm-4 col-form-label">{{form.house_area.label}}</label>
+        <div class="col-sm-8">{{form.house_area}}</div>
+    </div>
+
+    <div class="form-group row">
+        <label for="" class="col-sm-4 col-form-label">{{form.house_rent.label}}</label>
+        <div class="col-sm-8">{{form.house_rent}}</div>
+    </div>
+    <div class="form-group row">
+        <label for="" class="col-sm-4 col-form-label">{{form.house_deposit.label}}</label>
+        <div class="col-sm-8">{{form.house_deposit}}</div>
+    </div>
+
+    <div class="form-group row">
+        <label for="" class="col-sm-4 col-form-label">{{form.house_kind.label}}</label>
+        <div class="col-sm-8">{{form.house_kind}}</div>
+    </div>
+
+    <div class="form-group row">
+        <label for="" class="col-sm-4 col-form-label">{{form.house_rooms_number.label}}</label>
+        <div class="col-sm-8">{{form.house_rooms_number}}</div>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Enregistrer" />
 </form>
-{% block text-center %}
-{% endblock text-center %}
-{% block form-control-file %}
-<p class="form-control-file">
-    {{form.house_image.label}}
-    {{form.house_image}}
-</p>
-{% endblock form-control-file %}
-{% endblock form %}
+{% endblock %}

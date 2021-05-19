@@ -41,8 +41,8 @@
 
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
-            href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>
+        {% block a1 %} <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
+            href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>{% endblock a1 %}
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
             data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -56,10 +56,12 @@
     </nav>
     <div class="container-fluid">
         <div class="row">
+            {% block navigation %}
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="sidebar-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
+                            {% block navitem1 %}
                             <a style="border: solid 1px red;" class="nav-link active"
                                 href="{% url 'spaces:client_profile' user.id %}">
                                 <span data-feather="home"></span>{{user.username}}
@@ -68,18 +70,23 @@
                             {% if user.landlord.avatar %}
                             <img width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
                             {% endif %}
+                            {% endblock navitem1 %}
                         </li>
                         <li class="nav-item">
+                            {% block navitem2 %}
                             <a class="nav-link" href="{% url 'spaces:edit_client_profile' user.id %}">
                                 <span data-feather="user"></span>
                                 Modifier profil
                             </a>
+                            {% endblock navitem2 %}
                         </li>
                         <li class="nav-item">
+                            {% block navitem3 %}
                             <a class="nav-link" href="{% url 'spaces:client_proposal' user.id %}">
                                 <span data-feather="plus"></span>
                                 Que désirez vous?
                             </a>
+                            {% endblock navitem3 %}
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'spaces:client_statistics' user.id %}">
@@ -112,6 +119,7 @@
                     </ul>
                 </div>
             </nav>
+            {% endblock navigation %}
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">

@@ -1,8 +1,7 @@
 {% extends "spaces/landlord_profile.html" %}
 
-{% block content %}
 <div>
-    {% block form %}<form method="post" action="{% url 'spaces:add_house' user.id %}" enctype="multipart/form-data">
+    <form method="post" action="{% url 'spaces:add_house' user.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group row">
             <label for="" class="col-sm-4 col-form-label">{{form.house_township.label}}</label>
@@ -35,7 +34,7 @@
             <label for="" class="col-sm-4 col-form-label">{{form.house_rooms_number.label}}</label>
             <div class="col-sm-8">{{form.house_rooms_number}}</div>
         </div>
-        {% block text-center %}
+
         <div class="text-center">
             <div class="form-check">
                 {{form.house_available}}
@@ -45,17 +44,16 @@
                 <label for="" class="form-check-label">{{form.house_to_sell.label}}</label>
             </div>
         </div>
-        {% endblock text-center %}
-        {% block form-control-file %}
+
+
         <p class="form-control-file">
             {{form.house_image.label}}
             {{form.house_image}}
         </p>
-        {% endblock form-control-file %}
+
 
         <input type="submit" class="btn btn-primary" value="Enregistrer" />
 
     </form>
-    {% block form %}
+
 </div>
-{% endblock %}
