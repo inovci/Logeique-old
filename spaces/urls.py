@@ -18,6 +18,6 @@ urlpatterns = [
     path('see/clients/<int:id>' , views.see_clients , name="landlord_clients"),
     path('see/landlord/statistics/<int:id>', views.landlordStatistics, name="landlord_statistics"),
     path('see/client/statistics/<int:id>' , views.clientStatistics, name="client_statistics"),
-    path('see/notifications/<int:id>', views.landlordNotifications, name="landlord_notifications"),
-    path('see/notifications/<int:id>' , views.clientNotifications, name="client_notifications"),
+    path('see/landlord/notifications/<int:id>', views.landlordNotifications, name="landlord_notifications"),
+    path('see/client/notifications/<int:id>' , views.clientNotifications, name="client_notifications"),
 ]
