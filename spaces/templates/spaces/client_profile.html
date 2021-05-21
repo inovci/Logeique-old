@@ -89,16 +89,20 @@
                             {% endblock navitem3 %}
                         </li>
                         <li class="nav-item">
+                            {% block navitem4 %}
                             <a class="nav-link" href="{% url 'spaces:client_statistics' user.id %}">
                                 <span data-feather="bar-chart-2"></span>
                                 Statistiques
                             </a>
+                            {% endblock navitem4 %}
                         </li>
                         <li class="nav-item">
+                            {% block navitem5 %}
                             <a class="nav-link" href="{% url 'spaces:client_notifications' user.id %}">
                                 <span data-feather="bell"></span>
                                 Notifications
                             </a>
+                            {% endblock navitem5 %}
                         </li>
                     </ul>
                     <h6
@@ -123,7 +127,7 @@
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">{% block h1 %}Espace Client{% endblock h1 %}</h1>
+                    <h1 class="h2">{% block h1 %}Espace client{% endblock h1 %}</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
                             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
