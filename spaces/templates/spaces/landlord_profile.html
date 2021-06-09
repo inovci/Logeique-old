@@ -106,16 +106,20 @@
                             {% endblock navitem5 %}
                         </li>
                         <li class="nav-item">
+                            {% block navitem6 %}
                             <a class="nav-link" href="{% url 'spaces:landlord_statistics' user.id %}">
                                 <span data-feather="bar-chart-2"></span>
                                 Statistiques
                             </a>
+                            {% endblock navitem6 %}
                         </li>
                         <li class="nav-item">
+                            {% block navitem7 %}
                             <a class="nav-link" href="{% url 'spaces:landlord_notifications' user.id %}">
                                 <span data-feather="bell"></span>
                                 Notifications
                             </a>
+                            {% endblock navitem7 %}
                         </li>
                     </ul>
 

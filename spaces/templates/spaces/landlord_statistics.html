@@ -1,7 +1,25 @@
 {% extends "spaces/landlord_profile.html" %}
+{% block title %}Statistiques{% endblock %}
+{% block navitem1 %}
+<a class="nav-link active" href="{% url 'spaces:landlord_profile' user.id %}">
+    <span data-feather="home"></span>{{user.username}}
+    Dashboard <span class="sr-only"></span>
+</a>
+{% if user.landlord.avatar %}
+<img width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
+{% endif %}
+{% endblock navitem1 %}
+
+{% block navitem6 %}
+<a style="border: solid 1px red;" class="nav-link" href="{% url 'spaces:landlord_statistics' user.id %}">
+    <span data-feather="bar-chart-2">(current)</span>
+    Statistiques
+</a>
+{% endblock navitem6 %}
+{% block h1 %}Etudes de décision{% endblock h1 %}
 
 {% block content %}
-    <div>
-        <h1>Vos statistiques.</h1>
-    </div>
+<div>
+    <h1>Vos statistiques.</h1>
+</div>
 {% endblock %}

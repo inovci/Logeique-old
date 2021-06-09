@@ -1,29 +1,46 @@
 {% extends "spaces/landlord_profile.html" %}
+{% block title %}voir maisons{% endblock %}
+{% block navitem1 %}
+<a class="nav-link active" href="{% url 'spaces:landlord_profile' user.id %}">
+    <span data-feather="home"></span>{{user.username}}
+    Dashboard <span class="sr-only"></span>
+</a>
+{% if user.landlord.avatar %}
+<img width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
+{% endif %}
+{% endblock navitem1 %}
 
+{% block navitem4 %}
+<a style="border: solid 1px red;" class="nav-link" href="{% url 'spaces:landlord_houses' user.id %}">
+    <span data-feather="home">(current)</span>
+    Voir ses Maisons
+</a>
+{% endblock navitem4 %}
+{% block h1 %}Consultations de biens{% endblock h1 %}
 {% block content %}
-    <div>
-        {% if no_house_err %}
-            <p>Vous n'avez aucune maisons pour l'instant</p>
+<div>
+    {% if no_house_err %}
+    <p>Vous n'avez aucune maisons pour l'instant</p>
+    {% endif %}
+
+    {% for house in houses %}
+    <div class="card bg-light mb-3" style="width: 20rem;padding: 5px;">
+        {% if house.house_image %}
+        <img src="{{house.house_image.url}}" alt="image de maison">
         {% endif %}
-        
-        {% for house in houses %}
-            <div class="card bg-light mb-3" style="width: 20rem;padding: 5px;">
-                {% if house.house_image %}
-                    <img src="{{house.house_image.url}}" alt="image de maison">
-                {% endif %}
-                <div class="card-body">
-                    <p>Commune: {{house.house_township}} {{area}}</p>
-                    <p>Loyer: {{house.house_rent}} FCFA</p>
-                    <p>Caution: {{house.house_deposit}} FCFA</p>
-                    <p>Type: {{house.house_kind}}</p>
-                    <p>{{house.house_rooms_number}} pieces</p>
-                    {% if house.house_available %}
-                        <P>Disponible</P>
-                    {% else %}
-                        <p>Indisponible</p>
-                    {% endif %}
-                </div>
-            </div>
-        {% endfor %}          
+        <div class="card-body">
+            <p>Commune: {{house.house_township}} {{area}}</p>
+            <p>Loyer: {{house.house_rent}} FCFA</p>
+            <p>Caution: {{house.house_deposit}} FCFA</p>
+            <p>Type: {{house.house_kind}}</p>
+            <p>{{house.house_rooms_number}} pieces</p>
+            {% if house.house_available %}
+            <P>Disponible</P>
+            {% else %}
+            <p>Indisponible</p>
+            {% endif %}
+        </div>
     </div>
+    {% endfor %}
+</div>
 {% endblock %}
