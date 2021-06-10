@@ -1,0 +1,50 @@
+{
+  "short_name": "logic",
+  "name": "LOGEIQUE",
+  "icons": [
+    {
+      "src": ".Logeique/media/img/icons/house.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": ".Logeique/media/img/icons/house512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#3367D6",
+  "shortcuts": [
+    {
+      "name": "logique ?",
+      "short_name": "logic",
+      "description": "Recherchez vous une maison ?",
+      "url": "/",
+      "icons": [{ "src": ".Logeique/media/img/icons/questionmark192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "voulez vous vous inscrire?",
+      "short_name": "Inscription",
+      "description": "Demande d'informations sur inscription",
+      "url": "/signup",
+      "icons": [{ "src": ".Logeique/media/img/icons/suscribe192.png", "sizes": "192x192" }]
+    }
+  ],
+  "description": "Application de recherche et de gestion de maisons à Abidjan",
+  "screenshots": [
+    {
+      "src": ".Logeique/media/img/screenshots/acceuil.PNG",
+      "type": "image/png",
+      "sizes": "540x720"
+    },
+    {
+      "src": ".Logeique/media/img/screenshots/enregistrement.PNG",
+      "type": "image/jpg",
+      "sizes": "540x720"
+    }
+  ]
+}
