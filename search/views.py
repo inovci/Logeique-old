@@ -116,19 +116,18 @@ def get_result(value, choice = 1):
             value = int(value)
             clients_list = list(
                 Client.objects.filter(
-                    Q(kind_desire__icontains=value) |
+    
                     Q(rooms_number_desire=int(value)) |
                     Q(rent_proposal = int(value))|
-                    Q(deposit_proposal = int(value))|
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains = value)|
-                    Q(user__last_name__icontains = value)
+                    Q(deposit_proposal = int(value))
                 )
             )
         except ValueError:
             clients_list = list(
                 Client.objects.filter(
                     Q(kind_desire__icontains=value) |
+                    Q(area_desire__icontains=value) |
+                    Q(township_desire__icontains = value)|
                     Q(user__username__icontains = value)|
                     Q(user__first_name__icontains = value)|
                     Q(user__last_name__icontains = value)
