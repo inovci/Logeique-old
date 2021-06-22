@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('spaces.urls', namespace='spaces')),
     path('search/', include('search.urls', namespace='search')),
-    path('', include('pwa.urls'))
+    #path('', include('pwa.urls'))
 ]
 
 if settings.DEBUG:
