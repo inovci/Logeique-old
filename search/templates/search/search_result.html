@@ -13,7 +13,7 @@
         {% if context.clients %}
         <h3>Clients interessés par ce genre de maisons</h3>
         {% for client in context.clients %}
-        <p>{{client.user.username}}</p>
+        <p>{{client.user.username}} , au numéro : {{client.contact}}</p>
         {% endfor %}
         {% endif %}
     </div>
