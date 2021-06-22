@@ -4,51 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 </head>
 
 <body>
     <div>
         {% if context.clients %}
-            <h3>Clients interessés par ce genre de maisons</h3>
-            {% for client in context.clients %}
-                <p>{{client.user.username}}</p>
-            {% endfor %}
+        <h3>Clients interessés par ce genre de maisons</h3>
+        {% for client in context.clients %}
+        <p>{{client.user.username}}</p>
+        {% endfor %}
         {% endif %}
     </div>
-        
+
     <div>
         {% if context.landlords %}
         <h3>Proprietaires concernés</h3>
-            {% for landlord in context.landlords %}
-            <div>
-                {{landlord.user.username}}
-                {{landlord.contact}}
-            </div>
-            {% endfor %}
+        {% for landlord in context.landlords %}
+        <div>
+            {{landlord.user.username}}
+            {{landlord.contact}}
+        </div>
+        {% endfor %}
         {% endif %}
     </div>
-        
+
     <div>
         {% if context.houses %}
-            <h3>Maisons concernés</h3>
-            {% for house in context.houses %}
-                <div class="row row-cols-1 row-cols-md-2">
-                    <div class="col mb-4">
-                        <div class="card">
-                            <img src="{{house.house_image.url}}" class="card-img-top" alt="pas d'image">
-                            <div class="card-body">
-                                <h5 class="card-title">TYpe: {{house.house_kind}}</h5>
-                                <p class="card-text">COmmune: {{house.house_township}}</p>
-                            </div>
-                        </div>
+        <h3>Maisons concernés</h3>
+        {% for house in context.houses %}
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col mb-4">
+                <div class="card">
+                    <img src="{{house.house_image.url}}" class="card-img-top" alt="pas d'image">
+                    <div class="card-body">
+                        <h5 class="card-title">TYpe: {{house.house_kind}}</h5>
+                        <p class="card-text">COmmune: {{house.house_township}}</p>
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
         {% endif %}
-    </div>       
-        <!--
+    </div>
+    <!--
             <div>
                 
                QUartier: {{house.house_area}} 
@@ -72,7 +72,7 @@
             <h1> Aucun resultat</h1>
         {% endif %}
         </div>
-        --> 
+        -->
 </body>
 
 </html>
