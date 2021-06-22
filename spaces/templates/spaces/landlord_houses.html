@@ -23,24 +23,28 @@
     <p>Vous n'avez aucune maisons pour l'instant</p>
     {% endif %}
 
-    {% for house in houses %}
-    <div class="card bg-light mb-3" style="width: 20rem;padding: 5px;">
-        {% if house.house_image %}
-        <img src="{{house.house_image.url}}" alt="image de maison">
-        {% endif %}
-        <div class="card-body">
-            <p>Commune: {{house.house_township}} {{area}}</p>
-            <p>Loyer: {{house.house_rent}} FCFA</p>
-            <p>Caution: {{house.house_deposit}} FCFA</p>
-            <p>Type: {{house.house_kind}}</p>
-            <p>{{house.house_rooms_number}} pieces</p>
-            {% if house.house_available %}
-            <P>Disponible</P>
-            {% else %}
-            <p>Indisponible</p>
-            {% endif %}
+    <div class="row row-cols-1 row-cols-md-3">
+        {% for house in houses %}
+        <div class="col mb-4">
+            <div class="card bg-light mb-3" style="width: 20rem;padding: 5px;">
+                {% if house.house_image %}
+                <img src="{{house.house_image.url}}" alt="image de maison">
+                {% endif %}
+                <div class="card-body">
+                    <p>Commune: {{house.house_township}} {{area}}</p>
+                    <p>Loyer: {{house.house_rent}} FCFA</p>
+                    <p>Caution: {{house.house_deposit}} FCFA</p>
+                    <p>Type: {{house.house_kind}}</p>
+                    <p>{{house.house_rooms_number}} pieces</p>
+                    {% if house.house_available %}
+                    <P>Disponible</P>
+                    {% else %}
+                    <p>Indisponible</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endblock %}
