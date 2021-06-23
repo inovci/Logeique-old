@@ -7,6 +7,7 @@ from .models import Client, Landlord, House, Deal
 from django.shortcuts import get_object_or_404, Http404
 from django.contrib.auth.decorators import login_required
 from spaces.models import Client, Landlord
+from django.db.models import Q
 import re
 import os
 from PIL import Image 
@@ -453,6 +454,7 @@ def client_proposal(request, id):
             client.deposit_proposal = house_deposit
             client.kind_desire = house_kind
             client.rooms_number_desire = house_rooms_number
+            client.save()
     
     return render(request, 'spaces/client_proposal.html', locals())
 
@@ -487,6 +489,18 @@ def landlordNotifications(request, id):
     
 @login_required()
 def clientNotifications(request, id):
+    client = Client.objects.get(client__user_id=id)
+    houses = House.objects.filter(Q(house_area__icontains=client.area_desire,
+                                    house_township__icontains=client.township_desire,
+                                    house_deposit=client.deposit_proposal,
+                                    house_rent=client.rent_proposal)|
+                                Q(house_area__icontains=client.area_desire,
+                                    house_township__icontains=client.township_desire,
+                                    house_deposit__lte=client.deposit_proposal - client.deposit_proposal * 0.1,
+                                    house_deposit__gte=client.deposit_proposal - client.deposit_proposal * 0.1,
+                                    house_rent__lte=client.rent_proposal - client.rent_proposal * 0.1,
+                                    house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1 ))
+                                     #Meaning more or less 10 percent of the initial value
     return render(request ,'spaces/client_notifications.html' , locals())
 
 
