@@ -132,6 +132,11 @@
 
     <script src="{% static 'js/bootstrap.min.js' %}" type="javascript"></script>
     {% block scripts %}{% endblock %}
+    <script type="text/javascript">
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+    </script>
 </body>
 
 </html>
