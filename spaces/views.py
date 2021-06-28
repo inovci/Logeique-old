@@ -563,6 +563,10 @@ def test(id, username=None, first_name=None, last_name=None, email=None, contact
         error = True
 """
 
+def edit_house(request):
+    form = AddHouseForm()
+    return render(request, 'spaces/edit_house_founded.html', locals())
+
 def test2(id):
     try:
         houses = House.objects.filter(landlord__user_id = id)

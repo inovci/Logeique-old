@@ -1,48 +1,61 @@
 {% extends "spaces/landlord_profile.html" %}
 {% block title %}voir maisons{% endblock %}
 {% block navitem1 %}
-<a class="nav-link active" href="{% url 'spaces:landlord_profile' user.id %}">
-    <span data-feather="home"></span> ACCUEIL<span class="sr-only">(current)</span>
-</a>
-{% if user.landlord.avatar %}
-<img width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
-{% endif %}
+    <a class="nav-link active" href="{% url 'spaces:landlord_profile' user.id %}">
+        <span data-feather="home"></span> ACCUEIL<span class="sr-only">(current)</span>
+    </a>
+    {% if user.landlord.avatar %}
+        <img width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
+    {% endif %}
 {% endblock navitem1 %}
 
 {% block navitem4 %}
-<a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:landlord_houses' user.id %}">
-    <span data-feather="home">(current)</span>
-    Voir ses Maisons
-</a>
+    <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:landlord_houses' user.id %}">
+        <span data-feather="home">(current)</span>
+        Voir ses Maisons
+    </a>
 {% endblock navitem4 %}
+
 {% block h1 %}Consultations de biens{% endblock h1 %}
+
 {% block content %}
 <div>
     {% if no_house_err %}
-    <p>Vous n'avez aucune maisons pour l'instant</p>
+        <p>Vous n'avez aucune maison pour l'instant</p>
     {% endif %}
 
     <div class="row row-cols-1 row-cols-md-3">
         {% for house in houses %}
-        <div class="col mb-4">
-            <div class="card bg-light mb-3" style="width: 20rem;padding: 5px;">
-                {% if house.house_image %}
-                <img src="{{house.house_image.url}}" alt="image de maison">
-                {% endif %}
-                <div class="card-body">
-                    <p>Commune: {{house.house_township}} {{area}}</p>
-                    <p>Loyer: {{house.house_rent}} FCFA</p>
-                    <p>Caution: {{house.house_deposit}} FCFA</p>
-                    <p>Type: {{house.house_kind}}</p>
-                    <p>{{house.house_rooms_number}} pieces</p>
-                    {% if house.house_available %}
-                    <P>Disponible</P>
-                    {% else %}
-                    <p>Indisponible</p>
+            <div class="col mb-4">
+                <div class="card bg-light mb-3" style="width: 25rem;padding: 5px;">
+                    {% if house.house_image %}
+                        <img src="{{house.house_image.url}}" alt="image de maison">
                     {% endif %}
+                    <div class="card-body">
+                        <p>
+                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Voir Les Informations de Cette maison
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <p>Commune: {{house.house_township}} {{area}}</p>
+                                <p>Loyer: {{house.house_rent}} FCFA</p>
+                                <p>Caution: {{house.house_deposit}} FCFA</p>
+                                <p>Type: {{house.house_kind}}</p>
+                                <p>{{house.house_rooms_number}} pieces</p>
+                                {% if house.house_available %}
+                                    <P>Disponible</P>
+                                {% else %}
+                                    <p>Indisponible</p>
+                                {% endif %}
+
+                                <div class="text-center"><a href="{% url 'spaces:edit_house_founded' %}" style="width: 50%;" class="btn btn-primary">Editez cette maison</a></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
     </div>
 </div>

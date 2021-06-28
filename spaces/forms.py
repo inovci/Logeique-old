@@ -167,7 +167,7 @@ class EditClientForm(forms.Form):
             attrs={
                 'class': 'form-control inbox',
                 'title': 'Contact',
-                'placeholder': 'Exemple : + 225 00-00-00-00',
+                'placeholder': 'Exemple : + 225 00-00-00-00-00',
                 'id': 'lo_nu'
             }
         )
