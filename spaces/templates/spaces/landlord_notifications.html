@@ -2,8 +2,7 @@
 {% block title %}notifications{% endblock %}
 {% block navitem1 %}
 <a class="nav-link active" href="{% url 'spaces:landlord_profile' user.id %}">
-    <span data-feather="home"></span>{{user.username}}
-    Dashboard <span class="sr-only"></span>
+    <span data-feather="home"></span> ACCUEIL<span class="sr-only">(current)</span>
 </a>
 {% if user.landlord.avatar %}
 <img width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
@@ -11,7 +10,7 @@
 {% endblock navitem1 %}
 
 {% block navitem7 %}
-<a style="border: solid 1px red;" class="nav-link" href="{% url 'spaces:landlord_notifications' user.id %}">
+<a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:landlord_notifications' user.id %}">
     <span data-feather="bell">(current)</span>
     Notifications
 </a>

@@ -1,79 +1,82 @@
 {% extends "spaces/landlord_profile.html" %}
 {% block title %}Ajout de maisons{% endblock %}
 {% block navitem1 %}
-<a class="nav-link active" href="{% url 'spaces:landlord_profile' user.id %}">
-    <span data-feather="home"></span>{{user.username}}
-    Dashboard <span class="sr-only"></span>
-</a>
-{% if user.landlord.avatar %}
-<img width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
-{% endif %}
+    <a class="nav-link active" href="{% url 'spaces:landlord_profile' user.id %}">
+        <span data-feather="home"></span> ACCUEIL<span class="sr-only">(current)</span>
+    </a>
+    {% if user.landlord.avatar %}
+        <img width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
+    {% endif %}
 {% endblock navitem1 %}
 
 {% block navitem3 %}
-<a style="border: solid 1px red;" class="nav-link" href="{% url 'spaces:add_house' user.id %}">
-    <span data-feather="plus">(current)</span>
-    Ajouter Maisons
-</a>
+    <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:add_house' user.id %}">
+        <span data-feather="plus">(current)</span>
+        Ajouter Maisons
+    </a>
 {% endblock navitem3 %}
+
 {% block h1 %}Ajout de maisons{% endblock h1 %}
 
 {% block content %}
-<div>
-    <form method="post" action="{% url 'spaces:add_house' user.id %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group row">
-            <label for="" class="col-sm-4 col-form-label">{{form.house_township.label}}</label>
-            <div class="col-sm-8">
-                {{form.house_township}}
-            </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+
+        <div class="col-md-6">
+            <form style="padding: 10px;" class="card" method="post" action="{% url 'spaces:add_house' user.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="" class="col-sm-4 col-form-label">{{form.house_township.label}}</label>
+                    <div class="col-sm-8">
+                        {{form.house_township}}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-4 col-form-label">{{form.house_area.label}}</label>
+                    <div class="col-sm-8">{{form.house_area}}</div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-4 col-form-label">{{form.house_rent.label}}</label>
+                    <div class="col-sm-8">{{form.house_rent}}</div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-4 col-form-label">{{form.house_deposit.label}}</label>
+                    <div class="col-sm-8">{{form.house_deposit}}</div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-4 col-form-label">{{form.house_kind.label}}</label>
+                    <div class="col-sm-8">{{form.house_kind}}</div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-4 col-form-label">{{form.house_rooms_number.label}}</label>
+                    <div class="col-sm-8">{{form.house_rooms_number}}</div>
+                </div>
+
+                <div class="text-center">
+                    <div class="form-check">
+                        {{form.house_available}}
+                        <label for="" class="form-check-label" style="margin-right: 10%;">{{form.house_available.label}}</label>
+
+                        {{form.house_to_sell}}
+                        <label for="" class="form-check-label">{{form.house_to_sell.label}}</label>
+                    </div>
+                </div>
+
+                <p class="form-control-file">
+                    {{form.house_image.label}}
+                    {{form.house_image}}
+                </p>
+
+                <div class="text-center"><input style="width: 50%;" type="submit" class="btn btn-primary" value="Enregistrer" /></div>
+
+            </form>
         </div>
 
-        <div class="form-group row">
-            <label for="" class="col-sm-4 col-form-label">{{form.house_area.label}}</label>
-            <div class="col-sm-8">{{form.house_area}}</div>
-        </div>
-
-        <div class="form-group row">
-            <label for="" class="col-sm-4 col-form-label">{{form.house_rent.label}}</label>
-            <div class="col-sm-8">{{form.house_rent}}</div>
-        </div>
-
-        <div class="form-group row">
-            <label for="" class="col-sm-4 col-form-label">{{form.house_deposit.label}}</label>
-            <div class="col-sm-8">{{form.house_deposit}}</div>
-        </div>
-
-        <div class="form-group row">
-            <label for="" class="col-sm-4 col-form-label">{{form.house_kind.label}}</label>
-            <div class="col-sm-8">{{form.house_kind}}</div>
-        </div>
-
-        <div class="form-group row">
-            <label for="" class="col-sm-4 col-form-label">{{form.house_rooms_number.label}}</label>
-            <div class="col-sm-8">{{form.house_rooms_number}}</div>
-        </div>
-
-        <div class="text-center">
-            <div class="form-check">
-                {{form.house_available}}
-                <label for="" class="form-check-label" style="margin-right: 10%;">{{form.house_available.label}}</label>
-
-                {{form.house_to_sell}}
-                <label for="" class="form-check-label">{{form.house_to_sell.label}}</label>
-            </div>
-        </div>
-
-
-        <p class="form-control-file">
-            {{form.house_image.label}}
-            {{form.house_image}}
-        </p>
-
-
-        <input type="submit" class="btn btn-primary" value="Enregistrer" />
-
-    </form>
-
-</div>
+        <div class="col-md-3"></div>
+    </div>
 {% endblock %}

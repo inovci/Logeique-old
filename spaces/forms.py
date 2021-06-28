@@ -24,7 +24,7 @@ class SignUpForm(forms.Form):
         )
     )
     last_name = forms.CharField(
-        label='Nom',
+        label='Nom : ',
         max_length=200,
         widget=forms.TextInput(
             attrs={
@@ -80,18 +80,18 @@ class SignUpForm(forms.Form):
         )
     )
     password = forms.CharField(
-        label='Mot de passe :',
+        label='Mot de passe : ',
         max_length=200,
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control inbox',
                 'title': 'Mot de passe',
-                'placeholder': 'Entrez votre mot de passe'
+                'placeholder': 'Mot de passe'
             }
         )
     )
     password_verification = forms.CharField(
-        label='Vérification',
+        label='Vérification : ',
         max_length=200,
         widget=forms.PasswordInput(
             attrs={
@@ -137,7 +137,7 @@ class EditClientForm(forms.Form):
         )
     )
     last_name = forms.CharField(
-        label='Nom',
+        label='Nom : ',
         max_length=200,
         required=False,
         widget=forms.TextInput(
@@ -173,39 +173,39 @@ class EditClientForm(forms.Form):
         )
     )
     password = forms.CharField(
-        label='Mot de passe :',
+        label='Mot de passe : ',
         required=False,
         max_length=200,
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control inbox',
                 'title': 'Mot de passe',
-                'placeholder': 'Entrez votre mot de passe'
+                'placeholder': 'Nouveau mot de passe'
             }
         )
     )
     password_verification = forms.CharField(
-        label='Vérification',
+        label='Vérification : ',
         required=False,
         max_length=200,
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control inbox',
                 'title': 'Vérification',
-                'placeholder': 'Entrez votre mot de passe à nouveau'
+                'placeholder': 'Entrez votre nouveau mot de passe à nouveau'
             }
         )
     )
     rent_proposal = forms.IntegerField(
-        label='budget loyer',
+        label='Budget loyer',
         required=False
     )
     deposit_proposal = forms.IntegerField(
-        label='budget caution',
+        label='Budget caution',
         required=False
     )
     avatar = forms.ImageField(
-        label='ajoute avatar',
+        label='Ajoutez un avatar',
         required=False
     )
 
@@ -217,45 +217,45 @@ class EditLandlordForm(EditClientForm):
 class AddHouseForm(forms.Form):
     house_township = forms.CharField(
         max_length=50,
-        label='Commune de la maison: ',
+        label='Commune : ',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Commune'
+                'placeholder': 'Commune de la maison'
             }
         )
     )
     house_area = forms.CharField(
         max_length=50,
-        label='Quartier de la maison: ',
+        label='Quartier : ',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Quartier'
+                'placeholder': 'Quartier de la maison'
             }
         )
     )
     house_rent = forms.IntegerField(
-        label='Prix du loyer de la maison: ',
+        label='Prix : ',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Montant du Loyer'
+                'placeholder': 'Prix du Loyer'
             }
         )
     )
     house_deposit = forms.IntegerField(
-        label='Caution de la maison: ',
+        label='Caution : ',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Montant de la caution'
+                'placeholder': 'Caution de la caution'
             }
         )
     )
     house_kind = forms.CharField(
         max_length=50,
-        label='Type de maison: ',
+        label='Type : ',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
@@ -264,7 +264,7 @@ class AddHouseForm(forms.Form):
         )
     )
     house_rooms_number = forms.IntegerField(
-        label='Nombres de pieces: ',
+        label='Pièces : ',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
@@ -273,7 +273,7 @@ class AddHouseForm(forms.Form):
         )
     )
     house_available = forms.BooleanField(
-        label='Disponible: ',
+        label='En location : ',
         required=False,
         widget=forms.CheckboxInput(
             attrs={
@@ -285,7 +285,7 @@ class AddHouseForm(forms.Form):
         )
     )
     house_to_sell = forms.BooleanField(
-        label='A vendre: ',
+        label='À vendre : ',
         required=False,
         widget=forms.CheckboxInput(
             attrs={
