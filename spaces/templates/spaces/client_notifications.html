@@ -1,21 +1,26 @@
 {% extends 'spaces/client_profile.html' %}
+
 {% block title %}Notifications Client{% endblock title %}
+
 {% block navitem1 %}
-<a class="nav-link active" href="{% url 'spaces:client_profile' user.id %}">
-    <span data-feather="home"></span>{{user.username}}
-    Dashboard <span class="sr-only"></span>
-</a>
-{% if user.landlord.avatar %}
-<img width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
-{% endif %}
+    <a class="nav-link active" href="{% url 'spaces:client_profile' user.id %}">
+        <span data-feather="home"></span>{{user.username}}
+        Dashboard <span class="sr-only"></span>
+    </a>
+    {% if user.landlord.avatar %}
+        <img width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
+    {% endif %}
 {% endblock navitem1 %}
+
 {% block navitem5 %}
-<a style="border: solid 1px red;" class="nav-link" href="{% url 'spaces:client_notifications' user.id %}">
-    <span data-feather="bar-chart-2">(current)</span>
-    Notifications
-</a>
+    <a style="border: solid 1px red;" class="nav-link" href="{% url 'spaces:client_notifications' user.id %}">
+        <span data-feather="bar-chart-2">(current)</span>
+        Notifications
+    </a>
 {% endblock navitem5 %}
+
 {% block h1 %}Notifications client{% endblock h1 %}
+
 {% block content %}
-<h1>Notifications</h1>
+    <h1>Notifications</h1>
 {% endblock %}
