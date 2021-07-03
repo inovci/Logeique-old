@@ -501,6 +501,7 @@ def clientNotifications(request, id):
                                     house_rent__lte=client.rent_proposal - client.rent_proposal * 0.1,
                                     house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1 ))
                                      #Meaning more or less 10 percent of the initial value
+    print(len(houses))
     return render(request ,'spaces/client_notifications.html' , locals())
 
 

@@ -4,8 +4,7 @@
 
 {% block navitem1 %}
     <a class="nav-link active" href="{% url 'spaces:client_profile' user.id %}">
-        <span data-feather="home"></span>{{user.username}}
-        Dashboard <span class="sr-only"></span>
+        <span data-feather="home"></span> ACCUEIL <span class="sr-only"></span>
     </a>
     {% if user.landlord.avatar %}
         <img width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
@@ -13,7 +12,7 @@
 {% endblock navitem1 %}
 
 {% block navitem2 %}
-    <a style="border: solid 1px red;" class="nav-link" href="{% url 'spaces:edit_client_profile' user.id %}">
+    <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:edit_client_profile' user.id %}">
         <span data-feather="user">(current)</span>
         Modifier profil
     </a>
@@ -26,94 +25,104 @@
         <p><strong>une erreur inhabituelle est survenue</strong></p>
     {% endif %}
 
-    <form method="post" action="{% url 'spaces:edit_client_profile' user.id %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group">
-            {{form.username.label}}
-            {{form.username}}
-            {% if no_username_msg %}
-            <p><strong>Pseudo non changé</strong></p>
-            {% elif yes_username_msg %}
-            <p><strong>Pseudo changé</strong></p>
-            {% endif %}
-        </div>
+    <div class="row" style="padding: 10px;">
 
-        <div class="form-group">
-            {{form.first_name.label}}
-            {{form.first_name}}
-            {% if no_first_name_msg %}
-            <p><strong>Prenom non changé</strong></p>
-            {% elif yes_first_name_msg %}
-            <p><strong>Prenom changé</strong></p>
-            {% endif %}
-        </div>
+        <div class="col-md-3"></div>
 
-        <div class="form-group">
-            {{form.last_name.label}}
-            {{form.last_name}}
-            {% if no_last_name_msg %}
-            <p><strong>Nom non changé</strong></p>
-            {% elif yes_last_name_msg %}
-            <p><strong>Nom changé</strong></p>
-            {% endif %}
-        </div>
-
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                {{form.contact.label}}
-                {{form.contact}}
-                {% if no_contact_msg %}
-                <p><strong>Contact non changé</strong></p>
-                {% elif yes_contact_msg %}
-                <p><strong>Contact changé</strong></p>
+        <div class="col-md-6">
+            <form style="padding: 10px;" class="card" method="post" action="{% url 'spaces:edit_client_profile' user.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{form.username.label}}
+                    {{form.username}}
+                    {% if no_username_msg %}
+                    <p><strong>Pseudo non changé</strong></p>
+                    {% elif yes_username_msg %}
+                    <p><strong>Pseudo changé</strong></p>
+                    {% endif %}
+                </div>
+        
+                <div class="form-group">
+                    {{form.first_name.label}}
+                    {{form.first_name}}
+                    {% if no_first_name_msg %}
+                    <p><strong>Prenom non changé</strong></p>
+                    {% elif yes_first_name_msg %}
+                    <p><strong>Prenom changé</strong></p>
+                    {% endif %}
+                </div>
+        
+                <div class="form-group">
+                    {{form.last_name.label}}
+                    {{form.last_name}}
+                    {% if no_last_name_msg %}
+                    <p><strong>Nom non changé</strong></p>
+                    {% elif yes_last_name_msg %}
+                    <p><strong>Nom changé</strong></p>
+                    {% endif %}
+                </div>
+        
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{form.contact.label}}
+                        {{form.contact}}
+                        {% if no_contact_msg %}
+                        <p><strong>Contact non changé</strong></p>
+                        {% elif yes_contact_msg %}
+                        <p><strong>Contact changé</strong></p>
+                        {% endif %}
+                    </div>
+        
+                    <div class="form-group col-md-6">
+                        {{form.email.label}}
+                        {{form.email}}
+                        {% if no_email_msg %}
+                        <p><strong>Email non changé</strong></p>
+                        {% elif yes_email_msg %}
+                        <p><strong>Email changé</strong></p>
+                        {% endif %}
+                    </div>
+                </div>
+        
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{form.password.label}}
+                        {{form.password}}
+                        {% if no_pass_msg %}
+                        <p><strong>Mot de passe non changé</strong></p>
+                        {% endif %}
+                    </div>
+        
+        
+                    <div class="form-group col-md-6">
+                        {{form.password_verification.label}}
+                        {{form.password_verification}}
+                        {% if error_pass_no_match %}
+                        <p><strong>Les mots de passes entrés ne correspondent pas.</strong></p>
+                        {% elif yes_pass_msg %}
+                        <p><strong>Mot de passe changé</strong></p>
+                        {% endif %}
+                    </div>
+                </div>
+        
+                <p>
+                    {{form.avatar.label}}
+                    {{form.avatar}}
+                    {% if avatar_added_err %}
+                <p><strong>Aucun avatar ajouté.</strong></p>
+                {% elif avatar_added %}
+                <p><strong>Avatar ajouté</strong></p>
                 {% endif %}
-            </div>
-
-            <div class="form-group col-md-6">
-                {{form.email.label}}
-                {{form.email}}
-                {% if no_email_msg %}
-                <p><strong>Email non changé</strong></p>
-                {% elif yes_email_msg %}
-                <p><strong>Email changé</strong></p>
+                </p>
+        
+                <input type="submit" value="Modifier" />
+                {% if user.client.user_id != None %}
+                <a href="{% url 'spaces:client_profile' user.id %}"> Retournez à votre profil</a>
                 {% endif %}
-            </div>
+            </form>
         </div>
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                {{form.password.label}}
-                {{form.password}}
-                {% if no_pass_msg %}
-                <p><strong>Mot de passe non changé</strong></p>
-                {% endif %}
-            </div>
-
-
-            <div class="form-group col-md-6">
-                {{form.password_verification.label}}
-                {{form.password_verification}}
-                {% if error_pass_no_match %}
-                <p><strong>Les mots de passes entrés ne correspondent pas.</strong></p>
-                {% elif yes_pass_msg %}
-                <p><strong>Mot de passe changé</strong></p>
-                {% endif %}
-            </div>
-        </div>
-
-        <p>
-            {{form.avatar.label}}
-            {{form.avatar}}
-            {% if avatar_added_err %}
-        <p><strong>Aucun avatar ajouté.</strong></p>
-        {% elif avatar_added %}
-        <p><strong>Avatar ajouté</strong></p>
-        {% endif %}
-        </p>
-
-        <input type="submit" value="Modifier" />
-        {% if user.client.user_id != None %}
-        <a href="{% url 'spaces:client_profile' user.id %}"> Retournez à votre profil</a>
-        {% endif %}
-    </form>
+        <div class="col-md-3"></div>
+    </div>
+    
 {% endblock %}
