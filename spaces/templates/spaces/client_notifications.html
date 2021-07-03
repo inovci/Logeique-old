@@ -14,7 +14,7 @@
 {% block navitem5 %}
     <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:client_notifications' user.id %}">
         <span data-feather="bar-chart-2">(current)</span>
-        Notifications
+        Notifications {{ houses|length }}
     </a>
 {% endblock navitem5 %}
 

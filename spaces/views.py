@@ -517,10 +517,6 @@ def see_clients(request , id):
 
     return render(request ,'spaces/landlord_clients.html' , locals())
 
-def testHouses(tab):
-    for index in tab:
-        print(index)
-        print(type(index))
 
 """
 def test(id, username=None, first_name=None, last_name=None, email=None, contact=None, password1=None, password2=None, ):
