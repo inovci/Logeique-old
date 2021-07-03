@@ -502,11 +502,8 @@ def clientNotifications(request, id):
                                     house_rent__lte=client.rent_proposal + client.rent_proposal * 0.1,
                                     house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1 ))
                                      #Meaning more or less 10 percent of the initial value
-    if houses != None:
-        for house in houses:
-            landlord = Landlord.objects.get(id=house.landlord.id)
-            landlords.append(landlord)
-        print(landlords)
+    if houses == None:
+        no_houses_error = True
     return render(request ,'spaces/client_notifications.html' , locals())
 
 
@@ -520,6 +517,10 @@ def see_clients(request , id):
 
     return render(request ,'spaces/landlord_clients.html' , locals())
 
+def testHouses(tab):
+    for index in tab:
+        print(index)
+        print(type(index))
 
 """
 def test(id, username=None, first_name=None, last_name=None, email=None, contact=None, password1=None, password2=None, ):

@@ -23,7 +23,7 @@
 {% block content %}
     <h1>Notifications</h1>
     <div>
-        {% for landlord in landlords %}
+        {% for house in houses %}
             <div style="padding: 5px;" class="col-xl-6 col-md-12">
                 <div class="card user-card-full">
                     <div class="row m-l-0 m-r-0">
@@ -31,8 +31,9 @@
                             <div class="text-white">
                                 <img src="https://img.icons8.com/bubbles/200/000000/user.png" class="img-radius" alt="User-Profile-Image">
                                 <div>
-                                    <h6 class="f-w-600">Hembo Tingor</h6>
-                                    <p>Web Designer</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                    <h6 class="f-w-600">{{house.landlord.user.first_name}}</h6>
+                                    <h6 class="f-w-600">{{house.landlord.user.last_name}}</h6>
+                                    <p>Un Propriétaire</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                 </div>
                             </div>
                         </div>
@@ -42,25 +43,25 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Email</p>
-                                        <h6 class="text-muted f-w-400">{{landlord.user.email}}</h6>
+                                        <h6 class="text-muted f-w-400">{{house.landlord.user.email}}</h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Phone</p>
-                                        <h6 class="text-muted f-w-400">{{landlord.contact}}</h6>
+                                        <h6 class="text-muted f-w-400">{{house.landlord.contact}}</h6>
                                     </div>
                                 </div>
-                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Maison disponible à {{house.house_township}}</h6>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Recent</p>
-                                        <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                                        <p class="m-b-10 f-w-600">Quartier</p>
+                                        <h6 class="text-muted f-w-400">{{house.house_area}}</h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Most Viewed</p>
                                         <h6 class="text-muted f-w-400">Dinoter husainm</h6>
                                     </div>
                                     <div class="col-sm-12 text-center">
-                                        <button type="button" class="btn btn-primary">Primary</button>
+                                        <button type="button" class="btn btn-primary">Négocier ?</button>
                                     </div>
                                 </div>
                             </div>
