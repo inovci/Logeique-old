@@ -486,7 +486,7 @@ def clientStatistics(request, id):
 @login_required()
 def landlordNotifications(request, id):
     landlord = Landlord.objects.get(user_id = id)
-    landlord_houses = landlord.houses 
+    landlord_houses = House.objects.filter(landlord = landlord) 
     if landlord_houses != None:
         for landlord_house in landlord_houses:
             clients = Client.objects.filter(Q(rent_proposal = landlord_house.house_rent,
