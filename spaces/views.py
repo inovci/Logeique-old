@@ -489,6 +489,7 @@ def landlordNotifications(request, id):
     
 @login_required()
 def clientNotifications(request, id):
+    landlords = []
     client = Client.objects.get(user_id=id)
     houses = House.objects.filter(Q(house_area__icontains=client.area_desire,
                                     house_township__icontains=client.township_desire,
@@ -496,12 +497,16 @@ def clientNotifications(request, id):
                                     house_rent=client.rent_proposal)|
                                 Q(house_area__icontains=client.area_desire,
                                     house_township__icontains=client.township_desire,
-                                    house_deposit__lte=client.deposit_proposal - client.deposit_proposal * 0.1,
+                                    house_deposit__lte=client.deposit_proposal + client.deposit_proposal * 0.1,
                                     house_deposit__gte=client.deposit_proposal - client.deposit_proposal * 0.1,
-                                    house_rent__lte=client.rent_proposal - client.rent_proposal * 0.1,
+                                    house_rent__lte=client.rent_proposal + client.rent_proposal * 0.1,
                                     house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1 ))
                                      #Meaning more or less 10 percent of the initial value
-    print(len(houses))
+    if houses != None:
+        for house in houses:
+            landlord = Landlord.objects.get(id=house.landlord.id)
+            landlords.append(landlord)
+        print(landlords)
     return render(request ,'spaces/client_notifications.html' , locals())
 
 

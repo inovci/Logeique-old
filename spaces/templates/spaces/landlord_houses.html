@@ -27,13 +27,13 @@
     <div class="row row-cols-1 row-cols-md-3">
         {% for house in houses %}
             <div class="col mb-4">
-                <div class="card bg-light mb-3" style="width: 25rem;padding: 5px;">
+                <div class="card bg-light mb-3" style="width: 25rem;height: 300px;padding: 5px;">
                     {% if house.house_image %}
-                        <img src="{{house.house_image.url}}" alt="image de maison">
+                        <img style="height: 200px;" src="{{house.house_image.url}}" alt="image de maison">
                     {% endif %}
                     <div class="card-body">
                         <p>
-                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" onclick="$('.collapse').collapse()" role="button" aria-expanded="false" aria-controls="collapseExample">
                                 Voir Les Informations de Cette maison
                             </a>
                         </p>
