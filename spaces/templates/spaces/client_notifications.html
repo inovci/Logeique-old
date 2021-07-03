@@ -46,19 +46,25 @@
                                         <h6 class="text-muted f-w-400">{{house.landlord.user.email}}</h6>
                                     </div>
                                     <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Phone</p>
+                                        <p class="m-b-10 f-w-600">Contact</p>
                                         <h6 class="text-muted f-w-400">{{house.landlord.contact}}</h6>
                                     </div>
                                 </div>
                                 <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Maison disponible à {{house.house_township}}</h6>
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <p class="m-b-10 f-w-600">Quartier</p>
                                         <h6 class="text-muted f-w-400">{{house.house_area}}</h6>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Most Viewed</p>
-                                        <h6 class="text-muted f-w-400">Dinoter husainm</h6>
+                                        <p class="m-b-10 f-w-600">Loyer</p>
+                                        <h6 class="text-muted f-w-400">{{house.house_rent}} FCFA</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Caution</p>
+                                        <h6 class="text-muted f-w-400">{{house.house_deposit}} FCFA</h6>
                                     </div>
                                     <div class="col-sm-12 text-center">
                                         <button type="button" class="btn btn-primary">Négocier ?</button>
