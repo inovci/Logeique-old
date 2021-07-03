@@ -21,52 +21,65 @@
 {% block h1 %}Vos notifications{% endblock h1 %}
 
 {% block content %}
-    <div>
-        <h1>Nous vous informerons si il y'a du nouveau</h1>
-    </div>
+    {% if not clients %}
+        <div>
+            <h1>Nous vous informerons si il y'a du nouveau</h1>
+        </div>
+    {% endif %}
 
-    <div style="padding: 5px;" class="col-xl-6 col-md-12">
-        <div class="card user-card-full">
-            <div class="row m-l-0 m-r-0">
-                <div class="col-sm-4 bg-c-lite-green">
-                    <div class="text-white">
-                        <img src="https://img.icons8.com/bubbles/200/000000/user.png" class="img-radius" alt="User-Profile-Image">
-                        <div>
-                            <h6 class="f-w-600">Hembo Tingor</h6>
-                            <p>Web Designer</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <div class="card-block">
-                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Email</p>
-                                <h6 class="text-muted f-w-400">rntng@gmail.com</h6>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Phone</p>
-                                <h6 class="text-muted f-w-400">98979989898</h6>
+    <div class="row" style="padding: 20px;">
+        {% for client in clients %}
+            <div style="padding: 5px;" class="col-xl-6 col-md-6">
+                <div class="card user-card-full" style="width: 100%;">
+                    <div class="row m-l-0 m-r-0">
+                        <div class="col-sm-4 bg-c-lite-green">
+                            <div class="text-white">
+                                <img src="https://img.icons8.com/bubbles/200/000000/user.png" class="img-radius" alt="User-Profile-Image">
+                                <div>
+                                    <h6 class="f-w-600">{{client.user.first_name}}</h6>
+                                    <h6 class="f-w-600">{{client.user.last_name}}</h6>
+                                    <p>Un Client</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                </div>
                             </div>
                         </div>
-                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Recent</p>
-                                <h6 class="text-muted f-w-400">Sam Disuja</h6>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Most Viewed</p>
-                                <h6 class="text-muted f-w-400">Dinoter husainm</h6>
-                            </div>
-                            <div class="col-sm-12 text-center">
-                                <button type="button" class="btn btn-primary">Primary</button>
+                        <div class="col-sm-8">
+                            <div class="card-block">
+                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Adresse du Client</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Email</p>
+                                        <h6 class="text-muted f-w-400">{{client.user.email}}</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Contact</p>
+                                        <h6 class="text-muted f-w-400">{{client.contact}}</h6>
+                                    </div>
+                                </div>
+                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Veut la maison à {{client.township_desire}}</h6>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p class="m-b-10 f-w-600">Quartier</p>
+                                        <h6 class="text-muted f-w-400">{{client.area_desire}}</h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Loyer</p>
+                                        <h6 class="text-muted f-w-400">{{client.rent_proposal}} FCFA</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Caution</p>
+                                        <h6 class="text-muted f-w-400">{{client.deposit_proposal}} FCFA</h6>
+                                    </div>
+                                    <div class="col-sm-12 text-center">
+                                        <button type="button" class="btn btn-primary">Négocier ?</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}

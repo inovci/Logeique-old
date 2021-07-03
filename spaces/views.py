@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from .models import Client, Landlord, House, Deal
 from django.shortcuts import get_object_or_404, Http404
 from django.contrib.auth.decorators import login_required
-from spaces.models import Client, Landlord
 from django.db.models import Q
 import re
 import os
@@ -486,19 +485,21 @@ def clientStatistics(request, id):
 @login_required()
 def landlordNotifications(request, id):
     landlord = Landlord.objects.get(user_id = id)
-    landlord_houses = House.objects.filter(landlord = landlord) 
+    landlord_houses = House.objects.filter(landlord = landlord)
+    clients = [] 
     if landlord_houses != None:
         for landlord_house in landlord_houses:
-            clients = Client.objects.filter(Q(rent_proposal = landlord_house.house_rent,
+            client = Client.objects.get(Q(rent_proposal = landlord_house.house_rent,
                                             deposit_proposal=landlord_house.house_deposit,
                                             area_desire__icontains=landlord_house.house_area,
-                                            township_desire__icontains=landlord_house.house_township) |
+                                            township_desire__icontains=landlord_house.house_township)|
                                             Q(rent_proposal__lte=landlord_house.house_rent + landlord_house.house_rent * 0.1,
                                             rent_proposal__gte=landlord_house.house_rent - landlord_house.house_rent * 0.1,
                                             deposit_proposal__lte=landlord_house.house_deposit + landlord_house.house_deposit * 0.1,
                                             deposit_proposal__gte=landlord_house.house_deposit - landlord_house.house_deposit * 0.1,
                                             area_desire__icontains=landlord_house.house_area,
-                                            township_desire__icontains=landlord_house.house_township)) 
+                                            township_desire__icontains=landlord_house.house_township))
+            clients.append(client) 
     return render(request, 'spaces/landlord_notifications.html', locals())
     
 @login_required()
