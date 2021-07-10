@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from spaces.models import Client, Landlord
 from django.db.models import Q
-
+ 
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
@@ -19,6 +19,7 @@ def room(request, room_id , user_id):
     })
 
 def checkview(request, user1_id , user2_id):
+
     try:
         room = Room.objects.get(Q(user1=user1_id, user2=user2_id)|
                                 Q(user1 = user2_id , user2 = user1_id))
@@ -27,9 +28,10 @@ def checkview(request, user1_id , user2_id):
 
     if room != None:
         return render(request , 'chat/discuss.html' , locals())
-    else:
-        
-        new_room = Room.objects.create(user1 = user1_id , user2=user2_id  , code = f"{user1_id}-{user2_id}code")
+    else: 
+        user1 = get_object_or_404(User, id=user1_id)
+        user2 = get_object_or_404(User, id=user2_id)
+        new_room = Room.objects.create(user1 = user1, user2 = user2)
         new_room.save()
         return render(request , 'chat/discuss.html' , locals())
 
