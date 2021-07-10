@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('spaces.urls', namespace='spaces')),
     path('search/', include('search.urls', namespace='search')),
+    path('chat/', include('chat.urls', namespace='chat')),
     #path('', include('pwa.urls'))
 ]
 

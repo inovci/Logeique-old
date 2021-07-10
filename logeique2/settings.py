@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'spaces',
     'search',
     'chat',
-    
 ]
 
 MIDDLEWARE = [
