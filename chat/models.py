@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Room(models.Model):
-    user1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user1_rooms")
-    user2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user2_rooms")
+    user1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user1_rooms" , default = 1000000)
+    user2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user2_rooms" , default = 1000000)
     code = models.CharField(unique = True , max_length = 250 )
 
 class Message(models.Model):
