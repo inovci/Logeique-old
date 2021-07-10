@@ -1,12 +1,11 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
-from spaces.models import Client , Landlord
 
 # Create your models here.
 class Room(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="client_rooms")
-    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE, related_name="landlord_rooms")
+    user1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user1_rooms")
+    user2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user2_rooms")
     code = models.CharField(unique = True , max_length = 250 )
 
 class Message(models.Model):
