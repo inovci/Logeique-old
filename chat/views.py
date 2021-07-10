@@ -1,3 +1,47 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect , get_object_or_404
+from chat.models import Room, Message
+from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.models import User
+from spaces.models import Client, Landlord
+from django.db.models import Q
 
 # Create your views here.
+def home(request):
+    return render(request, 'home.html')
+
+def room(request, room_id , user_id):
+    user = User.objects.get(id = user_id)
+    room_details = Room.objects.get(id=room_id)
+    return render(request, 'discuss.html', {
+        'username': user.username,
+        #'room': room,
+        'room_details': room_details
+    })
+
+def checkview(request, user1_id , user2_id):
+    try:
+        room = Room.objects.get(Q(user1=user1_id, user2=user2_id)|
+                                Q(user1 = user2_id , user2 = user1_id))
+    except:
+        room = None
+
+    if room != None:
+        return render(request , 'chat/discuss.html' , locals())
+    else:
+        
+        new_room = Room.objects.create(user1 = user1_id , user2=user2_id  , code = f"{user1_id}-{user2_id}code")
+        new_room.save()
+        return render(request , 'chat/discuss.html' , locals())
+
+def send(request , user_id , room_id):
+    message = request.POST['message']
+    user = User.objects.get(id=user_id)
+    room = Room.objects.get(id = room_id)
+    new_message = Message.objects.create(value=message, user=user, room=room)
+    new_message.save()
+    return HttpResponse('Message sent successfully')
+
+def getMessages(request, room_id):
+    room_details = Room.objects.get(id=room_id)
+    messages = Message.objects.filter(room=room_details)
+    return JsonResponse({"messages":list(messages.values())})
