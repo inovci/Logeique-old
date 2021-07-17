@@ -67,7 +67,10 @@
                                         <h6 class="text-muted f-w-400">{{house.house_deposit}} FCFA</h6>
                                     </div>
                                     <div class="col-sm-12 text-center">
-                                        <button type="button" class="btn btn-primary">Négocier ?</button>
+                                        <form method="POST" action="{% url 'chat:checkview' house.landlord.id client.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-primary">Négocier ?</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
