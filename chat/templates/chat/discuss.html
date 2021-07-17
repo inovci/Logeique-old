@@ -1,72 +1,63 @@
-{% extends "spaces/landlord_notifications.html" %}
+{% include "chat/html_css/discuss_css.html" %}
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-{% block title %}Chat{% endblock %}
+<div id="display">
 
-{% block h1 %}Espace Chat{% endblock h1 %}
+<!-- <div class="container darker">
+<b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
+<span class="time-left">20th, April 2021</span>
+</div> -->RENDER !!!
 
-{% block content %}
-  {% include "chat/html_css/discuss_css.html" %}
+</div>
 
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-
-  <div id="display">
-
-  <!-- <div class="container darker">
-    <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
-    <span class="time-left">20th, April 2021</span>
-  </div> -->RENDER !!!
-
-  </div>
-
-  <script>
+<script>
     $(document).ready(function(){
-      setInterval(function(){
+        setInterval(function(){
         $.ajax({
-          type: 'GET',
-          url : "user/getMessages/{{room}}/",
-          success: function(response){
+            type: 'GET',
+            url : "user/getMessages/{{room}}/",
+            success: function(response){
             console.log(response);
             $("#display").empty();
             for (var key in response.messages)
             {
-              var temp="<div class='container darker'><b>"+response.messages[key].user+"</b><p>"+response.messages[key].value+"</p><span class='time-left'>"+response.messages[key].date+"</span></div>";
-              $("#display").append(temp);
+                var temp="<div class='container darker'><b>"+response.messages[key].user+"</b><p>"+response.messages[key].value+"</p><span class='time-left'>"+response.messages[key].date+"</span></div>";
+                $("#display").append(temp);
             }
-          },
-          error: function(response){
+            },
+            error: function(response){
             
-          }
+            }
         });
-      },1000);
+        },1000);
     })
-  </script>
+</script>
 
-  <div>
+<div>
     <form id="post-form">
-      {% csrf_token %}
-      <input type="text" name="message" id="message"/>
-      <input type="submit" value="Send"/>
+        {% csrf_token %}
+        <input type="text" name="message" id="message"/>
+        <input type="submit" value="Envoyez"/>
     </form>
-  </div>
+</div>
 
-  <script type="text/javascript">
+<script type="text/javascript">
     $(document).on('submit','#post-form',function(e){
-      e.preventDefault();
+        e.preventDefault();
 
-      $.ajax({
+        $.ajax({
         type:'POST',
         url:'/send',
         data:{
             username:$('#username').val(),
             room_id:$('#room_id').val(),
             message:$('#message').val(),
-          csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
         },
         success: function(data){
-          //alert(data)
+            //alert(data)
         }
-      });
-      document.getElementById('message').value = ''
+        });
+        document.getElementById('message').value = ''
     });
-  </script>
-{% endblock %}
+</script>

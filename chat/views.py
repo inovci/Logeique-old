@@ -18,7 +18,7 @@ def room(request, room_id , user_id):
         'room_details': room_details
     })
 
-def checkview(request, user1_id , user2_id):
+def landlordCheckview(request, user1_id , user2_id):
 
     try:
         room = Room.objects.get(Q(user1=user1_id, user2=user2_id)|
@@ -27,13 +27,32 @@ def checkview(request, user1_id , user2_id):
         room = None
 
     if room != None:
-        return render(request , 'chat/discuss.html' , locals())
+        return render(request , 'chat/discuss_with_client.html' , locals())
     else: 
         user1 = get_object_or_404(User, id=user1_id)
         user2 = get_object_or_404(User, id=user2_id)
         new_room = Room.objects.create(user1 = user1, user2 = user2)
         new_room.save()
-        return render(request , 'chat/discuss.html' , locals())
+        return render(request , 'chat/discuss_with_client.html' , locals())
+
+
+def clientCheckview(request, user1_id , user2_id):
+
+    try:
+        room = Room.objects.get(Q(user1=user1_id, user2=user2_id)|
+                                Q(user1 = user2_id , user2 = user1_id))
+    except:
+        room = None
+
+    if room != None:
+        return render(request , 'chat/discuss_with_landlord.html' , locals())
+    else: 
+        user1 = get_object_or_404(User, id=user1_id)
+        user2 = get_object_or_404(User, id=user2_id)
+        new_room = Room.objects.create(user1 = user1, user2 = user2)
+        new_room.save()
+        return render(request , 'chat/discuss_with_landlord.html' , locals())
+
 
 def send(request , user_id , room_id):
     message = request.POST['message']

@@ -503,7 +503,6 @@ def landlordNotifications(request, id):
     
 @login_required()
 def clientNotifications(request, id):
-    landlords = []
     client = Client.objects.get(user_id=id)
     houses = House.objects.filter(Q(house_area__icontains=client.area_desire,
                                     house_township__icontains=client.township_desire,
