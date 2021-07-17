@@ -55,16 +55,25 @@ def clientCheckview(request, user1_id , user2_id):
 
 
 def send(request, user_id, room_id):
-    print("something")
     message = request.POST['message']
     print(message)
     user = User.objects.get(id=user_id)
-    room = Room.objects.get(id = room_id)
-    new_message = Message.objects.create(value=message, user=user, room=room)
-    new_message.save()
-    return HttpResponse('Message sent successfully')
+    try:
+        client_user = get_object_or_404(Client, user_id=user.id)
+        if client_user:
+            room = Room.objects.get(id = room_id)
+            new_message = Message.objects.create(value=message, user=user, room=room)
+            new_message.save()
+            return render(request, 'chat/discuss_with_landlord.html', locals())
+    except:
+        landlord_user = get_object_or_404(Landlord, user_id=user.id)
+        if landlord_user:
+            room = Room.objects.get(id = room_id)
+            new_message = Message.objects.create(value=message, user=user, room=room)
+            new_message.save()
+            return render(request, 'chat/discuss_with_client.html', locals()) 
 
-def getMessages(request, room_id):
+def receive(request, room_id):
     room_details = Room.objects.get(id=room_id)
     messages = Message.objects.filter(room=room_details)
     return JsonResponse({"messages":list(messages.values())})
