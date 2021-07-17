@@ -446,7 +446,7 @@ def client_proposal(request, id):
             house_rooms_number = form.cleaned_data['house_rooms_number']
 
             client = Client.objects.get(user_id=id)
-            client.area_dire = house_area
+            client.area_desire = house_area
             client.township_desire = house_township
             client.rent_proposal = house_rent
             client.deposit_proposal = house_deposit
