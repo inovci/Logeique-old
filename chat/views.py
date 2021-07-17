@@ -35,8 +35,10 @@ def checkview(request, user1_id , user2_id):
         new_room.save()
         return render(request , 'chat/discuss.html' , locals())
 
-def send(request , user_id , room_id):
+def send(request, user_id, room_id):
+    print("something")
     message = request.POST['message']
+    print(message)
     user = User.objects.get(id=user_id)
     room = Room.objects.get(id = room_id)
     new_message = Message.objects.create(value=message, user=user, room=room)
