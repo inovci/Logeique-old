@@ -6,7 +6,7 @@
     <a class="nav-link active" href="{% url 'spaces:client_profile' user.id %}">
         <span data-feather="home"></span> ACCUEIL <span class="sr-only"></span>
     </a>
-    {% if user.landlord.avatar %}
+    {% if user.client.avatar %}
         <img width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
     {% endif %}
 {% endblock navitem1 %}
@@ -67,7 +67,7 @@
                                         <h6 class="text-muted f-w-400">{{house.house_deposit}} FCFA</h6>
                                     </div>
                                     <div class="col-sm-12 text-center">
-                                        <form method="POST" action="{% url 'chat:checkview' house.landlord.id client.id %}">
+                                        <form method="POST" action="{% url 'chat:clientCheckview' client.id house.landlord.id %}">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-primary">Négocier ?</button>
                                         </form>
