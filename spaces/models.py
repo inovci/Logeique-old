@@ -15,8 +15,8 @@ class Client(models.Model):
     township_desire = models.CharField(max_length=50 ,null=True , default = None )
     avatar = models.ImageField(null=True, blank=True, upload_to="img/avatars/")
 
-    def __str__(self):
-        return f'{self.user}'
+    """def __str__(self):
+        return f'{self.user}'"""
 
     class Meta():
         ordering = ['user', 'rent_proposal', 'deposit_proposal', 'contact']
@@ -28,8 +28,8 @@ class Landlord(models.Model):
     avatar = models.ImageField(null=True, blank=True, upload_to="img/avatars/")
     clients = models.ManyToManyField(Client, related_name="landlords", through="Deal")
 
-    def __str__(self):
-        return f'{self.user}'
+    """def __str__(self):
+        return f'{self.user}'"""
 
     class Meta():
         ordering = ['user', 'contact']
@@ -48,8 +48,8 @@ class House(models.Model):
     house_creation_day = models.DateTimeField(default=datetime.now)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE, related_name="houses")
 
-    def __str__(self):
-        return f'{self.house_township} - {self.house_area} - {self.house_kind} - {self.landlord}'
+    """def __str__(self):
+        return f'{self.house_township} - {self.house_area} - {self.house_kind} - {self.landlord}'"""
 
     class Meta():
         ordering = [
