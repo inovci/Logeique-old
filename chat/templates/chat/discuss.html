@@ -4,9 +4,10 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-
 {% block display %}
-<div id="display">
+Discussion entre {{ room.user1.username }} et {{ room.user2.username }}
+
+<div id="chat-log" class="chat-board">
 
   <!-- <div class="container darker">
     <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
@@ -16,55 +17,70 @@
 </div>
 {% endblock display %}
 
-<script>
-</script>
+<<<<<<< HEAD <script>
+  </script>
 
-<div>
-  {% block form %}
-  <form id="post-form">
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
-  </form>
-  {% endblock form %}
-</div>
+  <div>
+    {% block form %}
+    <form id="post-form">
+      <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+      <input id="chat-message-input" type="text" size="100"><br>
+      <input id="chat-message-submit" type="button" value="Send">
+      {{ room_name|json_script:"room-name" }}
+      =======
+      <div>
+        {% block form %}
+        <form id="post-form" method="POST">
+          {% csrf_token %}
+          <input type="text" name="message" id="chat-message-input" />
+          <input type="button" value="Send" id="chat-message-submit" class="btn btn-primary" />
+          >>>>>>> fa0c49164c99f73c840e4ce076d5b06ebe2f654e
+        </form>
+        {% endblock form %}
+      </div>
 
-<script type="text/javascript">
-  const roomName = JSON.parse(document.getElementById('room-name').textContent);
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
 
-  const chatSocket = new WebSocket(
-    'ws://'
-    + window.location.host
-    + '/ws/chat/'
-    + roomName
-    + '/'
-  );
+      <script type="text/javascript">
+        console.log(window.location);
+        var loc = window.location
+        var wsStart = 'ws://'
+        if (loc.protocol == 'https:') {
+          wsStart = 'wss://'
+        }
 
-  chatSocket.onmessage = function (e) {
-    const data = JSON.parse(e.data);
-    document.querySelector('#chat-log').value += (data.message + '\n');
-  };
+        var endpoint = wsStart + loc.host + loc.pathname
+        console.log(endpoint)
 
-  chatSocket.onclose = function (e) {
-    console.error('Chat socket closed unexpectedly');
-  };
+        var socket = new WebSocket(endpoint)
 
-  document.querySelector('#chat-message-input').focus();
-  document.querySelector('#chat-message-input').onkeyup = function (e) {
-    if (e.keyCode === 13) {  // enter, return
-      document.querySelector('#chat-message-submit').click();
-    }
-  };
+        socket.onmessage = function (e) {
+          var chatDataMsg = JSON.parse(e.data)
+          chatHolder.append("<li>" + chatDataMsg.message + " via " + chatDataMsg.username + "</li>")
+        }
 
-  document.querySelector('#chat-message-submit').onclick = function (e) {
-    const messageInputDom = document.querySelector('#chat-message-input');
-    const message = messageInputDom.value;
-    chatSocket.send(JSON.stringify({
-      'message': message
-    }));
-    messageInputDom.value = '';
-  };
-</script>
+        socket.onopen = function (e) {
+          console.log("Open: ", e)
+          fromData.submit(function (event) {
+            event.preventDefault()
+            var msgText = msgInput.val()
+            var finalData = {
+              'message': msgText
+            }
+            socket.send(JSON.stringify(finalData))
+            fromData[0].reset()
+          })
+        }
 
-{% endblock %}
+        socket.onerror = function (e) {
+          console.log("Error: ", e)
+        }
+
+        socket.onclose = function (e) {
+          console.log("Close: ", e)
+        }
+
+      </script>
+
+      {% endblock %}
