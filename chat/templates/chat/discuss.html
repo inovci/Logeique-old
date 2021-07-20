@@ -4,9 +4,10 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-
 {% block display %}
-<div id="display" class="chat-board">
+Discussion entre {{ room.user1.username }} et {{ room.user2.username }}
+
+<div id="chat-log" class="chat-board">
 
   <!-- <div class="container darker">
     <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
@@ -18,18 +19,55 @@
 
 <div>
   {% block form %}
-  <form id="post-form" method="POST" action="{% url 'chat:send' user.id room.id %}">
+  <form id="post-form" method="POST">
     {% csrf_token %}
-    <input type="text" name="message" id="message" />
-    <input type="submit" value="Send" />
+    <input type="text" name="message" id="chat-message-input" />
+    <input type="button" value="Send" id="chat-message-submit" class="btn btn-primary" />
   </form>
   {% endblock form %}
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
+
 <script type="text/javascript">
-  document.getElementById("#post-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-  }, false);
+  console.log(window.location);
+  var loc = window.location
+  var wsStart = 'ws://'
+  if (loc.protocol == 'https:') {
+    wsStart = 'wss://'
+  }
+
+  var endpoint = wsStart + loc.host + loc.pathname
+  console.log(endpoint)
+
+  var socket = new WebSocket(endpoint)
+
+  socket.onmessage = function(e) {
+    var chatDataMsg = JSON.parse(e.data)
+    chatHolder.append("<li>" + chatDataMsg.message + " via " + chatDataMsg.username + "</li>")
+  }
+
+  socket.onopen = function(e) {
+    console.log("Open: ", e)
+    fromData.submit(function(event){
+      event.preventDefault()
+      var msgText = msgInput.val()
+      var finalData  = {
+        'message': msgText
+      }
+      socket.send(JSON.stringify(finalData))
+      fromData[0].reset()
+    })
+  }
+
+  socket.onerror = function(e) {
+    console.log("Error: ", e)
+  }
+
+  socket.onclose = function(e) {
+    console.log("Close: ", e)
+  }
+
 </script>
 
 {% endblock %}

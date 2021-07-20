@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Room(models.Model):
     user1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user1_rooms")
     user2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user2_rooms")
-    #code = models.CharField(unique = True , max_length = 250 )
+    #timestamp    = models.DateTimeField(auto_now_add=True)
 
 class Message(models.Model):
     value = models.TextField(max_length=100000, blank=True)

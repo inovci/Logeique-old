@@ -17,37 +17,41 @@ def room(request, room_id , user_id):
         'room_details': room_details
     })
 
-def landlordCheckview(request, user1_id , user2_id):
+def landlordCheckview(request, user1 , user2):
+    user1 = get_object_or_404(User, username=user1)
+    user2 = get_object_or_404(User, username=user2)
 
     try:
-        room = Room.objects.get(Q(user1=user1_id, user2=user2_id)|
-                                Q(user1 = user2_id , user2 = user1_id))
+        room = Room.objects.get(Q(user1=user1, user2=user2)|
+                                Q(user1 = user2, user2 = user1))
     except:
         room = None
 
     if room != None:
         return render(request , 'chat/discuss_with_client.html' , locals())
-    else: 
-        user1 = get_object_or_404(User, id=user1_id)
-        user2 = get_object_or_404(User, id=user2_id)
+    else:
+        user1 = get_object_or_404(User, username=user1)
+        user2 = get_object_or_404(User, username=user2)
         new_room = Room.objects.create(user1 = user1, user2 = user2)
         new_room.save()
         return render(request , 'chat/discuss_with_client.html' , locals())
 
 
-def clientCheckview(request, user1_id , user2_id):
+def clientCheckview(request, user1 , user2):
+    user1 = get_object_or_404(User, username=user1)
+    user2 = get_object_or_404(User, username=user2)
 
     try:
-        room = Room.objects.get(Q(user1=user1_id, user2=user2_id)|
-                                Q(user1 = user2_id , user2 = user1_id))
+        room = Room.objects.get(Q(user1=user1, user2=user2)|
+                                Q(user1 = user2, user2 = user1))
     except:
         room = None
 
     if room != None:
         return render(request , 'chat/discuss_with_landlord.html' , locals())
     else: 
-        user1 = get_object_or_404(User, id=user1_id)
-        user2 = get_object_or_404(User, id=user2_id)
+        user1 = get_object_or_404(User, username=user1)
+        user2 = get_object_or_404(User, username=user2)
         new_room = Room.objects.create(user1 = user1, user2 = user2)
         new_room.save()
         return render(request , 'chat/discuss_with_landlord.html' , locals())
