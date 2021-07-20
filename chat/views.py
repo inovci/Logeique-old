@@ -8,6 +8,15 @@ from django.db.models import Q
 def home(request):
     return render(request, 'home.html')
 
+def room(request, room_name):
+    return render(request, 'chat/room.html', {
+        'room_name': room_name
+    })
+
+
+
+"""
+
 def room(request, room_id , user_id):
     user = User.objects.get(id = user_id)
     room_details = Room.objects.get(id=room_id)
@@ -16,6 +25,7 @@ def room(request, room_id , user_id):
         #'room': room,
         'room_details': room_details
     })
+"""
 
 def landlordCheckview(request, user1_id , user2_id):
 
@@ -52,7 +62,7 @@ def clientCheckview(request, user1_id , user2_id):
         new_room.save()
         return render(request , 'chat/discuss_with_landlord.html' , locals())
 
-
+"""
 def send(request, user_id, room_id):
 
     message = request.POST['message']
@@ -77,3 +87,4 @@ def receive(request, room_id):
     room_details = Room.objects.get(id=room_id)
     messages = Message.objects.filter(room=room_details)
     return JsonResponse({"messages":list(messages.values())})
+"""
