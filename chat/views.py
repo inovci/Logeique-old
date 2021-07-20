@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect , get_object_or_404
 from chat.models import Room, Message
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
-from spaces.models import Client, Landlord
 from django.db.models import Q
  
 # Create your views here.
@@ -55,6 +54,7 @@ def clientCheckview(request, user1_id , user2_id):
 
 
 def send(request , user_id , room_id):
+    print("SENDER")
     message = request.POST['message']
     user = User.objects.get(id=user_id)
     room = Room.objects.get(id = room_id)
