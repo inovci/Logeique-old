@@ -6,7 +6,7 @@
 
 
 {% block display %}
-<div id="display">
+<div id="display" class="chat-board">
 
   <!-- <div class="container darker">
     <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
@@ -15,28 +15,6 @@
 
 </div>
 {% endblock display %}
-
-<script>
-  $(document).ready(function () {
-    setInterval(function () {
-      $.ajax({
-        type: 'GET',
-        url: "/chat/receive/{{room}}/",
-        success: function (response) {
-          console.log(response);
-          $("#display").empty();
-          for (var key in response.messages) {
-            var temp = "<div class='container darker'><b> <p>" + response.messages[key].value + "</p><span class='time-left'>" + response.messages[key].date + "</span></div>";
-            $("#display").append(temp);
-          }
-        },
-        error: function (response) {
-
-        }
-      });
-    }, 1000);
-  })
-</script>
 
 <div>
   {% block form %}
