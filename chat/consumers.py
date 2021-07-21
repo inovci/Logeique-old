@@ -13,11 +13,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def websocket_connect(self, event):
         print("Connected !!!", event)
 
-        user1 = self.scope['user']
+        user = self.scope['user']
         room = self.scope['url_route']['kwargs']
-        print(user1, room)
-        """
-        room_obj = await self.get_room(user1, user2)
+        room_id = room['room_id']
+
+        room_obj = await self.get_room(room_id)
         print(room_obj)
 
         self.room_obj = room_obj
@@ -29,7 +29,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             chat_room,
             self.channel_name
         )
-        """
+
         await self.accept()
 
     async def websocket_receive(self, text_data):
@@ -76,9 +76,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # My own methods
     @database_sync_to_async
-    def get_room(self, user, other_user):
-        other_user = User.objects.get(username=other_user)
-        return get_object_or_404(Room, user1=user, user2=other_user)
+    def get_room(self, room_id):
+        return get_object_or_404(Room, id=room_id)
 
     @database_sync_to_async
     def creat_chat_message(self, user, msg):

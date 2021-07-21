@@ -9,9 +9,8 @@ def home(request):
     return render(request, 'home.html')
 
 def room(request, room_id):
-    print(room_id)
     room = Room.objects.get(id=room_id)
-    print(room)
+    messages = Message.objects.filter(room=room)
     return render(request, 'chat/room.html', locals())
 
 

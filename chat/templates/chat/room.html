@@ -14,7 +14,17 @@ Discussion dans {{ room }}
   <!-- <div class="container darker">
     <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
     <span class="time-left">20th, April 2021</span>
-  </div> -->RENDER !!!
+  </div> -->
+  <div style="overflow-y: scroll;overflow-x: hidden;max-height: 500px;">
+    {% for message in messages %}
+      <div class="container darker">
+        <li>
+          <p>{{message.value}}</p>
+          <span class="time-left">{{message.date}}</span>
+        </li> 
+      </div>
+    {% endfor %}
+  </div>
 
 </div>
 {% endblock display %}
