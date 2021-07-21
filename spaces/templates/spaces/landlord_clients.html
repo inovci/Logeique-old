@@ -10,7 +10,8 @@
 {% endblock navitem1 %}
 
 {% block navitem5 %}
-<a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:landlord_clients' user.id %}">
+<a style="border-radius: 5px;" class="btn-outline-secondary nav-link active"
+    href="{% url 'spaces:landlord_clients' user.id %}">
     <span data-feather="users">(current)</span>
     Clients
 </a>
@@ -18,71 +19,86 @@
 {% block h1 %}Consultations de clients{% endblock h1 %}
 
 {% block content %}
-    <div>
-        {% if no_client_err %}
-            <p>Vous n'avez aucun client pour l'instant</p>
-            <div style="padding: 5px;" class="col-xl-6 col-md-12">
-                <div class="card user-card-full">
-                    <div class="row m-l-0 m-r-0">
-                        <div class="col-sm-4 bg-c-lite-green">
-                            <div class="text-white">
-                                <img src="https://img.icons8.com/bubbles/200/000000/user.png" class="img-radius" alt="User-Profile-Image">
-                                <div>
-                                    <h6 class="f-w-600">Hembo Tingor</h6>
-                                    <p>Web Designer</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
-                                </div>
+<div>
+    {% if no_client_err %}
+    <p>Vous n'avez aucun client pour l'instant</p>
+    <p>Ici est la page ou seront affichés tous les clients qui résident dans vos maisons actuelles</p>
+    <p>Si vous n'avez aucun client affiché c'est parceque vous n'avez pas encore négocié avec un client sur la
+        plateforme</p>
+    <p>Voici comment s'y prender en quelques etapes
+    <ol>
+        <li>
+            allez à notifications
+        </li>
+        <li>
+            Voir si vous avez des clients
+            si oui:
+            <ol>
+                <li>
+                    appuyez sur le bouton négocier
+                </li>
+                <li>
+                    appuyez sur le bouton discuter
+                </li>
+                <li>
+                    Envoyez des messages au client
+                </li>
+                <li>
+                    Si vous vous etes entendus appuyez sur le bouton succes
+                </li>
+            </ol>
+            si non:
+            Attendez vos notifications , ajoutez d'autres maisons ou rechercher des potentiels intéressés de vos types
+            de maisons
+        </li>
+    </ol>
+    </p>
+    {% else %}
+    <div style="padding: 5px;" class="col-xl-6 col-md-12">
+        <div class="card user-card-full">
+            <div class="row m-l-0 m-r-0">
+                <div class="col-sm-4 bg-c-lite-green">
+                    <div class="text-white">
+                        <img src="https://img.icons8.com/bubbles/200/000000/user.png" class="img-radius"
+                            alt="User-Profile-Image">
+                        <div>
+                            <h6 class="f-w-600">Hembo Tingor</h6>
+                            <p>Web Designer</p> <i
+                                class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="card-block">
+                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Email</p>
+                                <h6 class="text-muted f-w-400">rntng@gmail.com</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Phone</p>
+                                <h6 class="text-muted f-w-400">98979989898</h6>
                             </div>
                         </div>
-                        <div class="col-sm-8">
-                            <div class="card-block">
-                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Email</p>
-                                        <h6 class="text-muted f-w-400">rntng@gmail.com</h6>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Phone</p>
-                                        <h6 class="text-muted f-w-400">98979989898</h6>
-                                    </div>
-                                </div>
-                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Recent</p>
-                                        <h6 class="text-muted f-w-400">Sam Disuja</h6>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Most Viewed</p>
-                                        <h6 class="text-muted f-w-400">Dinoter husainm</h6>
-                                    </div>
-                                    <div class="col-sm-12 text-center">
-                                        <button type="button" class="btn btn-primary">Primary</button>
-                                    </div>
-                                </div>
+                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Recent</p>
+                                <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Most Viewed</p>
+                                <h6 class="text-muted f-w-400">Dinoter husainm</h6>
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <button type="button" class="btn btn-primary">Primary</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         {% endif %}
-
-        {% for client in clients %}
-            {% if client.house_image %}
-            <div>
-                <img src="{{house.house_image.url}}" alt="image de maison">
-                <p>Commune: {{client.house_township}} {{area}}</p>
-                <p>Loyer: {{client.house_rent}} FCFA</p>
-                <p>Caution: {{client.house_deposit}} FCFA</p>
-                <p>Type: {{client.house_kind}}</p>
-                <p>{{client.house_rooms_number}} pieces</p>
-                {% if house.house_available %}
-                <P>Disponible</P>
-                {% else %}
-                <p>Indisponible</p>
-                {% endif %}
-            </div>
-            {% endif %}
-        {% endfor %}
     </div>
-{% endblock %}
+    {% endblock %}
