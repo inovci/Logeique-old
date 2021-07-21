@@ -7,8 +7,7 @@
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
 {% block display %}
-Discussion entre {{ room.user1.username }} et {{ room.user2.username }}
-<input type='hidden' id="myRoomId" value="{{room.id}}" />
+Discussion dans {{ room }}
 
 <div id='chat-items' class="chat-board">
 

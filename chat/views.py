@@ -8,35 +8,43 @@ from django.db.models import Q
 def home(request):
     return render(request, 'home.html')
 
-def room(request, room_id , user_id):
-    user = User.objects.get(id = user_id)
-    room_details = Room.objects.get(id=room_id)
-    return render(request, 'discuss.html', {
-        'username': user.username,
-        #'room': room,
-        'room_details': room_details
-    })
+def room(request, room_id):
+    print(room_id)
+    room = Room.objects.get(id=room_id)
+    print(room)
+    return render(request, 'chat/room.html', locals())
 
-def landlordCheckview(request, user1 , user2):
-    user1 = get_object_or_404(User, username=user1)
-    user2 = get_object_or_404(User, username=user2)
+
+def checkview(request, other_user):
+    other_user = get_object_or_404(User, username=other_user)
 
     try:
-        room = Room.objects.get(Q(user1=user1, user2=user2)|
-                                Q(user1 = user2, user2 = user1))
+        room = Room.objects.get(Q(user1=request.user, user2=other_user)|
+                                Q(user1 = other_user, user2 = request.user))
     except:
         room = None
 
     if room != None:
-        return render(request , 'chat/discuss_with_client.html' , locals())
+        try:
+            request.user.landlord.user_id != None
+            return render(request , 'chat/discuss_with_client.html' , locals())
+        except:
+            request.user.client.user_id != None
+            return render(request , 'chat/discuss_with_landlord.html' , locals())
+
     else:
-        user1 = get_object_or_404(User, username=user1)
-        user2 = get_object_or_404(User, username=user2)
-        new_room = Room.objects.create(user1 = user1, user2 = user2)
-        new_room.save()
-        return render(request , 'chat/discuss_with_client.html' , locals())
+        user1 = get_object_or_404(User, username=request.user)
+        user2 = get_object_or_404(User, username=other_user)
+        room = Room.objects.create(user1 = user1, user2 = user2)
+        room.save()
+        try:
+            user1.landlord.user_id != None
+            return render(request , 'chat/discuss_with_client.html' , locals())
+        except:
+            user1.client.user_id != None
+            return render(request , 'chat/discuss_with_landlord.html' , locals())
 
-
+"""
 def clientCheckview(request, user1 , user2):
     user1 = get_object_or_404(User, username=user1)
     user2 = get_object_or_404(User, username=user2)
@@ -55,7 +63,7 @@ def clientCheckview(request, user1 , user2):
         new_room = Room.objects.create(user1 = user1, user2 = user2)
         new_room.save()
         return render(request , 'chat/discuss_with_landlord.html' , locals())
-
+"""
 
 def send(request, user_id, room_id):
 

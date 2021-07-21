@@ -3,6 +3,7 @@ import json
 import asyncio
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 
@@ -11,10 +12,11 @@ from .models import Room, Message
 class ChatConsumer(AsyncWebsocketConsumer):
     async def websocket_connect(self, event):
         print("Connected !!!", event)
-        
-        user1 = self.scope['user']
-        user2 = self.scope['url_route']['kwargs']['user2']
 
+        user1 = self.scope['user']
+        room = self.scope['url_route']['kwargs']
+        print(user1, room)
+        """
         room_obj = await self.get_room(user1, user2)
         print(room_obj)
 
@@ -27,7 +29,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             chat_room,
             self.channel_name
         )
-
+        """
         await self.accept()
 
     async def websocket_receive(self, text_data):
@@ -75,7 +77,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # My own methods
     @database_sync_to_async
     def get_room(self, user, other_user):
-        return get_object_or_404(Room, user1=user, id=16)
+        other_user = User.objects.get(username=other_user)
+        return get_object_or_404(Room, user1=user, user2=other_user)
 
     @database_sync_to_async
     def creat_chat_message(self, user, msg):
