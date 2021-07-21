@@ -19,75 +19,6 @@ Discussion dans {{ room }}
 </div>
 {% endblock display %}
 
-<<<<<<< HEAD:chat/templates/chat/discuss.html
-<<<<<<< HEAD <script>
-  </script>
-
-  <div>
-    {% block form %}
-    <form id="post-form">
-      <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-      <input id="chat-message-input" type="text" size="100"><br>
-      <input id="chat-message-submit" type="button" value="Send">
-      {{ room_name|json_script:"room-name" }}
-      =======
-      <div>
-        {% block form %}
-        <form id="post-form" method="POST">
-          {% csrf_token %}
-          <input type="text" name="message" id="chat-message-input" />
-          <input type="button" value="Send" id="chat-message-submit" class="btn btn-primary" />
-          >>>>>>> fa0c49164c99f73c840e4ce076d5b06ebe2f654e
-        </form>
-        {% endblock form %}
-      </div>
-
-      <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
-
-      <script type="text/javascript">
-        console.log(window.location);
-        var loc = window.location
-        var wsStart = 'ws://'
-        if (loc.protocol == 'https:') {
-          wsStart = 'wss://'
-        }
-
-        var endpoint = wsStart + loc.host + loc.pathname
-        console.log(endpoint)
-
-        var socket = new WebSocket(endpoint)
-
-        socket.onmessage = function (e) {
-          var chatDataMsg = JSON.parse(e.data)
-          chatHolder.append("<li>" + chatDataMsg.message + " via " + chatDataMsg.username + "</li>")
-        }
-
-        socket.onopen = function (e) {
-          console.log("Open: ", e)
-          fromData.submit(function (event) {
-            event.preventDefault()
-            var msgText = msgInput.val()
-            var finalData = {
-              'message': msgText
-            }
-            socket.send(JSON.stringify(finalData))
-            fromData[0].reset()
-          })
-        }
-
-        socket.onerror = function (e) {
-          console.log("Error: ", e)
-        }
-
-        socket.onclose = function (e) {
-          console.log("Close: ", e)
-        }
-
-      </script>
-
-      {% endblock %}
-=======
 <div>
   {% block form %}
   <form id="form" method="POST">
@@ -117,17 +48,17 @@ Discussion dans {{ room }}
 
   var socket = new WebSocket(endpoint)
 
-  socket.onmessage = function(e) {
+  socket.onmessage = function (e) {
     var chatDataMsg = JSON.parse(e.data)
     chatHolder.append("<li>" + chatDataMsg.message + " via " + chatDataMsg.username + "</li>")
   }
 
-  socket.onopen = function(e) {
+  socket.onopen = function (e) {
     console.log("Open: ", e)
-    fromData.submit(function(event){
+    fromData.submit(function (event) {
       event.preventDefault()
       var msgText = msgInput.val()
-      var finalData  = {
+      var finalData = {
         'message': msgText
       }
       socket.send(JSON.stringify(finalData))
@@ -135,15 +66,14 @@ Discussion dans {{ room }}
     })
   }
 
-  socket.onerror = function(e) {
+  socket.onerror = function (e) {
     console.log("Error: ", e)
   }
 
-  socket.onclose = function(e) {
+  socket.onclose = function (e) {
     console.log("Close: ", e)
   }
 
 </script>
 
 {% endblock %}
->>>>>>> c7c71191ba4855a676a38f4b040062d955ea9d73:chat/templates/chat/room.html

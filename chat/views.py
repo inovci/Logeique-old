@@ -8,32 +8,10 @@ from django.db.models import Q
 def home(request):
     return render(request, 'home.html')
 
-<<<<<<< HEAD
-def room(request, room_name):
-    return render(request, 'chat/room.html', {
-        'room_name': room_name
-    })
-
-
-
-"""
-
-def room(request, room_id , user_id):
-    user = User.objects.get(id = user_id)
-    room_details = Room.objects.get(id=room_id)
-    return render(request, 'discuss.html', {
-        'username': user.username,
-        #'room': room,
-        'room_details': room_details
-    })
-"""
-=======
 def room(request, room_id):
-    print(room_id)
     room = Room.objects.get(id=room_id)
-    print(room)
+    messages = Message.objects.filter(room = room)
     return render(request, 'chat/room.html', locals())
->>>>>>> c7c71191ba4855a676a38f4b040062d955ea9d73
 
 
 def checkview(request, other_user):
@@ -65,54 +43,4 @@ def checkview(request, other_user):
             user1.client.user_id != None
             return render(request , 'chat/discuss_with_landlord.html' , locals())
 
-"""
-def clientCheckview(request, user1 , user2):
-    user1 = get_object_or_404(User, username=user1)
-    user2 = get_object_or_404(User, username=user2)
 
-    try:
-        room = Room.objects.get(Q(user1=user1, user2=user2)|
-                                Q(user1 = user2, user2 = user1))
-    except:
-        room = None
-
-    if room != None:
-        return render(request , 'chat/discuss_with_landlord.html' , locals())
-    else: 
-        user1 = get_object_or_404(User, username=user1)
-        user2 = get_object_or_404(User, username=user2)
-        new_room = Room.objects.create(user1 = user1, user2 = user2)
-        new_room.save()
-        return render(request , 'chat/discuss_with_landlord.html' , locals())
-<<<<<<< HEAD
-
-"""
-=======
-"""
-
->>>>>>> c7c71191ba4855a676a38f4b040062d955ea9d73
-def send(request, user_id, room_id):
-
-    message = request.POST['message']
-    print(message)
-    user = User.objects.get(id=user_id)
-    try:
-        client_user = get_object_or_404(Client, user_id=user.id)
-        if client_user:
-            room = Room.objects.get(id = room_id)
-            new_message = Message.objects.create(value=message, user=user, room=room)
-            new_message.save()
-            return render(request, 'chat/discuss_with_landlord.html', locals())
-    except:
-        landlord_user = get_object_or_404(Landlord, user_id=user.id)
-        if landlord_user:
-            room = Room.objects.get(id = room_id)
-            new_message = Message.objects.create(value=message, user=user, room=room)
-            new_message.save()
-            return render(request, 'chat/discuss_with_client.html', locals()) 
-
-def receive(request, room_id):
-    room_details = Room.objects.get(id=room_id)
-    messages = Message.objects.filter(room=room_details)
-    return JsonResponse({"messages":list(messages.values())})
-"""
