@@ -3,6 +3,8 @@
 import json
 import asyncio
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 
@@ -11,11 +13,14 @@ from .models import Room, Message
 class ChatConsumer(AsyncWebsocketConsumer):
     async def websocket_connect(self, event):
         print("Connected !!!", event)
+
+        user1 = self.scope['user']
+        room = self.scope['url_route']['kwargs']
+        print(user1, room)
         """
-        other_user = self.scope['url_route']['kwargs']
-        user = self.scope['user']
-        print(other_user, user)
-        room_obj = await self.get_thread(user, other_user)
+        room_obj = await self.get_room(user1, user2)
+        print(room_obj)
+
         self.room_obj = room_obj
 
         chat_room = f"room_{room_obj.id}"
@@ -72,13 +77,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # My own methods
     @database_sync_to_async
-    def get_thread(self, user, other_user):
-        return Room.objects.get_or_new(user, other_user)[0]
+    def get_room(self, user, other_user):
+        other_user = User.objects.get(username=other_user)
+        return get_object_or_404(Room, user1=user, user2=other_user)
 
     @database_sync_to_async
     def creat_chat_message(self, user, msg):
         room_obj = self.room_obj
-        return ChatMessage.objects.create(room=room_obj, user=user, message=msg)
+        return Message.objects.create(room=room_obj, user=user, value=msg)
 
 
 class ChatConsumerTuto(AsyncWebsocketConsumer):

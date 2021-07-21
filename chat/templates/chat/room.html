@@ -1,13 +1,15 @@
 {% block content %}
 {% include "chat/html_css/discuss_css.html" %}
 
+{% include "chat/js/discuss_js.html" %}
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
 {% block display %}
-Discussion entre {{ room.user1.username }} et {{ room.user2.username }}
+Discussion dans {{ room }}
 
-<div id="chat-log" class="chat-board">
+<div id='chat-items' class="chat-board">
 
   <!-- <div class="container darker">
     <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
@@ -17,6 +19,7 @@ Discussion entre {{ room.user1.username }} et {{ room.user2.username }}
 </div>
 {% endblock display %}
 
+<<<<<<< HEAD:chat/templates/chat/discuss.html
 <<<<<<< HEAD <script>
   </script>
 
@@ -84,3 +87,63 @@ Discussion entre {{ room.user1.username }} et {{ room.user2.username }}
       </script>
 
       {% endblock %}
+=======
+<div>
+  {% block form %}
+  <form id="form" method="POST">
+    {% csrf_token %}
+    <input type="text" name="message" id="chat-message-input" />
+    <input type="button" value="Send" id="chat-message-submit" class="btn btn-primary" />
+  </form>
+  {% endblock form %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
+
+<script type="text/javascript">
+  //console.log(window.location);
+  var fromData = $("#form")
+  var msgInput = $("#chat-message-input")
+  var chatHolder = $('#chat-items')
+  var room = $('#myRoomId').val()
+  var loc = window.location
+  var wsStart = 'ws://'
+  if (loc.protocol == 'https:') {
+    wsStart = 'wss://'
+  }
+
+  var endpoint = wsStart + loc.host + loc.pathname
+  //console.log(endpoint)
+
+  var socket = new WebSocket(endpoint)
+
+  socket.onmessage = function(e) {
+    var chatDataMsg = JSON.parse(e.data)
+    chatHolder.append("<li>" + chatDataMsg.message + " via " + chatDataMsg.username + "</li>")
+  }
+
+  socket.onopen = function(e) {
+    console.log("Open: ", e)
+    fromData.submit(function(event){
+      event.preventDefault()
+      var msgText = msgInput.val()
+      var finalData  = {
+        'message': msgText
+      }
+      socket.send(JSON.stringify(finalData))
+      fromData[0].reset()
+    })
+  }
+
+  socket.onerror = function(e) {
+    console.log("Error: ", e)
+  }
+
+  socket.onclose = function(e) {
+    console.log("Close: ", e)
+  }
+
+</script>
+
+{% endblock %}
+>>>>>>> c7c71191ba4855a676a38f4b040062d955ea9d73:chat/templates/chat/room.html
