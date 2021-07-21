@@ -10,7 +10,7 @@ def home(request):
 
 def room(request, room_id):
     room = Room.objects.get(id=room_id)
-    messages = Message.objects.filter(room = room)
+    messages = Message.objects.filter(room=room)
     return render(request, 'chat/room.html', locals())
 
 
