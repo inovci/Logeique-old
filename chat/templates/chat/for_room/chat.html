@@ -1,0 +1,73 @@
+{% block display %}
+  Discussion dans {{ room }}
+
+  <div id='chat-items' class="chat-board">
+
+    <!-- <div class="container darker">
+      <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
+      <span class="time-left">20th, April 2021</span>
+    </div> -->
+    <div class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+      {% for message in messages %}
+        <div class="mycontainer darker">
+          <p>{{message.value}}</p>
+          <span class="time-left">{{message.date}}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock display %}
+
+<div>
+  {% block form %}
+  <form id="form" method="POST">
+    {% csrf_token %}
+    <input type="text" name="message" id="chat-message-input" />
+    <input type="button" value="Send" id="chat-message-submit" class="btn btn-primary" />
+  </form>
+  {% endblock form %}
+</div>
+
+<script type="text/javascript">
+  //console.log(window.location);
+  var fromData = $("#form")
+  var msgInput = $("#chat-message-input")
+  var chatHolder = $('#chat-items')
+  var loc = window.location
+  var wsStart = 'ws://'
+  if (loc.protocol == 'https:') {
+    wsStart = 'wss://'
+  }
+
+  var endpoint = wsStart + loc.host + loc.pathname
+  //console.log(endpoint)
+
+  var socket = new WebSocket(endpoint)
+
+  socket.onmessage = function(e) {
+    var chatDataMsg = JSON.parse(e.data)
+    chatHolder.append("<li>" + chatDataMsg.message + " via " + chatDataMsg.username + "</li>")
+  }
+
+  socket.onopen = function(e) {
+    console.log("Open: ", e)
+    fromData.submit(function(event){
+      event.preventDefault()
+      var msgText = msgInput.val()
+      var finalData  = {
+        'message': msgText
+      }
+      socket.send(JSON.stringify(finalData))
+      fromData[0].reset()
+    })
+  }
+
+  socket.onerror = function(e) {
+    console.log("Error: ", e)
+  }
+
+  socket.onclose = function(e) {
+    console.log("Close: ", e)
+  }
+
+</script>

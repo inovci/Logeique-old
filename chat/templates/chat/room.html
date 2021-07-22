@@ -1,89 +1,169 @@
-{% block content %}
-{% include "chat/html_css/discuss_css.html" %}
+<!doctype html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% include "chat/js/discuss_js.html" %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <link href="fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 
-{% block display %}
-Discussion dans {{ room }}
+    <!-- Our project just needs Font Awesome Solid + Brands -->
+    <script defer src="{% static 'fontawesome/js/brands.js' %}"></script>
+    <script defer src="{% static 'fontawesome/js/solid.js' %}"></script>
+    <script defer src="{% static 'fontawesome/js/fontawesome.js' %}"></script>
 
-<div id='chat-items' class="chat-board">
+    <title>Chat interface</title>
 
-  <!-- <div class="container darker">
-    <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
-    <span class="time-left">20th, April 2021</span>
-  </div> -->
-  <div style="overflow-y: scroll;overflow-x: hidden;max-height: 500px;">
-    {% for message in messages %}
-      <div class="container darker">
-        <li>
-          <p>{{message.value}}</p>
-          <span class="time-left">{{message.date}}</span>
-        </li> 
-      </div>
-    {% endfor %}
-  </div>
+    {% include "chat/html_css/discuss_css.html" %}
+    {% include "chat/js/discuss_js.html" %}
 
-</div>
-{% endblock display %}
-
-<div>
-  {% block form %}
-  <form id="form" method="POST">
-    {% csrf_token %}
-    <input type="text" name="message" id="chat-message-input" />
-    <input type="button" value="Send" id="chat-message-submit" class="btn btn-primary" />
-  </form>
-  {% endblock form %}
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
-
-<script type="text/javascript">
-  //console.log(window.location);
-  var fromData = $("#form")
-  var msgInput = $("#chat-message-input")
-  var chatHolder = $('#chat-items')
-  var room = $('#myRoomId').val()
-  var loc = window.location
-  var wsStart = 'ws://'
-  if (loc.protocol == 'https:') {
-    wsStart = 'wss://'
-  }
-
-  var endpoint = wsStart + loc.host + loc.pathname
-  //console.log(endpoint)
-
-  var socket = new WebSocket(endpoint)
-
-  socket.onmessage = function(e) {
-    var chatDataMsg = JSON.parse(e.data)
-    chatHolder.append("<li>" + chatDataMsg.message + " via " + chatDataMsg.username + "</li>")
-  }
-
-  socket.onopen = function(e) {
-    console.log("Open: ", e)
-    fromData.submit(function(event){
-      event.preventDefault()
-      var msgText = msgInput.val()
-      var finalData  = {
-        'message': msgText
+    <style type="text/css">
+      .mycontainer {
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
       }
-      socket.send(JSON.stringify(finalData))
-      fromData[0].reset()
-    })
-  }
 
-  socket.onerror = function(e) {
-    console.log("Error: ", e)
-  }
+      .darker {
+        border-color: #ccc;
+        background-color: #ddd;
+      }
 
-  socket.onclose = function(e) {
-    console.log("Close: ", e)
-  }
+      .mycontainer::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
 
-</script>
+      .mycontainer img {
+        float: left;
+        max-width: 60px;
+        width: 100%;
+        margin-right: 20px;
+        border-radius: 50%;
+      }
 
-{% endblock %}
+      .mycontainer img.right {
+        float: right;
+        margin-left: 20px;
+        margin-right:0;
+      }
+
+      .time-right {
+        float: right;
+        color: #aaa;
+      }
+
+      .time-left {
+        float: left;
+        color: #999;
+      }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
+  </head>
+  <body style="position: relative;">
+    <header class="shadow rounded">
+      <div class="container">
+        <nav class="navbar navbar-light">
+          <a class="navbar-brand" href="#">Logeique &times;</a>
+
+          <ul class="nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">FAQ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Compte</a>
+            </li>
+          </ul>
+          <i class="fas fa-user-circle"></i>
+        </nav>
+      </div>
+    </header>
+    
+    <main style="background-color: #f0f0f0; overflow-x: hidden;">
+      <div class="row">
+        <div class="col-3" style="height: 90vh;background-color: #181F26;">
+          <div style="padding: 5px;" class="text-white text-center">
+            <div class="card-img-top" style="border: solid 1px red;">
+              <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;;"></i>
+            </div>
+            <p>Name & First Name</p>
+            <p style="color: #1CE;">Bla Bla Bla</p>
+          </div>
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Chat</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+          </div>
+        </div>
+        <div class="col-9">
+          <div style="padding: 10px;">
+            <div class="tab-content" id="v-pills-tabContent">
+              <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div>
+                  {% include "chat/for_room/chat.html" %}
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Profile</div>
+              
+              <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <div class="border" style="overflow-x: hidden; overflow-y: scroll; height: 400px;padding: 10px;background-color: #fff;">
+                  <h4 id="list-item-1">Item 1</h4>
+                  <p>
+                    Placeholder content for the scrollspy list-group example. This one relates to item 1. Don't need apologies. There is no fear now, let go and just be free, I will love you unconditionally. Last Friday night. Don't be a shy kinda guy I'll bet it's beautiful. Summer after high school when we first met. 'Cause she's the muse and the artist. What? Wait. Thought that I was the exception.
+                  </p>
+                  <h4 id="list-item-2">Item 2</h4>
+                  <p>
+                    Placeholder content for the scrollspy list-group example. This one relates to item 2. Yeah, she dances to her own beat. Oh, no. You could've been the greatest. 'Cause, baby, you're a firework. Maybe a reason why all the doors are closed. Open up your heart and just let it begin. So très chic, yeah, she's a classic.
+                  </p>
+                  <h4 id="list-item-3">Item 3</h4>
+                  <p>
+                    Placeholder content for the scrollspy list-group example. This one relates to item 3. We go higher and higher. Never one without the other, we made a pact. I'm walking on air. Someone said you had your tattoo removed. Now I’m floating like a butterfly. Tone, tan fit and ready, turn it up cause its gettin' heavy. Cause once you’re mine, once you’re mine. You just gotta ignite the light and let it shine! So we hit the boulevard. Do you ever feel, feel so paper thin. I see it all, I see it now.
+                  </p>
+                  <h4 id="list-item-4">Item 4</h4>
+                  <p>
+                    Placeholder content for the scrollspy list-group example. This one relates to item 4. Summer after high school when we first met. There is no fear now, let go and just be free, I will love you unconditionally. Sun-kissed skin so hot we'll melt your popsicle. This love will make you levitate.
+                  </p>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">Settings</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    -->
+
+    <script type="text/javascript">
+      $('body').scrollspy({ target: '#navbar-example' })
+    </script>
+  </body>
+</html>
