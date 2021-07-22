@@ -1,4 +1,7 @@
+{% load static %}
 {% block display %}
+  <script defer src="{% static 'js/moment-with-locales.min.js' %}"></script>
+
   Discussion dans {{ room }}
 
   <div class="chat-board">
@@ -56,9 +59,15 @@
   socket.onmessage = function(e) {
     var chatDataMsg = JSON.parse(e.data)
 
-    chatHolder.append(
-      "<div class='d-flex justify-content-end'><div  class='mycontainer' style='width: 60%;background-color: #303841;color: #fff;border-radius: 20px 20px 0 20px;'>" + "<p>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + chatDataMsg.message + "</span></div></div>"
+    if (chatDataMsg.username === "{{request.user.username}}") {
+      chatHolder.append(
+        "<div class='d-flex justify-content-end'><div  class='mycontainer' style='width: 60%;background-color: #303841;color: #fff;border-radius: 20px 20px 0 20px;'>" + "<p>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
       )
+    } else {
+      chatHolder.append(
+        "<div  class='mycontainer' style='width: 60%;background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;'>" + "<p>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div>"
+      )
+    }
   }
 
   socket.onopen = function(e) {
