@@ -54,8 +54,10 @@
     </ol>
     </p>
     {% else %}
-    {% for deal in deals %}
-        
+    {% for client in landlord_clients %}
+
+    {{client.user.username}}
+
     {% endor %}
     {% endif %}
 </div>
