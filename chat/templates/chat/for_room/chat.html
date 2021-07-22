@@ -9,7 +9,7 @@
     </div> -->
     <div class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
       {% for message in messages %}
-        <div class="mycontainer" style="width: 60%;background-color: #303841;color: #fff;border-radius: 20px;">
+        <div class="mycontainer" style="width: 60%;background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;">
           <h5>{{message.user.first_name}}</h5>
           <p style="font-size: 18px;">{{message.value}}</p>
           <span class="time-right">{{message.date}}</span>
