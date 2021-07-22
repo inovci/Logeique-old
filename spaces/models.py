@@ -73,4 +73,4 @@ class Deal(models.Model):
         on_delete=models.CASCADE,
         related_name="landlord_deals"
     )
-    concluded = models.BooleanField()
+    concluded = models.BooleanField(default=0)
