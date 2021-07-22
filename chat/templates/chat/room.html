@@ -75,7 +75,7 @@
     <header class="shadow rounded">
       <div class="container">
         <nav class="navbar navbar-light">
-          <a class="navbar-brand" href="#">Logeique &times;</a>
+          <a class="navbar-brand" href="#">Logeique</a>
 
           <ul class="nav ml-auto">
             <li class="nav-item">
@@ -98,10 +98,12 @@
         <div class="col-3" style="height: 90vh;background-color: #181F26;">
           <div style="padding: 5px;" class="text-white text-center">
             <div class="card-img-top" style="border: solid 1px red;">
-              <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;;"></i>
+              <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
             </div>
-            <p>Name & First Name</p>
-            <p style="color: #1CE;">Bla Bla Bla</p>
+            <p>{{request.user.last_name}} {{request.user.first_name}}</p>
+            <p style="color: #1CE;">
+              Votre statut: {% if request.user.landlord %} Propriétaire {% elif request.user.client %} Client {% endif %}
+            </p>
           </div>
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Chat</a>

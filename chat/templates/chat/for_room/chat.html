@@ -9,9 +9,10 @@
     </div> -->
     <div class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
       {% for message in messages %}
-        <div class="mycontainer darker">
-          <p>{{message.value}}</p>
-          <span class="time-left">{{message.date}}</span>
+        <div class="mycontainer" style="width: 60%;background-color: #303841;color: #fff;border-radius: 20px;">
+          <h5>{{message.user.first_name}}</h5>
+          <p style="font-size: 18px;">{{message.value}}</p>
+          <span class="time-right">{{message.date}}</span>
         </div>
       {% endfor %}
     </div>
@@ -23,7 +24,7 @@
   <form id="form" method="POST">
     {% csrf_token %}
     <input type="text" name="message" id="chat-message-input" />
-    <input type="button" value="Send" id="chat-message-submit" class="btn btn-primary" />
+    <input type="submit" value="Send" id="chat-message-submit" class="btn" />
   </form>
   {% endblock form %}
 </div>
