@@ -525,10 +525,16 @@ def see_clients(request, id):
     all_clients = list(all_clients)
     landlord_clients = []
     for client in all_clients:
-        deal = Deal.objects.filter(landlord=id, client=client.id)
-        if deal != None:
-            for single_deal in deal:
+        deals = Deal.objects.filter(landlord=id, client=client.id)
+        if deals != None:
+            for deal in deals:
                 landlord_clients.append(client)
+    if landlord_clients != []:
+        no_client_error = False
+    else:
+        no_client_err = True
+
+    return render(request, 'spaces/landlord_clients.html', locals())
     #
     #clients = []
     #deal = Deal.objects.filter(landlord=id)
@@ -543,7 +549,7 @@ def see_clients(request, id):
     """
     
 
-    return render(request, 'spaces/landlord_clients.html', locals())
+    
     
 """def test(id =  1):
     all_clients = Client.objects.all()
