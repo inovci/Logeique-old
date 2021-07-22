@@ -71,7 +71,7 @@
                                     <span data-feather="home"></span> ACCUEIL <span class="sr-only">(current)</span>
                                 </a>
                                 {% if user.client.avatar %}
-                                    <img width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
+                                    <img style="border-radius: 50%;" width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
                                 {% endif %}
                             {% endblock navitem1 %}
                         </li>

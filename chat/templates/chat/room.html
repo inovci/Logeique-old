@@ -75,11 +75,19 @@
     <header class="shadow rounded">
       <div class="container">
         <nav class="navbar navbar-light">
-          <a href="" class="navbar-brand">Logeique</a>
+          {% if request.user.landlord %}
+            <a href="{% url 'spaces:landlord_profile' request.user.id %}" class="navbar-brand">Logeique</a>
+          {% elif request.user.client %}
+            <a href="{% url 'spaces:client_profile' request.user.id %}" class="navbar-brand">Logeique</a>
+          {% endif %}
 
           <ul class="nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Accueil</a>
+              {% if request.user.landlord %}
+                <a class="nav-link active" href="{% url 'spaces:landlord_profile' request.user.id %}">Accueil</a>
+              {% elif request.user.client %}
+                <a class="nav-link active" href="{% url 'spaces:client_profile' request.user.id %}">Accueil</a>
+              {% endif %}
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">FAQ</a>
@@ -97,8 +105,20 @@
       <div class="row">
         <div class="col-3" style="height: 90vh;background-color: #181F26;">
           <div style="padding: 5px;" class="text-white text-center">
-            <div class="card-img-top" style="border: solid 1px red;">
-              <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+            <div class="card-img-top">
+              {% if request.user.landlord %}
+                {% if request.user.landlord.avatar %}
+                  <img style="border-radius: 50%;" width="50%" src="{{request.user.landlord.avatar.url}}" alt="Image de {{request.user.username}}">
+                {% else %}
+                  <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i> 
+                {% endif %}
+              {% elif request.user.client %}
+                {% if request.user.client.avatar %}
+                  <img width="50%" src="{{request.user.client.avatar.url}}" alt="Image de {{request.user.username}}">
+                {% else %}
+                  <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+                {% endif %}
+              {% endif %}
             </div>
             <p>{{request.user.last_name}} {{request.user.first_name}}</p>
             <p style="color: #1CE;">
@@ -110,6 +130,7 @@
             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
             <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+            <a href="{% url 'spaces:logout' %}" class="nav-link" href="#">Déconnexion</a>
           </div>
         </div>
         <div class="col-9">

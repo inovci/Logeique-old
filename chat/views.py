@@ -5,8 +5,6 @@ from django.contrib.auth.models import User
 from django.db.models import Q
  
 # Create your views here.
-def home(request):
-    return render(request, 'home.html')
 
 def room(request, room_id):
     room = Room.objects.get(id=room_id)
