@@ -62,91 +62,91 @@
     <div class="container-fluid">
         <div class="row">
             {% block navigation %}
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <div class="sidebar-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            {% block navitem1 %}
-                                <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active"
-                                    href="{% url 'spaces:landlord_profile' user.id %}">
-                                    <span data-feather="home"></span> ACCUEIL <span class="sr-only">(current)</span>
+                <nav id="sidebarMenu" style="height: 100vh;" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+                    <div class="sidebar-sticky pt-3">
+                        {% if user.landlord.avatar %}
+                            <img style="border-radius: 50%;" width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
+                        {% endif %}
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                {% block navitem1 %}
+                                    <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active"
+                                        href="{% url 'spaces:landlord_profile' user.id %}">
+                                        <span data-feather="home"></span> ACCUEIL <span class="sr-only">(current)</span>
+                                    </a>
+                                {% endblock navitem1 %}
+                            </li>
+                            <li class="nav-item">
+                                {% block navitem2 %}
+                                <a class="nav-link" href="{% url 'spaces:edit_landlord_profile' user.id %}">
+                                    <span data-feather="user"></span>
+                                    Modifier profil
                                 </a>
-                                {% if user.landlord.avatar %}
-                                    <img style="border-radius: 50%;" width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
-                                {% endif %}
-                            {% endblock navitem1 %}
-                        </li>
-                        <li class="nav-item">
-                            {% block navitem2 %}
-                            <a class="nav-link" href="{% url 'spaces:edit_landlord_profile' user.id %}">
-                                <span data-feather="user"></span>
-                                Modifier profil
-                            </a>
-                            {% endblock navitem2 %}
-                        </li>
-                        <li class="nav-item">
-                            {% block navitem3 %}
-                            <a class="nav-link" href="{% url 'spaces:add_house' user.id %}">
-                                <span data-feather="plus"></span>
-                                Ajouter Maisons
-                            </a>
-                            {% endblock navitem3 %}
-                        </li>
-                        <li class="nav-item">
-                            {% block navitem4 %}
-                            <a class="nav-link" href="{% url 'spaces:landlord_houses' user.id %}">
-                                <span data-feather="home"></span>
-                                Voir ses Maisons
-                            </a>
-                            {% endblock navitem4 %}
-                        </li>
-                        <li class="nav-item">
-                            {% block navitem5 %}
-                            <a class="nav-link" href="{% url 'spaces:landlord_clients' user.id %}">
-                                <span data-feather="users"></span>
-                                Clients
-                            </a>
-                            {% endblock navitem5 %}
-                        </li>
-                        <li class="nav-item">
-                            {% block navitem6 %}
-                            <a class="nav-link" href="{% url 'spaces:landlord_statistics' user.id %}">
-                                <span data-feather="bar-chart-2"></span>
-                                Statistiques
-                            </a>
-                            {% endblock navitem6 %}
-                        </li>
-                        <li class="nav-item">
-                            {% block navitem7 %}
-                            <a class="nav-link" href="{% url 'spaces:landlord_notifications' user.id %}">
-                                <span data-feather="bell"></span>
-                                Notifications
-                            </a>
-                            {% endblock navitem7 %}
-                        </li>
-                    </ul>
+                                {% endblock navitem2 %}
+                            </li>
+                            <li class="nav-item">
+                                {% block navitem3 %}
+                                <a class="nav-link" href="{% url 'spaces:add_house' user.id %}">
+                                    <span data-feather="plus"></span>
+                                    Ajouter Maisons
+                                </a>
+                                {% endblock navitem3 %}
+                            </li>
+                            <li class="nav-item">
+                                {% block navitem4 %}
+                                <a class="nav-link" href="{% url 'spaces:landlord_houses' user.id %}">
+                                    <span data-feather="home"></span>
+                                    Voir ses Maisons
+                                </a>
+                                {% endblock navitem4 %}
+                            </li>
+                            <li class="nav-item">
+                                {% block navitem5 %}
+                                <a class="nav-link" href="{% url 'spaces:landlord_clients' user.id %}">
+                                    <span data-feather="users"></span>
+                                    Clients
+                                </a>
+                                {% endblock navitem5 %}
+                            </li>
+                            <li class="nav-item">
+                                {% block navitem6 %}
+                                <a class="nav-link" href="{% url 'spaces:landlord_statistics' user.id %}">
+                                    <span data-feather="bar-chart-2"></span>
+                                    Statistiques
+                                </a>
+                                {% endblock navitem6 %}
+                            </li>
+                            <li class="nav-item">
+                                {% block navitem7 %}
+                                <a class="nav-link" href="{% url 'spaces:landlord_notifications' user.id %}">
+                                    <span data-feather="bell"></span>
+                                    Notifications
+                                </a>
+                                {% endblock navitem7 %}
+                            </li>
+                        </ul>
 
-                    <h6
-                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Statistiques enregistrées</span>
-                        <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Ce mois
+                        <h6
+                            class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Statistiques enregistrées</span>
+                            <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                                <span data-feather="plus-circle"></span>
                             </a>
-                        </li>
+                        </h6>
+                        <ul class="nav flex-column mb-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file-text"></span>
+                                    Ce mois
+                                </a>
+                            </li>
 
-                    </ul>
-                </div>
-            </nav>
+                        </ul>
+                    </div>
+                </nav>
             {% endblock navigation %}
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <main style="background-color: #f0f0f0;" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">{% block h1 %}Espace Proprio{% endblock h1 %}</h1>
@@ -162,7 +162,7 @@
                     </div>
                 </div>
 
-                <div style="background-color: #f9f9fa;">
+                <div>
                     <p>
                         {% block content %}
                             <h1>Lite des notifications des clients.</h1>
@@ -220,7 +220,7 @@
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-    <script src="../assets/dist/js/bootstrap.bundle.js"></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     <script src="{% static 'js/dashboard.js' %}"></script>

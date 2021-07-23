@@ -1,20 +1,19 @@
 {% extends "spaces/landlord_profile.html" %}
 {% block title %}Voir clients{% endblock %}
+
 {% block navitem1 %}
-<a class="nav-link active" href="{% url 'spaces:landlord_profile' user.id %}">
-    <span data-feather="home"></span> ACCUEIL<span class="sr-only">(current)</span>
-</a>
-{% if user.landlord.avatar %}
-    <img style="border-radius: 50%;" width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
-{% endif %}
+    <a class="nav-link active" href="{% url 'spaces:landlord_profile' user.id %}">
+        <span data-feather="home"></span> ACCUEIL<span class="sr-only">(current)</span>
+    </a>
 {% endblock navitem1 %}
 
 {% block navitem5 %}
-<a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:landlord_clients' user.id %}">
-    <span data-feather="users">(current)</span>
-    Clients
-</a>
+    <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:landlord_clients' user.id %}">
+        <span data-feather="users">(current)</span>
+        Clients
+    </a>
 {% endblock navitem5 %}
+
 {% block h1 %}Consultations de clients{% endblock h1 %}
 
 {% block content %}
