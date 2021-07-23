@@ -18,7 +18,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         room_id = room['room_id']
 
         room_obj = await self.get_room(room_id)
-        print(room_obj)
 
         self.room_obj = room_obj
 
