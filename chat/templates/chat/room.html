@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
-    <link href="fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+    <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet"> <!--load all styles -->
 
     <!-- Our project just needs Font Awesome Solid + Brands -->
     <script defer src="{% static 'fontawesome/js/brands.js' %}"></script>
@@ -106,18 +106,12 @@
         <div class="col-3" style="height: 90vh;background-color: #181F26;">
           <div style="padding: 5px;" class="text-white text-center">
             <div class="card-img-top">
-              {% if request.user.landlord %}
-                {% if request.user.landlord.avatar %}
-                  <img style="border-radius: 50%;" width="50%" src="{{request.user.landlord.avatar.url}}" alt="Image de {{request.user.username}}">
-                {% else %}
-                  <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i> 
-                {% endif %}
-              {% elif request.user.client %}
-                {% if request.user.client.avatar %}
-                  <img width="50%" src="{{request.user.client.avatar.url}}" alt="Image de {{request.user.username}}">
-                {% else %}
-                  <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
-                {% endif %}
+              {% if request.user.landlord.avatar %}
+                <img style="border-radius: 50%;" width="50%" src="{{request.user.landlord.avatar.url}}" alt="Image de {{request.user.username}}">
+              {% elif request.user.client.avatar %}
+                <img width="50%" src="{{request.user.client.avatar.url}}" alt="Image de {{request.user.username}}">
+              {% else %}
+                <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
               {% endif %}
             </div>
             <p>{{request.user.last_name}} {{request.user.first_name}}</p>

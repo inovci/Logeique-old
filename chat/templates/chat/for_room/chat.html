@@ -1,7 +1,6 @@
 {% load static %}
-{% block display %}
-  <script defer src="{% static 'js/moment-with-locales.min.js' %}"></script>
 
+{% block display %}
   Discussion dans {{ room }}
 
   <div class="chat-board">
@@ -14,15 +13,17 @@
       {% for message in messages %}
         {% if message.user == request.user %}
           <div class='d-flex justify-content-end'>
-            <div class="mycontainer" style="width: 60%;background-color: #303841;color: #fff;border-radius: 20px 20px 0 20px;">
-              <p style="font-size: 18px;">{{message.value}}</p>
-              <span class="time-right">{{message.date}}</span>
+            <div class="mycontainer" style="background-color: #303841;color: #fff;border-radius: 20px 20px 0 20px;">
+              <p style="font-size: 15px;">{{message.value}}</p>
+              <span class="time-right" style="font-size: 10px;">{{message.date}}</span>
             </div>
           </div>
         {% else %}
-          <div class="mycontainer" style="width: 60%;background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;">
-            <p style="font-size: 18px;">{{message.value}}</p>
-            <span class="time-right">{{message.date}}</span>
+          <div class="d-flex justify-content-start">
+            <div class="mycontainer" style="background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;">
+              <p style="font-size: 15px;">{{message.value}}</p>
+              <span class="time-right" style="font-size: 10px;">{{message.date}}</span>
+            </div>
           </div>
         {% endif %}
       {% endfor %}
@@ -40,7 +41,13 @@
   {% endblock form %}
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="{% static 'js/moment-with-locales.min.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="{% static 'js/moment.min.js' %}"></script>
 <script type="text/javascript">
+  moment().localeData();
   //console.log(window.location);
   var fromData = $("#form")
   var msgInput = $("#chat-message-input")
@@ -61,11 +68,11 @@
 
     if (chatDataMsg.username === "{{request.user.username}}") {
       chatHolder.append(
-        "<div class='d-flex justify-content-end'><div  class='mycontainer' style='width: 60%;background-color: #303841;color: #fff;border-radius: 20px 20px 0 20px;'>" + "<p>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
+        "<div class='d-flex justify-content-end'><div  class='mycontainer' style='background-color: #303841;color: #fff;border-radius: 20px 20px 0 20px;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
       )
     } else {
       chatHolder.append(
-        "<div  class='mycontainer' style='width: 60%;background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;'>" + "<p>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div>"
+        "<div  class='mycontainer' style='background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div>"
       )
     }
   }

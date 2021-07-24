@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-
+{% load static %}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,7 +19,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
 
     <!-- Bootstrap core CSS -->
-    <link href="../assets/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+    <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet"> <!--load all styles -->
+
+    <!-- Our project just needs Font Awesome Solid + Brands -->
+    <script defer src="{% static 'fontawesome/js/brands.js' %}"></script>
+    <script defer src="{% static 'fontawesome/js/solid.js' %}"></script>
+    <script defer src="{% static 'fontawesome/js/fontawesome.js' %}"></script>
 
     <style>
         .bd-placeholder-img {
@@ -38,15 +45,16 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    {% load static %}
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
     {% include "spaces/html_css/client_profile_css.html" %}
 </head>
 
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        {% block a1 %} <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
-            href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>{% endblock a1 %}
+        {% block a1 %}
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
+            href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>
+        {% endblock a1 %}
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
             data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -65,6 +73,8 @@
                     <div class="sidebar-sticky pt-3">
                         {% if user.client.avatar %}
                             <img style="border-radius: 50%;" width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
+                        {% else %}
+                            <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
                         {% endif %}
                         <ul class="nav flex-column">
                             <li class="nav-item">
@@ -190,7 +200,11 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+    <!--
+    <script>
+        window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')
+    </script>
+    -->
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
