@@ -521,6 +521,8 @@ def clientNotifications(request, id):
 
 
 def see_clients(request, id):
+    from datetime import date
+    current_year = date.today().year
     all_clients = Client.objects.all()
     all_clients = list(all_clients)
     landlord_clients = []
