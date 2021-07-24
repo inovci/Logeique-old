@@ -1,12 +1,10 @@
 {% extends "spaces/landlord_profile.html" %}
 {% block title %}Voir clients{% endblock %}
+
 {% block navitem1 %}
 <a class="nav-link active" href="{% url 'spaces:landlord_profile' user.id %}">
     <span data-feather="home"></span> ACCUEIL<span class="sr-only">(current)</span>
 </a>
-{% if user.landlord.avatar %}
-<img width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
-{% endif %}
 {% endblock navitem1 %}
 
 {% block navitem5 %}
@@ -16,6 +14,7 @@
     Clients
 </a>
 {% endblock navitem5 %}
+
 {% block h1 %}Consultations de clients{% endblock h1 %}
 
 {% block content %}

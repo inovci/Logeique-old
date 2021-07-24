@@ -18,6 +18,9 @@ class Client(models.Model):
     """def __str__(self):
         return f'{self.user}'"""
 
+    def statut(self):
+        return "Client"
+
     class Meta():
         ordering = ['user', 'rent_proposal', 'deposit_proposal', 'contact']
 
@@ -30,6 +33,9 @@ class Landlord(models.Model):
 
     """def __str__(self):
         return f'{self.user}'"""
+
+    def statut(self):
+        return "Landlord"
 
     class Meta():
         ordering = ['user', 'contact']

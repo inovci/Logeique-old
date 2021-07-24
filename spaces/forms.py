@@ -13,7 +13,7 @@ class SignUpForm(forms.Form):
         )
     )
     first_name = forms.CharField(
-        label='Prenom : ',
+        label='Prénom : ',
         max_length=200,
         widget=forms.TextInput(
             attrs={
@@ -125,7 +125,7 @@ class EditClientForm(forms.Form):
         )
     )
     first_name = forms.CharField(
-        label='Prenom : ',
+        label='Prénom : ',
         max_length=200,
         required=False,
         widget=forms.TextInput(

@@ -1,0 +1,94 @@
+{% load static %}
+{% block display %}
+  <script defer src="{% static 'js/moment-with-locales.min.js' %}"></script>
+
+  Discussion dans {{ room }}
+
+  <div class="chat-board">
+
+    <!-- <div class="container darker">
+      <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
+      <span class="time-left">20th, April 2021</span>
+    </div> -->
+    <div id='chat-items' class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+      {% for message in messages %}
+        {% if message.user == request.user %}
+          <div class='d-flex justify-content-end'>
+            <div class="mycontainer" style="width: 60%;background-color: #303841;color: #fff;border-radius: 20px 20px 0 20px;">
+              <p style="font-size: 18px;">{{message.value}}</p>
+              <span class="time-right">{{message.date}}</span>
+            </div>
+          </div>
+        {% else %}
+          <div class="mycontainer" style="width: 60%;background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;">
+            <p style="font-size: 18px;">{{message.value}}</p>
+            <span class="time-right">{{message.date}}</span>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endblock display %}
+
+<div>
+  {% block form %}
+  <form id="form" method="POST">
+    {% csrf_token %}
+    <input type="text" name="message" id="chat-message-input" />
+    <input type="submit" value="Send" id="chat-message-submit" class="btn" />
+  </form>
+  {% endblock form %}
+</div>
+
+<script type="text/javascript">
+  //console.log(window.location);
+  var fromData = $("#form")
+  var msgInput = $("#chat-message-input")
+  var chatHolder = $('#chat-items')
+  var loc = window.location
+  var wsStart = 'ws://'
+  if (loc.protocol == 'https:') {
+    wsStart = 'wss://'
+  }
+
+  var endpoint = wsStart + loc.host + loc.pathname
+  //console.log(endpoint)
+
+  var socket = new WebSocket(endpoint)
+
+  socket.onmessage = function(e) {
+    var chatDataMsg = JSON.parse(e.data)
+
+    if (chatDataMsg.username === "{{request.user.username}}") {
+      chatHolder.append(
+        "<div class='d-flex justify-content-end'><div  class='mycontainer' style='width: 60%;background-color: #303841;color: #fff;border-radius: 20px 20px 0 20px;'>" + "<p>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
+      )
+    } else {
+      chatHolder.append(
+        "<div  class='mycontainer' style='width: 60%;background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;'>" + "<p>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div>"
+      )
+    }
+  }
+
+  socket.onopen = function(e) {
+    console.log("Open: ", e)
+    fromData.submit(function(event){
+      event.preventDefault()
+      var msgText = msgInput.val()
+      var finalData  = {
+        'message': msgText
+      }
+      socket.send(JSON.stringify(finalData))
+      fromData[0].reset()
+    })
+  }
+
+  socket.onerror = function(e) {
+    console.log("Error: ", e)
+  }
+
+  socket.onclose = function(e) {
+    console.log("Close: ", e)
+  }
+
+</script>
