@@ -12,12 +12,7 @@
   </div>
 
   <div class="chat-board">
-
-    <!-- <div class="container darker">
-      <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
-      <span class="time-left">20th, April 2021</span>
-    </div> -->
-    <div id='chat-items' class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+    <div id='chat-items' class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;background: #f0f0f0;border: none;">
       {% for message in messages %}
         {% if message.user == request.user %}
           <div class='d-flex justify-content-end'>
@@ -39,29 +34,25 @@
   </div>
 {% endblock display %}
 
-<div>
-  {% block form %}
+{% block form %}
   <form id="form" method="POST">
     {% csrf_token %}
-    <div class="row">
-      <div class="col-8">
-        <input type="text" name="message" id="chat-message-input" style="display: none;" />
-      </div>
-      <div class="col-4">
-        <input type="submit" value="Envoyez" id="chat-message-submit" class="btn" />
-      </div>
-    </div>
+    <input type="text" name="message" id="chat-message-input"/>
+    <input type="submit" value="Envoyez" id="chat-message-submit" class="btn btn-primary"/>
   </form>
-  {% endblock form %}
-</div>
+{% endblock form %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script defer src="{% static 'js/moment-with-locales.min.js' %}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script defer src="{% static 'js/moment.min.js' %}"></script>
+
 <script type="text/javascript">
   moment().localeData();
+  var messageBody = document.querySelector('#chat-items');
+  messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+  $('#chat-items').scrollTop($('#chat-items')[0].scrollHeight);
   //console.log(window.location);
   var fromData = $("#form")
   var msgInput = $("#chat-message-input")
@@ -70,6 +61,11 @@
   var wsStart = 'ws://'
   if (loc.protocol == 'https:') {
     wsStart = 'wss://'
+  }
+
+  function scrollToEnd(){
+    var chatList = document.getElementById("chat-items");
+    chatList.scrollTop = chatList.scrollHeight;
   }
 
   var endpoint = wsStart + loc.host + loc.pathname
@@ -86,9 +82,11 @@
       )
     } else {
       chatHolder.append(
-        "<div  class='mycontainer' style='background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div>"
+        "<div class='d-flex justify-content-start'><div  class='mycontainer' style='background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
       )
     }
+
+    scrollToEnd();
   }
 
   socket.onopen = function(e) {
@@ -99,8 +97,8 @@
       var finalData  = {
         'message': msgText
       }
-      socket.send(JSON.stringify(finalData))
-      fromData[0].reset()
+      socket.send(JSON.stringify(finalData));
+      fromData[0].reset();
     })
   }
 
@@ -111,10 +109,11 @@
   socket.onclose = function(e) {
     console.log("Close: ", e)
   }
-
-  $(document).ready(function(){
+  /*
+  $(document).ready(function(e){
     $("#chat-message-input").emojioneArea({
-      pickerPosition: "bottom"
+      pickerPosition: "top"
     })
   })
+  */
 </script>

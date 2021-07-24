@@ -12,7 +12,7 @@ from .models import Room, Message
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def websocket_connect(self, event):
-        print("Connected !!!", event)
+        #print("Connected !!!", event)
 
         user = self.scope['user']
         room = self.scope['url_route']['kwargs']
@@ -34,7 +34,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def websocket_receive(self, text_data):
         # When a message is received from the websocket
-        print("Receive !!!", text_data)
+        #print("Receive !!!", text_data)
         front_text = text_data.get("text", None)
         if front_text is not None:
             loaded_dict_data = json.loads(front_text)
@@ -66,12 +66,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # Send message to WebSocket
         await self.send(text_data=data)
 
-
-
     async def disconnect(self, close_code):
         # When the socket connects
         print("Disconnected !!!")
-
 
     # My own methods
     @database_sync_to_async
