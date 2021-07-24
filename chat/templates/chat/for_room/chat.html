@@ -1,7 +1,15 @@
 {% load static %}
 
 {% block display %}
-  Discussion dans {{ room }}
+  <div style="padding: 0 5px;" class="d-flex justify-content-between">
+    <div>Discussion dans {{ room }}</div>
+
+    <div>
+      {% if request.user.landlord %}
+        <input type="button" name="" value="Marché Conclus" class="btn btn-primary">
+      {% endif %}
+    </div>
+  </div>
 
   <div class="chat-board">
 
@@ -35,8 +43,14 @@
   {% block form %}
   <form id="form" method="POST">
     {% csrf_token %}
-    <input type="text" name="message" id="chat-message-input" />
-    <input type="submit" value="Send" id="chat-message-submit" class="btn" />
+    <div class="row">
+      <div class="col-8">
+        <input type="text" name="message" id="chat-message-input" style="display: none;" />
+      </div>
+      <div class="col-4">
+        <input type="submit" value="Envoyez" id="chat-message-submit" class="btn" />
+      </div>
+    </div>
   </form>
   {% endblock form %}
 </div>
@@ -98,4 +112,9 @@
     console.log("Close: ", e)
   }
 
+  $(document).ready(function(){
+    $("#chat-message-input").emojioneArea({
+      pickerPosition: "bottom"
+    })
+  })
 </script>
