@@ -520,15 +520,51 @@ def clientNotifications(request, id):
     return render(request ,'spaces/client_notifications.html' , locals())
 
 
-def see_clients(request , id):
-
-    clients = Deal.objects.filter(landlord__user_id = id)
-    if clients:
-        no_client_err = False
+def see_clients(request, id):
+    from datetime import date
+    current_year = date.today().year
+    all_clients = Client.objects.all()
+    all_clients = list(all_clients)
+    landlord_clients = []
+    for client in all_clients:
+        deals = Deal.objects.filter(landlord=id, client=client.id)
+        if deals != None:
+            for deal in deals:
+                landlord_clients.append(client)
+    if landlord_clients != []:
+        no_client_error = False
     else:
         no_client_err = True
 
-    return render(request ,'spaces/landlord_clients.html' , locals())
+    return render(request, 'spaces/landlord_clients.html', locals())
+    #
+    #clients = []
+    #deal = Deal.objects.filter(landlord=id)
+    """
+    if deals:
+        no_client_err = False
+        for deal in deals:
+            client = deal.client
+            clients.append(client)
+    else:
+        no_client_err = True
+    """
+    
+
+    
+    
+"""def test(id =  1):
+    all_clients = Client.objects.all()
+    all_clients = list(all_clients)
+    landlord_clients = []
+    for client in all_clients:
+        deal = Deal.objects.filter(landlord=id, client=client.id)
+        if deal != None:
+            for single_deal in deal:
+                landlord_clients.append(client)
+        
+    for client in landlord_clients:
+        print (client.user)"""
 
 
 """

@@ -73,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'logeique2.wsgi.application'
+ASGI_APPLICATION = 'logeique2.asgi.application'
 
 # Channels
 ASGI_APPLICATION = "logeique2.asgi.application"
