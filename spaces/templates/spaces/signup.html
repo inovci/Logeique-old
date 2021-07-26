@@ -20,113 +20,118 @@
     </a>
 {% endblock %}
 
-{% block mt51 %}
-    <h1 style="margin: 10% 0;" class="text-white" id="">
-        Mon nom c'est LOGEIQUE V1 et vous ?
-    </h1>
-{% endblock %}
-
-{% block lead1 %}
-    <p class="text-white" id="">
-        Présentez vous à moi ,ensemble nous ferons des exploits.
-    </p>
-{% endblock %}
-
 {% block content %}
-    <div style="margin-bottom: 10%;">
-        <form method='POST' action="{% url 'spaces:signup' %}">
-            {% csrf_token %}
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <p class="text-white">
-                        {{form.username.label}}
-                    </p>
-                    {{form.username}}
-                </div>
+    <div class="row" style="margin-top: 1rem;">
+        <div class="col-1 col-sm-2 col-md-3"></div>
+        <div class="col-10 col-sm-8 col-md-6 card" style="padding: 1rem;border-radius: 1rem;">
+            <div class="text-center">
+                <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+                <h5 id="" style="font-weight: bold;">
+                    LOGEIQUEMENT
+                </h5>
+                <p id="">
+                    Inscrivez-vous!
+                </p>
             </div>
+            <form method='POST' action="{% url 'spaces:signup' %}">
+                {% csrf_token %}   
+                <div class="form-group">
+                    <p style="font-size: 12px;font-weight: bold;">
+                        {{form.first_name.label}}
+                    </p>
+                    {{form.first_name}}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <p style="font-size: 12px;font-weight: bold;">
+                            {{form.last_name.label}}
+                        </p>
+                        {{form.last_name}}
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <p style="font-size: 12px;font-weight: bold;">
+                            {{form.username.label}}
+                        </p>
+                        {{form.username}}
+                    </div>
+                </div>
                 
-            <div class="form-group">
-                <p class="text-white">
-                    {{form.first_name.label}}
-                </p>
-                {{form.first_name}}
-            </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <p style="font-size: 12px;font-weight: bold;">
+                            {{form.contact.label}}
+                        </p>
+                        {{form.contact}}
+                    </div>
 
-            <div class="form-group">
-                <p class="text-white">
-                    {{form.last_name.label}}
-                </p>
-                {{form.last_name}}
-            </div>
+                    {% if invalid_contact_err %}
+                        Le format de contact est invalide.
+                    {% endif %}
 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <p class="text-white">
-                        {{form.contact.label}}
-                    </p>
-                    {{form.contact}}
+                    {% if contact_exist_error %}
+                        Le contact que vous avez entré existe déja veuillez le changer.
+                    {% endif %}
+
+                    <div class="form-group col-md-6">
+                        <p style="font-size: 12px;font-weight: bold;">
+                            {{form.email.label}}
+                        </p>
+                        {{form.email}}
+                    </div>
+
+                    {% if email_unique_error %}
+                        L'email que vous avez entré existe déja veuillez le changer.
+                    {% endif %}
                 </div>
 
-                {% if invalid_contact_err %}
-                    Le format de contact est invalide.
-                {% endif %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <p style="font-size: 12px;font-weight: bold;">
+                            {{form.password.label}}
+                        </p>
+                        {{form.password}}
+                    </div>
 
-                {% if contact_exist_error %}
-                    Le contact que vous avez entré existe déja veuillez le changer.
-                {% endif %}
+                    <div class="form-group col-md-6">
+                        <p style="font-size: 12px;font-weight: bold;">
+                            {{form.password_verification.label}}
+                        </p>
+                        {{form.password_verification}}
+                    </div>
 
-                <div class="form-group col-md-6">
-                    <p class="text-white">
-                        {{form.email.label}}
-                    </p>
-                    {{form.email}}
+                    {% if pass_different_err %}
+                        Les mots de passe entrés ne correspondent pas.
+                    {% endif %}
                 </div>
 
-                {% if email_unique_error %}
-                    L'email que vous avez entré existe déja veuillez le changer.
-                {% endif %}
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <p class="text-white">
-                        {{form.password.label}}
-                    </p>
-                    {{form.password}}
+                <div class="form-group text-center">
+                    <div class="form-check form-check-inline">
+                        <p style="font-weight: bold;">
+                            {{form.client.label}}
+                            {{form.client}}
+                        </p>
+                        
+                        <p style="font-weight: bold;">
+                            {{form.landlord.label}}
+                            {{form.landlord}}
+                        </p> 
+                    </div>
                 </div>
 
-                <div class="form-group col-md-6">
-                    <p class="text-white">
-                        {{form.password_verification.label}}
-                    </p>
-                    {{form.password_verification}}
-                </div>
-
-                {% if pass_different_err %}
-                    Les mots de passe entrés ne correspondent pas.
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <div class="form-check form-check-inline">
-                    <p class="text-white">
-                        {{form.client.label}}
-                        {{form.client}}
-                    </p>
-                    
-                    <p class="text-white">
-                        {{form.landlord.label}}
-                        {{form.landlord}}
-                    </p> 
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary" name="Creer compte" value="Creer compte">
-                Creer votre compte
-            </button>    
-        </form>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" name="Creer compte" value="Creer compte">
+                        S'inscrire
+                    </button> 
+                </div>    
+            </form>
+        </div>
+        <div class="col-1 col-sm-2 col-md-3"></div>
     </div>
 {% endblock %}
+
+{% block footer %}{% endblock %}
 
 {% block scripts %}
     <script>
