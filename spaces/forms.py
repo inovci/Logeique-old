@@ -64,7 +64,8 @@ class SignUpForm(forms.Form):
             attrs={
                 'class': 'form-check-input stick',
                 'onclick': 'active()',
-                'id': 'is_cl'
+                'id': 'is_cl',
+                'type': 'radio'
             }
         )
     )
@@ -75,7 +76,8 @@ class SignUpForm(forms.Form):
             attrs={
                 'class': 'form-check-input stick',
                 'onclick': 'active()',
-                'id': 'is_la'
+                'id': 'is_la',
+                'type': 'radio'
             }
         )
     )
