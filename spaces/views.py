@@ -498,7 +498,9 @@ def landlordNotifications(request, id):
                                             deposit_proposal__gte=landlord_house.house_deposit - landlord_house.house_deposit * 0.1,
                                             area_desire__icontains=landlord_house.house_area,
                                             township_desire__icontains=landlord_house.house_township))
-            clients.append(client) 
+            print(client)
+            clients.append(client)
+        print(client) 
     return render(request, 'spaces/landlord_notifications.html', locals())
     
 @login_required()
