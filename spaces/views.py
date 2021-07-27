@@ -257,6 +257,7 @@ def see_profile(request, id):
         user.is_superuser == 0
         try:
             user.client.user_id != None
+            upper_classes = House.objects.all()
             return render(request, 'spaces/client_profile.html', locals())
         except:
             user.landlord.user_id != None
