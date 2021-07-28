@@ -3,15 +3,15 @@
 {% block title %}Connexion{% endblock %}
 
 {% block navbarbrand1 %}
-    <a class="navbar-brand" id="navbarbrand1" href="#">Nouveautés</a>
+    <a class="navbar-brand" id="navbarbrand1" href="{% url 'spaces:home' %}">Recherche</a>
 {% endblock %}
 
 {% block navlink1 %}
-    <a class="nav-link" href="#" id="navlink1">Forum<span class="sr-only">(current)</span></a>
+    <a class="nav-link" href="#" id="navlink1">Nouveautés</span></a>
 {% endblock %}
 
 {% block navlink2 %}
-    <a class="nav-link" href="{% url 'spaces:signup' %}" id="navlink2">S'enregistrer</a>
+    <a class="navbar-brand" href="{% url 'spaces:signup' %}" id="navlink2">S'enregistrer</a>
 {% endblock %}
 
 {% block navlinkdisabled1 %}
@@ -73,9 +73,9 @@
                     <button style="width: 100%;" type="submit" class="btn btn-primary" name="Connectez vous" value="Connectez vous">
                         Connectez-vous
                     </button>
-                    <hr>
-                    <p style="font-weight: bold;font-size: 10px;" class="text-center">Nouveau sur LOGEIQUE? <a href="{% url 'spaces:signup' %}">Créer un compte ici</a></p>
                 </div>
+                <hr>
+                <p style="font-weight: bold;font-size: 10px;" class="text-center">Nouveau sur LOGEIQUE? <a href="{% url 'spaces:signup' %}">Créer un compte ici</a></p>
             </form>
 
             <div class="text-center">
