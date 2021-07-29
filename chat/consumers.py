@@ -13,7 +13,7 @@ from .models import Room, Message
 class ChatConsumer(AsyncWebsocketConsumer):
     async def websocket_connect(self, event):
         #print("Connected !!!", event)
-
+        
         user = self.scope['user']
         room = self.scope['url_route']['kwargs']
         room_id = room['room_id']

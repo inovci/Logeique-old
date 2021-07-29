@@ -16,9 +16,9 @@
       {% for message in messages %}
         {% if message.user == request.user %}
           <div class='d-flex justify-content-end'>
-            <div class="mycontainer" style="background-color: #303841;color: #fff;border-radius: 20px 0 20px 20px;">
+            <div class="mycontainer" style="background-color: #0069E9;color: #fff;border-radius: 20px 0 20px 20px;">
               <p style="font-size: 15px;">{{message.value}}</p>
-              <span class="time-right" style="font-size: 10px;">{{message.date}}</span>
+              <span class="time-right text-white" style="font-size: 10px;">{{message.date}}</span>
             </div>
           </div>
         {% else %}
@@ -78,7 +78,7 @@
 
     if (chatDataMsg.username === "{{request.user.username}}") {
       chatHolder.append(
-        "<div class='d-flex justify-content-end'><div  class='mycontainer' style='background-color: #303841;color: #fff;border-radius: 20px 0 20px 20px;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
+        "<div class='d-flex justify-content-end'><div  class='mycontainer' style='background-color: #0069E9;color: #fff;border-radius: 20px 0 20px 20px;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right text-white'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
       )
     } else {
       chatHolder.append(
@@ -98,6 +98,7 @@
         'message': msgText
       }
       socket.send(JSON.stringify(finalData));
+      msgInput.val('');
       fromData[0].reset();
     })
   }
@@ -112,8 +113,15 @@
   /*
   $(document).ready(function(e){
     $("#chat-message-input").emojioneArea({
-      pickerPosition: "top"
-    })
-  })
+      pickerPosition: "top",
+      inline: true
+    });
+    $("#chat-message-submit").click(function(e) {
+        e.preventDefault();
+        $(".emojionearea-editor").html('');
+
+    });
+    //$("#cchat-message-input").data("emojioneArea").setText('');
+  });
   */
 </script>
