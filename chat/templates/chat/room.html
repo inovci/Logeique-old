@@ -19,6 +19,7 @@
 
     <!-- For Our Emoji -->
     <link rel="stylesheet" type="text/css" href="{% static 'emoji/emojionearea.css' %}">
+    {% block chat_link %}{% endblock %}
 
     <title>Chat interface</title>
 
@@ -75,27 +76,29 @@
   </head>
   <body style="position: relative;">
     <header class="shadow rounded">
-      <div class="container">
+      <div style="background-color: #5D5B8D;">
         <nav class="navbar navbar-light">
-          {% if request.user.landlord %}
-            <a href="{% url 'spaces:landlord_profile' request.user.id %}" class="navbar-brand">Logeique</a>
-          {% elif request.user.client %}
-            <a href="{% url 'spaces:client_profile' request.user.id %}" class="navbar-brand">Logeique</a>
-          {% endif %}
-
+          <div>
+            {% if request.user.landlord %}
+              <a style="text-decoration: overline;color: #fff;" href="{% url 'spaces:landlord_profile' request.user.id %}" class="navbar-brand">Logeique</a>
+            {% elif request.user.client %}
+              <a style="text-decoration: overline;color: #fff;" href="{% url 'spaces:client_profile' request.user.id %}" class="navbar-brand">Logeique</a>
+            {% endif %}
+          </div>
+          
           <ul class="nav ml-auto">
             <li class="nav-item">
               {% if request.user.landlord %}
-                <a class="nav-link active" href="{% url 'spaces:landlord_profile' request.user.id %}">Accueil</a>
+                <a style="color: #fff;" class="nav-link active" href="{% url 'spaces:landlord_profile' request.user.id %}">Accueil</a>
               {% elif request.user.client %}
-                <a class="nav-link active" href="{% url 'spaces:client_profile' request.user.id %}">Accueil</a>
+                <a style="color: #fff;" class="nav-link active" href="{% url 'spaces:client_profile' request.user.id %}">Accueil</a>
               {% endif %}
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">FAQ</a>
+              <a style="color: #fff;" class="nav-link" href="#">FAQ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Compte</a>
+              <a style="color: #fff;" class="nav-link" href="#">Compte</a>
             </li>
           </ul>
           <i class="fas fa-user-circle"></i>
@@ -105,7 +108,7 @@
     
     <main style="background-color: #f0f0f0; overflow-x: hidden;">
       <div class="row">
-        <div class="col-3" style="height: 90vh;background-color: #181F26;">
+        <div class="col-3" style="height: 90vh;background-color: #3B395E;">
           <div style="padding: 5px;" class="text-white text-center">
             <div class="card-img-top">
               {% if request.user.landlord.avatar %}
@@ -127,10 +130,15 @@
             <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
             <a href="{% url 'spaces:logout' %}" class="nav-link" href="#">Déconnexion</a>
+            <div>
+              {% for room in rooms %}
+                <a href="{% url 'spaces:logout' %}" class="nav-link" href="#">{{room.user2}}</a>
+              {% endfor %}
+            </div>
           </div>
         </div>
         <div class="col-9">
-          <div style="padding: 10px;">
+          <div>
             <div class="tab-content" id="v-pills-tabContent">
               <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <div>

@@ -1,5 +1,11 @@
 {% load static %}
-
+<!--
+{% block chat_link %}
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="{% static 'emoji-picker-main/lib/css/emoji.css' %}" rel="stylesheet">
+{% endblock %}
+-->
+<div class="chat-board">
 {% block display %}
   <div style="padding: 0 5px;" class="d-flex justify-content-between">
     <div>Discussion dans {{ room }}</div>
@@ -11,36 +17,44 @@
     </div>
   </div>
 
-  <div class="chat-board">
-    <div id='chat-items' class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;background: #f0f0f0;border: none;">
-      {% for message in messages %}
-        {% if message.user == request.user %}
-          <div class='d-flex justify-content-end'>
-            <div class="mycontainer" style="background-color: #0069E9;color: #fff;border-radius: 20px 0 20px 20px;">
-              <p style="font-size: 15px;">{{message.value}}</p>
-              <span class="time-right text-white" style="font-size: 10px;">{{message.date}}</span>
-            </div>
+  <div id='chat-items' class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 500px;background: #DDDDF7;border: none;">
+    {% for message in messages %}
+      {% if message.user == request.user %}
+        <div class='d-flex justify-content-end'>
+          <div class="mycontainer" style="background-color: #474B7B;color: #fff;border-radius: 20px 0 20px 20px;max-width: 70%;">
+            <p style="font-size: 15px;">{{message.value}}</p>
+            <span class="time-right text-white" style="font-size: 10px;">{{message.date}}</span>
           </div>
-        {% else %}
-          <div class="d-flex justify-content-start">
-            <div class="mycontainer" style="background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;">
-              <p style="font-size: 15px;">{{message.value}}</p>
-              <span class="time-right" style="font-size: 10px;">{{message.date}}</span>
-            </div>
+        </div>
+      {% else %}
+        <div class="d-flex justify-content-start">
+          <div class="mycontainer" style="background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;max-width: 70%;">
+            <p style="font-size: 15px;">{{message.value}}</p>
+            <span class="time-right" style="font-size: 10px;">{{message.date}}</span>
           </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+        </div>
+      {% endif %}
+    {% endfor %}
   </div>
 {% endblock display %}
+</div>
 
-{% block form %}
-  <form id="form" method="POST">
-    {% csrf_token %}
-    <input type="text" name="message" id="chat-message-input"/>
-    <input type="submit" value="Envoyez" id="chat-message-submit" class="btn btn-primary"/>
-  </form>
-{% endblock form %}
+<div style="font-weight: bold;position: fixed;bottom: 1;width: 95.5%;">
+  {% block form %}
+    <form id="form" method="POST">
+      {% csrf_token %}
+      <!--
+      <p class="lead emoji-picker-container">
+        <input type="text" class="form-control" name="message" id="chat-message-input" data-emoji-input="unicode" data-emojiable="true"/>
+      </p>
+      -->
+      <input class="form-control" type="text" name="message" id="chat-message-input" data-emoji-input="unicode" data-emojiable="true"/>
+      <!--
+      <input type="hidden" value="Envoyez" id="chat-message-submit" class="btn btn-secondary btn-sm"/>
+      -->
+    </form>
+  {% endblock form %}
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script defer src="{% static 'js/moment-with-locales.min.js' %}"></script>
@@ -78,11 +92,11 @@
 
     if (chatDataMsg.username === "{{request.user.username}}") {
       chatHolder.append(
-        "<div class='d-flex justify-content-end'><div  class='mycontainer' style='background-color: #0069E9;color: #fff;border-radius: 20px 0 20px 20px;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right text-white'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
+        "<div class='d-flex justify-content-end'><div  class='mycontainer' style='background-color: #474B7B;color: #fff;border-radius: 20px 0 20px 20px;max-width: 70%;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right text-white'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
       )
     } else {
       chatHolder.append(
-        "<div class='d-flex justify-content-start'><div  class='mycontainer' style='background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
+        "<div class='d-flex justify-content-start'><div  class='mycontainer' style='background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;max-width: 70%;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
       )
     }
 
@@ -111,6 +125,20 @@
     console.log("Close: ", e)
   }
   /*
+  $(function() {
+    // Initializes and creates emoji set from sprite sheet
+    window.emojiPicker = new EmojiPicker({
+      emojiable_selector: '[data-emojiable=true]',
+      assetsPath: '../../../static/emoji-picker-main/lib/img',
+      popupButtonClasses: 'fa fa-smile-o'
+    });
+    // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+    // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+    // It can be called as many times as necessary; previously converted input fields will not be converted again
+    window.emojiPicker.discover();
+  });
+  */
+  /*
   $(document).ready(function(e){
     $("#chat-message-input").emojioneArea({
       pickerPosition: "top",
@@ -125,3 +153,11 @@
   });
   */
 </script>
+
+<!-- ** Don't forget to Add jQuery here ** -->
+<!--
+<script src="{% static 'emoji-picker-main/lib/js/config.js' %}"></script>
+<script src="{% static 'emoji-picker-main/lib/js/util.js' %}"></script>
+<script src="{% static 'emoji-picker-main/lib/js/jquery.emojiarea.js' %}"></script>
+<script src="{% static 'emoji-picker-main/lib/js/emoji-picker.js' %}"></script>
+-->
