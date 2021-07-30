@@ -81,14 +81,14 @@
             <div class="text-center">
                 {% if client_user.is_authenticated %}
                     <p>
-                        Vous êtes connecté client {{ client_user.username }} !
+                        Vous êtes connecté client {{ client_user.last_name }} !
                     </p>
                     <P>
                         <a href="{% url 'spaces:client_profile' client_user.id %}" class="btn btn-lg btn-secondary">Allez à votre compte</a>
                     </P>
                 {% elif landlord_user.is_authenticated %}
                     <p>
-                        Vous êtes connecté propietaire {{ landlord_user.username }}!
+                        Vous êtes connecté propietaire {{ landlord_user.last_name }}!
                     </p>
                     <P>
                         <a href=" {% url 'spaces:landlord_profile' landlord_user.id %}" class="btn btn-lg btn-secondary">

@@ -70,11 +70,14 @@
     <div class="container-fluid">
         <div class="row">
             {% block navigation %}
-                <nav id="sidebarMenu" style="height: 100vh;" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+                <nav id="sidebarMenu" style="min-height: 87vh;background-color: #313A4B;" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
                     <div class="sidebar-sticky pt-3">
                         <div class="text-center">
                             {% if user.landlord.avatar %}
                                 <img style="border-radius: 50%;" width="50%" src="{{user.landlord.avatar.url}}" alt="Image de {{user.username}}">
+                                <div>
+                                    <p style="color: #1CE;font-size: 18px;">Monsieur {{request.user.last_name}}</p>
+                                </div>
                             {% else %}
                                 <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
                             {% endif %}
@@ -83,7 +86,7 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 {% block navitem1 %}
-                                    <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active"
+                                    <a style="color: #fff;" style="border-radius: 5px;" class="btn-outline-secondary nav-link active"
                                         href="{% url 'spaces:landlord_profile' user.id %}">
                                         <span data-feather="home"></span> ACCUEIL <span class="sr-only">(current)</span>
                                     </a>
@@ -91,7 +94,7 @@
                             </li>
                             <li class="nav-item">
                                 {% block navitem2 %}
-                                <a class="nav-link" href="{% url 'spaces:edit_landlord_profile' user.id %}">
+                                <a style="color: #fff;" class="nav-link" href="{% url 'spaces:edit_landlord_profile' user.id %}">
                                     <span data-feather="user"></span>
                                     Modifier profil
                                 </a>
@@ -99,7 +102,7 @@
                             </li>
                             <li class="nav-item">
                                 {% block navitem3 %}
-                                <a class="nav-link" href="{% url 'spaces:add_house' user.id %}">
+                                <a style="color: #fff;" class="nav-link" href="{% url 'spaces:add_house' user.id %}">
                                     <span data-feather="plus"></span>
                                     Ajouter Maisons
                                 </a>
@@ -107,7 +110,7 @@
                             </li>
                             <li class="nav-item">
                                 {% block navitem4 %}
-                                <a class="nav-link" href="{% url 'spaces:landlord_houses' user.id %}">
+                                <a style="color: #fff;" class="nav-link" href="{% url 'spaces:landlord_houses' user.id %}">
                                     <span data-feather="home"></span>
                                     Voir ses Maisons
                                 </a>
@@ -115,7 +118,7 @@
                             </li>
                             <li class="nav-item">
                                 {% block navitem5 %}
-                                <a class="nav-link" href="{% url 'spaces:landlord_clients' user.id %}">
+                                <a style="color: #fff;" class="nav-link" href="{% url 'spaces:landlord_clients' user.id %}">
                                     <span data-feather="users"></span>
                                     Clients
                                 </a>
@@ -123,7 +126,7 @@
                             </li>
                             <li class="nav-item">
                                 {% block navitem6 %}
-                                <a class="nav-link" href="{% url 'spaces:landlord_statistics' user.id %}">
+                                <a style="color: #fff;" class="nav-link" href="{% url 'spaces:landlord_statistics' user.id %}">
                                     <span data-feather="bar-chart-2"></span>
                                     Statistiques
                                 </a>
@@ -131,7 +134,7 @@
                             </li>
                             <li class="nav-item">
                                 {% block navitem7 %}
-                                <a class="nav-link" href="{% url 'spaces:landlord_notifications' user.id %}">
+                                <a style="color: #fff;" class="nav-link" href="{% url 'spaces:landlord_notifications' user.id %}">
                                     <span data-feather="bell"></span>
                                     Notifications
                                 </a>
@@ -159,7 +162,7 @@
                 </nav>
             {% endblock navigation %}
 
-            <main style="background-color: #f0f0f0;" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <main style="background-color: #EDF2F6;" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">{% block h1 %}Espace Proprio{% endblock h1 %}</h1>
@@ -193,6 +196,11 @@
             </main>
         </div>
     </div>
+
+    <div style="background-color: #313A4B;font-weight: bold;position: fixed;bottom: 0;width: 100%;height: 50px;color: #fff;" class="text-center">
+        {% include 'spaces/footers/base_footer.html' %}
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

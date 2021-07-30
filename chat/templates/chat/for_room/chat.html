@@ -8,7 +8,7 @@
 <div class="chat-board">
   {% block display %}
     <div style="padding: 0 5px;" class="d-flex justify-content-between">
-      <div>Discussion dans {{ room }}</div>
+      <div>Discussion avec {% if request.user.landlord %} {{ room.user2.last_name }} {% elif request.user.client %} {{ room.user1.last_name }} {% endif %}</div>
 
       <div>
         {% if request.user.landlord %}
