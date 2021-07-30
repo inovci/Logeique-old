@@ -6,40 +6,42 @@
 {% endblock %}
 -->
 <div class="chat-board">
-{% block display %}
-  <div style="padding: 0 5px;" class="d-flex justify-content-between">
-    <div>Discussion dans {{ room }}</div>
+  {% block display %}
+    <div style="padding: 0 5px;" class="d-flex justify-content-between">
+      <div>Discussion dans {{ room }}</div>
 
-    <div>
-      {% if request.user.landlord %}
-        <input type="button" name="" value="Marché Conclus" class="btn btn-primary">
-      {% endif %}
+      <div>
+        {% if request.user.landlord %}
+          <input type="button" name="" value="Marché Conclus" class="btn btn-primary">
+        {% endif %}
+      </div>
     </div>
-  </div>
 
-  <div id='chat-items' class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 500px;background: #DDDDF7;border: none;">
-    {% for message in messages %}
-      {% if message.user == request.user %}
-        <div class='d-flex justify-content-end'>
-          <div class="mycontainer" style="background-color: #474B7B;color: #fff;border-radius: 20px 0 20px 20px;max-width: 70%;">
-            <p style="font-size: 15px;">{{message.value}}</p>
-            <span class="time-right text-white" style="font-size: 10px;">{{message.date}}</span>
-          </div>
-        </div>
-      {% else %}
-        <div class="d-flex justify-content-start">
-          <div class="mycontainer" style="background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;max-width: 70%;">
-            <p style="font-size: 15px;">{{message.value}}</p>
-            <span class="time-right" style="font-size: 10px;">{{message.date}}</span>
-          </div>
-        </div>
-      {% endif %}
-    {% endfor %}
-  </div>
-{% endblock display %}
+    <div style="height: 500px;">
+      <div id='chat-items' class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 95%;background: #DDDDF7;border: none;">
+        {% for message in messages %}
+          {% if message.user == request.user %}
+            <div class='d-flex justify-content-end'>
+              <div class="mycontainer" style="background-color: #474B7B;color: #fff;border-radius: 20px 0 20px 20px;max-width: 70%;">
+                <p style="font-size: 15px;">{{message.value}}</p>
+                <span class="time-right text-white" style="font-size: 10px;">{{message.date}}</span>
+              </div>
+            </div>
+          {% else %}
+            <div class="d-flex justify-content-start">
+              <div class="mycontainer" style="background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;max-width: 70%;">
+                <p style="font-size: 15px;">{{message.value}}</p>
+                <span class="time-right" style="font-size: 10px;">{{message.date}}</span>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endblock display %}
 </div>
 
-<div style="font-weight: bold;position: fixed;bottom: 1;width: 95.5%;">
+<div style="font-weight: bold;position: fixed;bottom: 10px;width: 100%;">
   {% block form %}
     <form id="form" method="POST">
       {% csrf_token %}
