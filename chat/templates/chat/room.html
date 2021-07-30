@@ -108,7 +108,7 @@
     
     <main style="background-color: #f0f0f0; overflow-x: hidden;">
       <div class="row">
-        <div class="col-3" style="height: 90vh;background-color: #3B395E;">
+        <div class="col-3" style="height: 95vh;background-color: #3B395E;">
           <div style="padding: 5px;" class="text-white text-center">
             <div class="card-img-top">
               {% if request.user.landlord.avatar %}
@@ -125,18 +125,38 @@
             </p>
           </div>
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <!-- On affiche les utilisateurs receveurs des rooms -->
             {% if request.user.landlord %}
+              <!-- Ici on affiche les les utilisateurs receveurs du landlord -->
               {% for room in rooms %}
-                <a style="margin: 0 0.5rem;" class="row" href="{% url 'chat:room' room.id %}">
-                  <div class="col-2">
+                <a style="margin: 0.1rem 0.5rem;text-decoration: none;background-color: #5D5B8D;border-radius: 1rem;" class="row" href="{% url 'chat:room' room.id %}">
+                  <div class="col-3">
                     {% if room.user2.client.avatar %}
-                      <img width="5%" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.client.username}}">
+                      <img style="border-radius: 50%;margin: 5px;" width="120%" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
                     {% else %}
                       <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
                     {% endif %}
                   </div>
-                  <div class="col-10">
-                    <div style="margin: 0 0.5rem;padding-top: 0.5rem;">{{room.user2}}</div>
+                  <div class="col-9">
+                    <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">{{room.user2.last_name}}</div>
+                  </div>
+                </a>
+              {% endfor %}
+            {% elif request.user.client %}
+              <!-- Ici on affiche les les utilisateurs receveurs du client -->
+              {% for room in rooms %}
+                <a style="margin: 0.1rem 0.5rem;text-decoration: none;background-color: #5D5B8D;border-radius: 1rem;" class="row" href="{% url 'chat:room' room.id %}">
+                  <div class="col-3">
+                    {% if room.user1.landlord.avatar %}
+                      <img style="border-radius: 50%;margin: 5px;" width="120%" src="{{room.user1.landlord.avatar.url}}" alt="Image de {{room.user1.username}}">
+                    {% else %}
+                      <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                    {% endif %}
+                  </div>
+                  <div class="col-9">
+                    <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">
+                      {{room.user1.last_name}}
+                    </div>
                   </div>
                 </a>
               {% endfor %}
@@ -146,11 +166,11 @@
             <a style="margin: 0 0.5rem;" href="{% url 'spaces:logout' %}" class="nav-link" href="#">Déconnexion</a>
           </div>
         </div>
-        <div class="col-9">
+        <div class="col-9" style="background-color: #DCDCF6;">
           <div>
             <div class="tab-content" id="v-pills-tabContent">
               <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                <div>
+                <div style="padding: 1rem;">
                   {% include "chat/for_room/chat.html" %}
                 </div>
               </div>
