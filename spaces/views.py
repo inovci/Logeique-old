@@ -489,7 +489,8 @@ def landlordNotifications(request, id):
     clients = [] 
     if landlord_houses != None:
         for landlord_house in landlord_houses:
-            client = Client.objects.get(Q(rent_proposal = landlord_house.house_rent,
+            try:
+                client = Client.objects.get(Q(rent_proposal = landlord_house.house_rent,
                                             deposit_proposal=landlord_house.house_deposit,
                                             area_desire__icontains=landlord_house.house_area,
                                             township_desire__icontains=landlord_house.house_township)|
@@ -499,9 +500,9 @@ def landlordNotifications(request, id):
                                             deposit_proposal__gte=landlord_house.house_deposit - landlord_house.house_deposit * 0.1,
                                             area_desire__icontains=landlord_house.house_area,
                                             township_desire__icontains=landlord_house.house_township))
-            print(client)
-            clients.append(client)
-        print(client) 
+                clients.append(client)
+            except Exception as e:
+                pass
     return render(request, 'spaces/landlord_notifications.html', locals())
     
 @login_required()
