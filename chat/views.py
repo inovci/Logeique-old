@@ -45,7 +45,8 @@ def checkview(request, other_user):
             b - La variable user2 reçoit le client.
         Le but est de mettre en premier le landlord puis en second le client pour faciliter les liens urls.
         """
-        if request.user.landlord:
+        try:
+            request.user.landlord != None
             user1 = get_object_or_404(User, username=request.user)
             user2 = get_object_or_404(User, username=other_user)
             room = Room.objects.create(user1 = user1, user2 = user2)
@@ -56,7 +57,8 @@ def checkview(request, other_user):
             except:
                 user1.client.user_id != None
                 return render(request , 'chat/discuss_with_landlord.html' , locals())
-        elif request.user.client:
+        except:
+            request.user.client != None
             user2 = get_object_or_404(User, username=request.user)
             user1 = get_object_or_404(User, username=other_user)
             room = Room.objects.create(user1 = user1, user2 = user2)

@@ -50,7 +50,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #1C1B22;">
         {% block a1 %}
             <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
             href="{% url 'spaces:landlord_profile' user.id %}">{{user.username}}</a>
@@ -70,7 +70,7 @@
     <div class="container-fluid">
         <div class="row">
             {% block navigation %}
-                <nav id="sidebarMenu" style="min-height: 100vh;background-color: #313A4B;" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <nav id="sidebarMenu" style="min-height: 100vh;background-color: #2C2945;" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
                     <div class="sidebar-sticky pt-3">
                         <div class="text-center">
                             {% if user.landlord.avatar %}
@@ -83,10 +83,10 @@
                             {% endif %}
                         </div>
                         
-                        <ul class="nav flex-column">
+                        <ul class="nav flex-column" style="background-color: #313A4B;border-radius: 5px;">
                             <li class="nav-item">
                                 {% block navitem1 %}
-                                    <a style="color: #fff;" style="border-radius: 5px;" class="btn-outline-secondary nav-link active"
+                                    <a style="border-radius: 5px;color: #fff;" class="btn-outline-secondary nav-link active"
                                         href="{% url 'spaces:landlord_profile' user.id %}">
                                         <span data-feather="home"></span> ACCUEIL <span class="sr-only">(current)</span>
                                     </a>

@@ -50,7 +50,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #1C1B22;">
         {% block a1 %}
             <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
             href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>
@@ -69,7 +69,7 @@
     <div class="container-fluid">
         <div class="row">
             {% block navigation %}
-                <nav id="sidebarMenu" style="height: 100vh;background-color: #313A4B;" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <nav id="sidebarMenu" style="height: 100vh;background-color: #2C2945;" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
                     <div class="sidebar-sticky pt-3">
                         <div class="text-center">
                             {% if user.client.avatar %}
@@ -82,7 +82,7 @@
                             {% endif %}
                         </div>
                         
-                        <ul class="nav flex-column">
+                        <ul class="nav flex-column" style="background-color: #313A4B;border-radius: 5px;">
                             <li class="nav-item">
                                 {% block navitem1 %}
                                     <a  style="border-radius: 5px;color: #fff;" class="btn-outline-secondary nav-link active"
@@ -143,7 +143,7 @@
                     </div>
                 </nav>
             {% endblock navigation %}
-            <main style="background-color: #f0f0f0;" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <main style="background-color: #EDF2F6;" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">{% block h1 %}Espace client{% endblock h1 %}</h1>
@@ -172,11 +172,15 @@
                                   </div>
                                 </nav>
                                 <div class="tab-content" id="nav-tabContent">
-                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;background-color: #4F575E;padding: 1rem;">
+                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
                                         {% include 'spaces/for_client_profile/upper_classes.html' %}
                                     </div>
-                                      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Profile</div>
-                                      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Contact</div>
+                                      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                                        {% include 'spaces/for_client_profile/middle_classes.html' %}
+                                      </div>
+                                      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                                        {% include 'spaces/for_client_profile/lower_classes.html' %}
+                                      </div>
                                 </div>
                             </div>
                         {% endblock %}
@@ -205,6 +209,11 @@
             </main>
         </div>
     </div>
+
+    <div style="background-color: #313A4B;position: fixed;bottom: 0;width: 100%;height: 50px;" class="text-center">
+        {% include 'spaces/footers/base_footer.html' %}
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

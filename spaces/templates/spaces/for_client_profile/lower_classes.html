@@ -1,5 +1,5 @@
 <div class="row">
-    {% for house in upper_classes %}
+    {% for house in lower_classes %}
         <div class="col-md-4">
             <div class="card" style="width: 20rem;height: 20rem;">
                 <ul class="list-group list-group-flush">
@@ -62,7 +62,7 @@
                         </div>
 
                         <div class="text-center">
-                            <a href="" style="width: 50%;" class="btn btn-primary">Allez en négociation</a>
+                            <a href="{% url 'chat:checkview' house.landlord.user %}" style="width: 50%;" class="btn btn-primary">Allez en négociation</a>
                         </div>
                     </div>
                   </div>

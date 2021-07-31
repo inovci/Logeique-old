@@ -112,9 +112,9 @@
           <div style="padding: 5px;" class="text-white text-center">
             <div class="card-img-top">
               {% if request.user.landlord.avatar %}
-                <img style="border-radius: 50%;" width="50%" src="{{request.user.landlord.avatar.url}}" alt="Image de {{request.user.username}}">
+                <img style="border-radius: 50%;" width="100px" height="100px" src="{{request.user.landlord.avatar.url}}" alt="Image de {{request.user.username}}">
               {% elif request.user.client.avatar %}
-                <img width="50%" src="{{request.user.client.avatar.url}}" alt="Image de {{request.user.username}}">
+                <img style="border-radius: 50%;" width="100px" height="100px" src="{{request.user.client.avatar.url}}" alt="Image de {{request.user.username}}">
               {% else %}
                 <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
               {% endif %}
@@ -132,13 +132,15 @@
                 <a style="margin: 0.1rem 0.5rem;text-decoration: none;background-color: #5D5B8D;border-radius: 1rem;" class="row" href="{% url 'chat:room' room.id %}">
                   <div class="col-3">
                     {% if room.user2.client.avatar %}
-                      <img style="border-radius: 50%;margin: 5px;" width="120%" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
+                      <img style="border-radius: 50%;margin: 5px;" width="50px" height="50px" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
                     {% else %}
                       <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
                     {% endif %}
                   </div>
                   <div class="col-9">
-                    <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">{{room.user2.last_name}}</div>
+                    <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">
+                      {{room.user2.last_name}}
+                    </div>
                   </div>
                 </a>
               {% endfor %}
@@ -148,7 +150,7 @@
                 <a style="margin: 0.1rem 0.5rem;text-decoration: none;background-color: #5D5B8D;border-radius: 1rem;" class="row" href="{% url 'chat:room' room.id %}">
                   <div class="col-3">
                     {% if room.user1.landlord.avatar %}
-                      <img style="border-radius: 50%;margin: 5px;" width="120%" src="{{room.user1.landlord.avatar.url}}" alt="Image de {{room.user1.username}}">
+                      <img style="border-radius: 50%;margin: 5px;" width="50px" height="50px" src="{{room.user1.landlord.avatar.url}}" alt="Image de {{room.user1.username}}">
                     {% else %}
                       <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
                     {% endif %}

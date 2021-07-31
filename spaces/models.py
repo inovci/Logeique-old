@@ -23,7 +23,7 @@ class Client(models.Model):
 
 
 class Landlord(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='landlord')
     contact = models.CharField(max_length=50)
     avatar = models.ImageField(null=True, blank=True, upload_to="img/avatars/")
     clients = models.ManyToManyField(Client, related_name="landlords", through="Deal")

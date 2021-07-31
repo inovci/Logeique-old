@@ -4,6 +4,7 @@ from django.urls import reverse
 from .forms import SignUpForm, SignInForm, EditClientForm,EditLandlordForm, AddHouseForm , ClientProposalForm
 from django.contrib.auth.models import User
 from .models import Client, Landlord, House, Deal
+from chat.models import Room
 from django.shortcuts import get_object_or_404, Http404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -11,8 +12,6 @@ import re
 import os
 from PIL import Image 
 from search.forms import SearchForm
-
-
 
 max_height= 540
 max_width= 304
@@ -253,11 +252,22 @@ def sign_in(request):
 def see_profile(request, id):
     form = SearchForm()
     user = User.objects.get(id=id)
+    
     try:
         user.is_superuser == 0
         try:
             user.client.user_id != None
-            upper_classes = House.objects.all()
+            upper_classes = []
+            middle_classes = []
+            lower_classes = []
+            all_classes = House.objects.all()
+            for house in all_classes:
+                if house.house_rent >= 300000:
+                    upper_classes.append(house)
+                elif 70000 <= house.house_rent < 300000:
+                    middle_classes.append(house)
+                elif house.house_rent < 70000:
+                    lower_classes.append(house)
             return render(request, 'spaces/client_profile.html', locals())
         except:
             user.landlord.user_id != None
@@ -486,7 +496,8 @@ def clientStatistics(request, id):
 def landlordNotifications(request, id):
     landlord = Landlord.objects.get(user_id = id)
     landlord_houses = House.objects.filter(landlord = landlord)
-    clients = [] 
+    clients = []
+    clients_in_rooms = Room.objects.filter(user1=request.user) 
     if landlord_houses != None:
         for landlord_house in landlord_houses:
             try:
