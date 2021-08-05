@@ -4,7 +4,7 @@ from django.urls import reverse
 from .forms import SignUpForm, SignInForm, EditClientForm,EditLandlordForm, AddHouseForm , ClientProposalForm
 from django.contrib.auth.models import User
 from .models import Client, Landlord, House, Deal
-from chat.models import Room
+from chat.models import Message, Room
 from django.shortcuts import get_object_or_404, Http404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -494,10 +494,20 @@ def clientStatistics(request, id):
 
 @login_required()
 def landlordNotifications(request, id):
+    try:
+        in_deals = Deal.objects.filter(landlord=request.user.landlord, concluded=False)
+    except:
+        in_deals = None
+    if in_deals != None:
+        try:
+            rooms = Room.objects.filter(user1=request.user)
+        except:
+            rooms = None
+
     landlord = Landlord.objects.get(user_id = id)
     landlord_houses = House.objects.filter(landlord = landlord)
     clients = []
-    clients_in_rooms = Room.objects.filter(user1=request.user) 
+ 
     if landlord_houses != None:
         for landlord_house in landlord_houses:
             try:
@@ -518,6 +528,16 @@ def landlordNotifications(request, id):
     
 @login_required()
 def clientNotifications(request, id):
+    try:
+        in_deals = Deal.objects.filter(client=request.user.client, concluded=False)
+    except:
+        in_deals = None
+    if in_deals != None:
+        try:
+            rooms = Room.objects.filter(user2=request.user)
+        except:
+            rooms = None
+
     client = Client.objects.get(user_id=id)
     houses = House.objects.filter(Q(house_area__icontains=client.area_desire,
                                     house_township__icontains=client.township_desire,
