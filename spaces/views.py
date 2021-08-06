@@ -494,10 +494,12 @@ def clientStatistics(request, id):
 
 @login_required()
 def landlordNotifications(request, id):
+    # On essai de récupérer tous les clients en négociation avec le propriétaire. 
     try:
         in_deals = Deal.objects.filter(landlord=request.user.landlord, concluded=False)
     except:
         in_deals = None
+    # On éssai de récupérer tous les clients en chat avec le propriétaire.
     if in_deals != None:
         try:
             rooms = Room.objects.filter(user1=request.user)
@@ -506,12 +508,11 @@ def landlordNotifications(request, id):
 
     landlord = Landlord.objects.get(user_id = id)
     landlord_houses = House.objects.filter(landlord = landlord)
-    clients = []
  
     if landlord_houses != None:
         for landlord_house in landlord_houses:
             try:
-                client = Client.objects.get(Q(rent_proposal = landlord_house.house_rent,
+                clients = Client.objects.filter(Q(rent_proposal = landlord_house.house_rent,
                                             deposit_proposal=landlord_house.house_deposit,
                                             area_desire__icontains=landlord_house.house_area,
                                             township_desire__icontains=landlord_house.house_township)|
@@ -521,17 +522,20 @@ def landlordNotifications(request, id):
                                             deposit_proposal__gte=landlord_house.house_deposit - landlord_house.house_deposit * 0.1,
                                             area_desire__icontains=landlord_house.house_area,
                                             township_desire__icontains=landlord_house.house_township))
-                clients.append(client)
             except Exception as e:
-                pass
+                raise e
+        print(in_deals)
+        print(clients)
     return render(request, 'spaces/landlord_notifications.html', locals())
     
 @login_required()
 def clientNotifications(request, id):
+    # On éssai de récupérer tous les propriétaires en négociation avec le client.
     try:
         in_deals = Deal.objects.filter(client=request.user.client, concluded=False)
     except:
         in_deals = None
+    # On éssai de récupérer tous les propriétaires en chat avec le client.
     if in_deals != None:
         try:
             rooms = Room.objects.filter(user2=request.user)

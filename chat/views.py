@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect , get_object_or_404
 from chat.models import Room, Message
+from spaces.models import Deal
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -51,6 +52,8 @@ def checkview(request, other_user):
             user2 = get_object_or_404(User, username=other_user)
             room = Room.objects.create(user1 = user1, user2 = user2)
             room.save()
+            deal = Deal.objects.create(client=user2.client, landlord=user1.landlord, concluded=False)
+            deal.save()
             try:
                 user1.landlord.user_id != None
                 return render(request , 'chat/discuss_with_client.html' , locals())
@@ -63,6 +66,8 @@ def checkview(request, other_user):
             user1 = get_object_or_404(User, username=other_user)
             room = Room.objects.create(user1 = user1, user2 = user2)
             room.save()
+            deal = Deal.objects.create(client=user2.client, landlord=user1.landlord, concluded=False)
+            deal.save()
             try:
                 user1.landlord.user_id != None
                 return render(request , 'chat/discuss_with_client.html' , locals())

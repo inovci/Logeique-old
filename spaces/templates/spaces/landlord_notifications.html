@@ -90,9 +90,9 @@
             {% endfor %}
         </div>
     {% elif in_deals %}
-        {% for in_deal in in_deals %}
+        <div class="row">
             {% for client in clients %}
-                {% if client != in_deal.client %}
+                {% if client.user not in rooms %}
                     <div style="padding: 5px;" class="col-xl-6 col-md-6">
                         <div class="card user-card-full" style="width: 100%;">
                             <div class="row m-l-0 m-r-0">
@@ -153,28 +153,27 @@
                             </div>
                         </div>
                     </div>
-                {% elif client == in_deal.client %}
-                    <div class="row">
-                        {% if rooms %}
-                            {% for room in rooms %}
-                                <a href="{% url 'chat:room' room.id %}" class="row" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;background-color: #2B2F3E;border-radius: 1rem;width: 34%;">
-                                    <div class="col-2">
-                                        <img style="border-radius: 50%;" width="50px" height="50px" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
-                                    </div>
-                                    <div class="col-10">
-                                        <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">
-                                            <p>{{room.user2.last_name}}</p>
-                                        </div>
-                                        <div class="text-white" style="font-size: 10px;">
-                                            <p>BBBBBBBBB</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
                 {% endif %}
             {% endfor %}
-        {% endfor %}
+        </div>
     {% endif %}
+    <div class="row">
+        {% if rooms %}
+            {% for room in rooms %}
+                <a href="{% url 'chat:room' room.id %}" class="row" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;background-color: #2B2F3E;border-radius: 1rem;width: 34%;">
+                    <div class="col-3" style="margin: auto 0px;">
+                        <img style="border-radius: 50%;" width="70px" height="70px" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
+                    </div>
+                    <div class="col-9">
+                        <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">
+                            <p>{{room.user2.last_name}}</p>
+                        </div>
+                        <div class="text-white" style="font-size: 10px;">
+                            <p>BBBBBBBBB</p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        {% endif %}
+    </div>
 {% endblock %}
