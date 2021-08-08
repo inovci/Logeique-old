@@ -505,6 +505,11 @@ def landlordNotifications(request, id):
             rooms = Room.objects.filter(user1=request.user)
         except:
             rooms = None
+        # Ici, on rassemble tous les utilisateurs en chat avec le propriétaire dans une liste pour le filtrage dans le template suivant 
+        if rooms:
+            users_in_rooms = []
+            for room in rooms:
+                users_in_rooms.append(room.user2)
 
     landlord = Landlord.objects.get(user_id = id)
     landlord_houses = House.objects.filter(landlord = landlord)
@@ -524,8 +529,7 @@ def landlordNotifications(request, id):
                                             township_desire__icontains=landlord_house.house_township))
             except Exception as e:
                 raise e
-        print(in_deals)
-        print(clients)
+
     return render(request, 'spaces/landlord_notifications.html', locals())
     
 @login_required()
@@ -541,6 +545,11 @@ def clientNotifications(request, id):
             rooms = Room.objects.filter(user2=request.user)
         except:
             rooms = None
+        # Ici, on rassemble tous les utilisateurs en chat avec le client dans une liste pour le filtrage dans le template suivant
+        if rooms:
+            users_in_rooms = []
+            for room in rooms:
+                users_in_rooms.append(room.user1)
 
     client = Client.objects.get(user_id=id)
     houses = House.objects.filter(Q(house_area__icontains=client.area_desire,
