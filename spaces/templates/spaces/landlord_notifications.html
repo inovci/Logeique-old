@@ -89,10 +89,10 @@
                 </div>
             {% endfor %}
         </div>
-    {% elif in_deals %}
+    {% elif in_deals and users_in_rooms %}
         <div class="row">
             {% for client in clients %}
-                {% if client.user not in rooms %}
+                {% if client.user not in users_in_rooms %}
                     <div style="padding: 5px;" class="col-xl-6 col-md-6">
                         <div class="card user-card-full" style="width: 100%;">
                             <div class="row m-l-0 m-r-0">
