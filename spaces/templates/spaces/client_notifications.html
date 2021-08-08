@@ -153,8 +153,10 @@
             {% endfor %}
         </div>
     {% endif %}
-    <div class="row">
-        {% if rooms %}
+    
+    {% if rooms %}
+        <h1>Salles de chat</h1>
+        <div class="row">
             {% for room in rooms %}
                 <a href="{% url 'chat:room' room.id %}" class="row" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;background-color: #2B2F3E;border-radius: 1rem;width: 34%;">
                     <div class="col-3" style="margin: auto 0px;">
@@ -170,6 +172,6 @@
                     </div>
                 </a>
             {% endfor %}
-        {% endif %}
-    </div>
+        </div>
+    {% endif %} 
 {% endblock %}
