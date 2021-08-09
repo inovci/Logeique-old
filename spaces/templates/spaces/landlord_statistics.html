@@ -20,5 +20,30 @@
 {% block content %}
     <div>
         <h1>Vos statistiques.</h1>
+
+        <div>
+            <nav>
+              <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
+                <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Marchés conclus</a>
+                <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Maisons occupées</a>
+                <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Clients à jour</a>
+                <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-client-pas-a-jour" role="tab" aria-controls="nav-client-pas-a-jour" aria-selected="false">Clients pas à jour</a>
+              </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                    Les marchés conclus
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                    Les maisons occupées
+                </div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                    Les clients à jour
+                </div>
+                <div class="tab-pane fade" id="nav-client-pas-a-jour" role="tabpanel" aria-labelledby=nav-client-pas-a-jour-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                    Les clients pas à jour
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

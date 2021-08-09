@@ -15,12 +15,11 @@
     </a>
 {% endblock navitem5 %}
 
-{% block h1 %}Notifications client{% endblock h1 %}
+{% block h1 %}Négociations/Notifications{% endblock h1 %}
 
 {% block content %}
-    <h1>Notifications</h1>
-
     {% if in_deals is None %}
+        <h1>Notifications</h1>
         <div class="row" style="padding: 20px;">
             {% for house in houses %}
                 <div style="padding: 5px;" class="col-xl-6 col-md-12">
@@ -155,7 +154,7 @@
     {% endif %}
     
     {% if rooms %}
-        <h1>Salles de chat</h1>
+        <h1>Salles de Négociations</h1>
         <div class="row">
             {% for room in rooms %}
                 <div class="col-4">

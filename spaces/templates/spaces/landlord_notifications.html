@@ -15,16 +15,17 @@
     </a>
 {% endblock navitem7 %}
 
-{% block h1 %}Vos notifications{% endblock h1 %}
+{% block h1 %}Négociations/Notifications{% endblock h1 %}
 
 {% block content %}
     {% if not clients %}
         <div>
-            <h1>Nous vous informerons si il y'a du nouveau</h1>
+            <h1>Nous vous informerons si il y'a du nouveau.</h1>
         </div>
     {% endif %}
 
     {% if in_deals is None %}
+        <h1>Notifications</h1>
         <div class="row" style="padding: 20px;">
             {% for client in clients %}
                 <div style="padding: 5px;" class="col-xl-6 col-md-6">

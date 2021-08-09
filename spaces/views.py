@@ -489,6 +489,7 @@ def landlordStatistics(request, id):
     
 @login_required()
 def clientStatistics(request, id):
+    deals_done = None
     return render(request ,'spaces/client_statistics.html' , locals())
 
 
