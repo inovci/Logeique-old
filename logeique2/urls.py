@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('spaces.urls', namespace='spaces')),
     path('search/', include('search.urls', namespace='search')),
     path('chat/', include('chat.urls', namespace='chat')),
+    path('api/', include('api.urls', namespace='api'))
     #path('', include('pwa.urls'))
 ]
 
