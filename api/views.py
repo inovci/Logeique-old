@@ -5,14 +5,19 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.views import APIView
 
-from .serializers import MessageSerializer
-from chat.models import Message
+from .serializers import MessageSerializer, RoomSerializer
+from chat.models import Message, Room
 from django.contrib.auth.models import User
 
 
 class MessagesListView(generics.ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
+
+
+class RoomListView(generics.ListAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
 
 
 class MessageDetailView(APIView):
@@ -28,6 +33,19 @@ class MessageDetailView(APIView):
         serializer = MessageSerializer(message)
         return Response(serializer.data)
 
+
+class RoomDetailView(APIView):
+
+    def get_object(self, id):
+        try:
+            return Room.objects.get(id=id)
+        except Room.DoesNotExist:
+            raise Http404
+
+    def get(self, request, id, format=None):
+        room = self.get_object(id)
+        serializer = RoomSerializer(room)
+        return Response(serializer.data)
 
 class GetUserMessagesView(APIView):
 
@@ -45,4 +63,25 @@ class GetUserMessagesView(APIView):
     def get(self, request, user, format=None):
         user_messages = self.get_object(user)
         serializer = MessageSerializer(user_messages, many=True)
+        return Response(serializer.data)
+
+
+class GetUserRoomsView(APIView):
+
+    def get_object(self, user):
+        try:
+            user = User.objects.get(username=user)
+        except Exception as e:
+            raise e
+        if user:
+            try:
+                user.landlord != None
+                return Room.objects.filter(user1=user)
+            except:
+                user.client != None
+                return Room.objects.filter(user2=user)
+
+    def get(self, request, user, format=None):
+        user_rooms = self.get_object(user)
+        serializer = RoomSerializer(user_rooms, many=True)
         return Response(serializer.data)
