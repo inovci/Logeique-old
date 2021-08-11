@@ -175,58 +175,37 @@
                                 <p>{{room.user2.last_name}}</p>
                             </div>
                             <div class="text-white" style="font-size: 10px;">
-                                <p id="lastest-user-message">BBBBBBBBB</p>
+                                <p id="lastest-user-message-{{room.id}}"></p>
                             </div>
                         </div>
                     </a>
                 </div>
+
+                <script type="text/javascript">                   
+                    fetch(
+                        "http://127.0.0.1:8000/api/rooms/messages/latest/{{room.id}}/{{room.user2}}/", 
+                        {
+                            method: "GET",
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json"
+                        },
+                    }).then((response) => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                        })
+                        .then((data) => {
+                            console.log(data);
+                            const msg = document.getElementById("lastest-user-message-{{room.id}}");
+                            msg.innerHTML = data.value;
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                </script>
             {% endfor %}
         </div>
-
-        <script type="text/javascript">
-            /*
-            $.ajax({
-                type: 'GET',
-                url: 'http://127.0.0.1:8000/api/rooms/messages/latest/1/landlord-1/',
-                dataType: 'json',
-                success: function(res){
-                    console.log(res)
-                },
-                error: function(error) {
-                    callbackErr(error,self)
-                }
-            })
-            */
-            var msg = document.getElementById("lastest-user-message");
-            var room_id = $("#room-id")
-            var user_room = $("#user-room")
-            var id = room_id.val()
-            var user = user_room.val()
-            console.log(id)
-            console.log(user)
-            
-            const requestOptions = {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-            };
-            
-            let data;
-            fetch("http://127.0.0.1:8000/api/rooms/messages/latest/1/landlord-1/", requestOptions)
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                })
-                .then((data) => {
-                    console.log(data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        </script>    
     {% endif %}
 {% endblock %}
 

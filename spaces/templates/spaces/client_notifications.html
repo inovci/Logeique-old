@@ -167,11 +167,35 @@
                                 <p style="font-style: bold;">{{room.user1.last_name}}</p>
                             </div>
                             <div class="text-white" style="font-size: 10px;">
-                                <p>Last message</p>
+                                <p id="lastest-user-message-{{room.id}}"></p>
                             </div>
                         </div>
                     </a>
                 </div>
+
+                <script type="text/javascript">                   
+                    fetch(
+                        "http://127.0.0.1:8000/api/rooms/messages/latest/{{room.id}}/{{room.user1}}/", 
+                        {
+                            method: "GET",
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json"
+                        },
+                    }).then((response) => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                        })
+                        .then((data) => {
+                            console.log(data);
+                            const msg = document.getElementById("lastest-user-message-{{room.id}}");
+                            msg.innerHTML = data.value;
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                </script>
             {% endfor %}
         </div>
     {% endif %} 
