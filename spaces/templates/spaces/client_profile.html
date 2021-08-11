@@ -50,7 +50,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #002637;">
+    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #247583;">
         {% block a1 %}
             <a style="font-size: 30px;" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>
         {% endblock a1 %}
@@ -208,10 +208,6 @@
                 </div>
             </main>
         </div>
-    </div>
-
-    <div style="background-color: #313A4B;position: fixed;bottom: 0;width: 100%;height: 50px;" class="text-center">
-        {% include 'spaces/footers/base_footer.html' %}
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
