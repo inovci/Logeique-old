@@ -48,6 +48,7 @@ class RoomDetailView(APIView):
         serializer = RoomSerializer(room)
         return Response(serializer.data)
 
+
 class GetUserMessagesView(APIView):
 
     def get_object(self, user):
