@@ -1,3 +1,4 @@
+from django.core.checks import messages
 from django.shortcuts import render
 from django.http import Http404
 from rest_framework.response import Response
@@ -84,4 +85,45 @@ class GetUserRoomsView(APIView):
     def get(self, request, user, format=None):
         user_rooms = self.get_object(user)
         serializer = RoomSerializer(user_rooms, many=True)
+        return Response(serializer.data)
+
+
+class GetUserRoomMessageView(APIView):
+
+    def get_object(self, id, user):
+        try:
+            room = Room.objects.get(id=id)
+            user = User.objects.get(username=user)
+        except Exception as e:
+            raise e
+        if room and user:
+            try:
+                return Message.objects.filter(user=user, room=room)
+            except Exception as e:
+                raise e
+
+    def get(self, request, id, user, format=None):
+        user_room_messages = self.get_object(id, user)
+        serializer = MessageSerializer(user_room_messages, many=True)
+        return Response(serializer.data)
+
+
+class GetUserRoomLatestMessageView(APIView):
+
+    def get_object(self, id, user):
+        try:
+            room = Room.objects.get(id=id)
+            user = User.objects.get(username=user)
+        except Exception as e:
+            raise e
+        if room and user:
+            try:
+                messages = Message.objects.filter(user=user, room=room)
+                return messages.latest('id')
+            except Exception as e:
+                raise e
+
+    def get(self, request, id, user, format=None):
+        user_room_messages = self.get_object(id, user)
+        serializer = MessageSerializer(user_room_messages)
         return Response(serializer.data)
