@@ -25,7 +25,7 @@
         <div class="col-md-3"></div>
 
         <div class="col-md-6">
-            <form style="padding: 3rem;" class="card" method="post" action="{% url 'spaces:edit_landlord_profile' user.id %}" enctype="multipart/form-data">
+            <form style="padding: 3rem;border: solid 0.1em;" class="card" method="post" action="{% url 'spaces:edit_landlord_profile' user.id %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     {{form.username.label}}
