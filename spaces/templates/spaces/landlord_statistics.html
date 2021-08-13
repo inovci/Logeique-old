@@ -1,5 +1,5 @@
 {% extends "spaces/landlord_profile.html" %}
-
+{% load static %}
 {% block title %}Statistiques{% endblock %}
 
 {% block navitem1 %}
@@ -23,24 +23,69 @@
         <div>
             <nav>
               <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
-                <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Marchés conclus</a>
-                <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Maisons occupées</a>
-                <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Clients à jour</a>
+                <a class="nav-link active" id="nav-markets-tab" data-toggle="tab" href="#nav-markets" role="tab" aria-controls="nav-markets" aria-selected="true">Marchés conclus</a>
+                <a class="nav-link" id="nav-houses-tab" data-toggle="tab" href="#nav-houses" role="tab" aria-controls="nav-houses" aria-selected="false">Maisons occupées</a>
+                <a class="nav-link" id="nav-clients-tab" data-toggle="tab" href="#nav-clients" role="tab" aria-controls="nav-clients" aria-selected="false">Clients à jour</a>
                 <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-client-pas-a-jour" role="tab" aria-controls="nav-client-pas-a-jour" aria-selected="false">Clients pas à jour</a>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                <div class="tab-pane fade show active" id="nav-markets" role="tabpanel" aria-labelledby="nav-markets-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
                     Les marchés conclus
                 </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
-                    Les maisons occupées
+                <div class="tab-pane fade" id="nav-houses" role="tabpanel" aria-labelledby="nav-houses-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                    <div class="card" style="width: 25rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                                </div>
+                                <div class="col-10">
+                                    <header>Client Names occupe cette maison</header>
+                                    <hr>
+                                    <img style="max-height: 100%;max-width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;" src="{% static '03_Houses-of-the-future-vitaglass-house.jpg' %}" alt="Card image cap">
+                                </div>
+                            </div>
+                            <hr>
+                            <a href="#" class="card-link">Plus de détails</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
-                    Les clients à jour
+                <div class="tab-pane fade" id="nav-clients" role="tabpanel" aria-labelledby="nav-clients-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                    <div class="card" style="width: 25rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                                </div>
+                                <div class="col-10">
+                                    <header>Client Names</header>
+                                    <hr>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <a href="#" class="card-link">Chatter</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="nav-client-pas-a-jour" role="tabpanel" aria-labelledby=nav-client-pas-a-jour-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
-                    Les clients pas à jour
+                    <div class="card" style="width: 25rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                                </div>
+                                <div class="col-10">
+                                    <header>Client Names</header>
+                                    <hr>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <a href="#" class="card-link">Chatter</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

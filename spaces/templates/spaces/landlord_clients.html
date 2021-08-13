@@ -18,82 +18,108 @@
 {% block content %}
 <div>
     {% if no_client_err %}
-    <p>Vous n'avez aucun client pour l'instant</p>
-    <p>Ici est la page ou seront affichés tous les clients qui résident dans vos maisons actuelles</p>
-    <p>Si vous n'avez aucun client affiché c'est parceque vous n'avez pas encore négocié avec un client sur la
-        plateforme</p>
-    <p>Voici comment s'y prender en quelques etapes
-    <ol>
-        <li>
-            allez à notifications
-        </li>
-        <li>
-            Voir si vous avez des clients
-            si oui:
-            <ol>
-                <li>
-                    appuyez sur le bouton négocier
-                </li>
-                <li>
-                    appuyez sur le bouton discuter
-                </li>
-                <li>
-                    Envoyez des messages au client
-                </li>
-                <li>
-                    Si vous vous etes entendus appuyez sur le bouton succes
-                </li>
-            </ol>
-            si non:
-            Attendez vos notifications , ajoutez d'autres maisons ou rechercher des potentiels intéressés de vos types
-            de maisons
-        </li>
-    </ol>
-    </p>
+    <div>
+        <nav>
+          <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
+            <a class="nav-link" id="nav-tuto-tab" data-toggle="tab" href="#nav-tuto" role="tab" aria-controls="nav-tuto" aria-selected="true">Tuto</a>
+            <a class="nav-link active" id="nav-clients-tab" data-toggle="tab" href="#nav-clients" role="tab" aria-controls="nav-clients" aria-selected="false">Clients</a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade" id="nav-tuto" role="tabpanel" aria-labelledby="nav-tuto-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                <p>Vous n'avez aucun client pour l'instant</p>
+                <p>Ici est la page ou seront affichés tous les clients qui résident dans vos maisons actuelles</p>
+                <p>Si vous n'avez aucun client affiché c'est parceque vous n'avez pas encore négocié avec un client sur la plateforme</p>
+                <p>
+                    Voici comment s'y prender en quelques etapes
+                    <ol>
+                        <li>
+                            allez à notifications
+                        </li>
+                        <li>
+                            Voir si vous avez des clients
+                            si oui:
+                            <ol>
+                                <li>
+                                    appuyez sur le bouton négocier
+                                </li>
+                                <li>
+                                    appuyez sur le bouton discuter
+                                </li>
+                                <li>
+                                    Envoyez des messages au client
+                                </li>
+                                <li>
+                                    Si vous vous etes entendus appuyez sur le bouton succes
+                                </li>
+                            </ol>
+                            si non:
+                            Attendez vos notifications , ajoutez d'autres maisons ou rechercher des potentiels intéressés de vos types
+                            de maisons
+                        </li>
+                    </ol>
+                </p>
+            </div>
+            <div class="tab-pane fade show active" id="nav-clients" role="tabpanel" aria-labelledby="nav-clients-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                <div class="card" style="width: 25rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2">
+                                <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                            </div>
+                            <div class="col-10">
+                                <header>Names</header>
+                                <hr>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <a href="#" class="card-link">Chatter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     {% else %}
-    <table class="table table-borderless table-dark">
-        <thead>
-            <tr>
-                <th scope="col">{{current_year}}</th>
-                <th scope="col">Janvier</th>
-                <th scope="col">Fevrier</th>
-                <th scope="col">Mars</th>
-                <th scope="col">Avril</th>
-                <th scope="col">Mai</th>
-                <th scope="col">Juin</th>
-                <th scope="col">Juillet</th>
-                <th scope="col">Aout</th>
-                <th scope="col">Septembre</th>
-                <th scope="col">Octobre</th>
-                <th scope="col">Novembre</th>
-                <th scope="col">Decembre</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for client in landlord_clients %}
-
-            <tr>
-                <th scope="row">{{client.user.username}}</th>
-                <td><input type="checkbox" value="" id="janCheck"></td>
-                <td><input type="checkbox" value="" id="febCheck"></td>
-                <td><input type="checkbox" value="" id="marCheck"></td>
-                <td><input type="checkbox" value="" id="aprCheck"></td>
-                <td><input type="checkbox" value="" id="mayCheck"></td>
-                <td><input type="checkbox" value="" id="junCheck"></td>
-                <td><input type="checkbox" value="" id="julCheck"></td>
-                <td><input type="checkbox" value="" id="auCheck"></td>
-                <td><input type="checkbox" value="" id="sepCheck"></td>
-                <td><input type="checkbox" value="" id="octCheck"></td>
-                <td><input type="checkbox" value="" id="novCheck"></td>
-                <td><input type="checkbox" value="" id="decCheck"></td>
-            </tr>
-
-
-            {% endfor %}
-
-        </tbody>
-    </table>
+        <table class="table table-borderless table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">{{current_year}}</th>
+                    <th scope="col">Janvier</th>
+                    <th scope="col">Fevrier</th>
+                    <th scope="col">Mars</th>
+                    <th scope="col">Avril</th>
+                    <th scope="col">Mai</th>
+                    <th scope="col">Juin</th>
+                    <th scope="col">Juillet</th>
+                    <th scope="col">Aout</th>
+                    <th scope="col">Septembre</th>
+                    <th scope="col">Octobre</th>
+                    <th scope="col">Novembre</th>
+                    <th scope="col">Decembre</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in landlord_clients %}
+                    <tr>
+                        <th scope="row">{{client.user.username}}</th>
+                        <td><input type="checkbox" value="" id="janCheck"></td>
+                        <td><input type="checkbox" value="" id="febCheck"></td>
+                        <td><input type="checkbox" value="" id="marCheck"></td>
+                        <td><input type="checkbox" value="" id="aprCheck"></td>
+                        <td><input type="checkbox" value="" id="mayCheck"></td>
+                        <td><input type="checkbox" value="" id="junCheck"></td>
+                        <td><input type="checkbox" value="" id="julCheck"></td>
+                        <td><input type="checkbox" value="" id="auCheck"></td>
+                        <td><input type="checkbox" value="" id="sepCheck"></td>
+                        <td><input type="checkbox" value="" id="octCheck"></td>
+                        <td><input type="checkbox" value="" id="novCheck"></td>
+                        <td><input type="checkbox" value="" id="decCheck"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
-
 </div>
 {% endblock %}

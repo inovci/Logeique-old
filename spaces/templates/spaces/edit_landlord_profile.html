@@ -25,99 +25,101 @@
         <div class="col-md-3"></div>
 
         <div class="col-md-6">
-            <form style="padding: 3rem;border: solid 0.1em;" class="card" method="post" action="{% url 'spaces:edit_landlord_profile' user.id %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                    {{form.username.label}}
-                    {{form.username}}
-                    {% if no_username_msg %}
-                        <p><strong>Pseudo non changé</strong></p>
-                    {% elif yes_username_msg %}
-                        <p><strong>Pseudo changé</strong></p>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    {{form.first_name.label}}
-                    {{form.first_name}}
-                    {% if no_first_name_msg %}
-                        <p><strong>Prenom non changé</strong></p>
-                    {% elif yes_first_name_msg %}
-                        <p><strong>Prenom changé</strong></p>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    {{form.last_name.label}}
-                    {{form.last_name}}
-                    {% if no_last_name_msg %}
-                        <p><strong>Nom non changé</strong></p>
-                    {% elif yes_last_name_msg %}
-                        <p><strong>Nom changé</strong></p>
-                    {% endif %}
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        {{form.contact.label}}
-                        {{form.contact}}
-                        {% if no_contact_msg %}
-                            <p><strong>Contact non changé</strong></p>
-                        {% elif yes_contact_msg %}
-                            <p><strong>Contact changé</strong></p>
+            <div class="card" style="border: solid 0.1rem #DFDFDF;">
+                <form style="padding: 3rem;" method="post" action="{% url 'spaces:edit_landlord_profile' user.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{form.username.label}}
+                        {{form.username}}
+                        {% if no_username_msg %}
+                            <p><strong>Pseudo non changé</strong></p>
+                        {% elif yes_username_msg %}
+                            <p><strong>Pseudo changé</strong></p>
                         {% endif %}
                     </div>
 
-                    <div class="form-group col-md-6">
-                        {{form.email.label}}
-                        {{form.email}}
-                        {% if no_email_msg %}
-                            <p><strong>Email non changé</strong></p>
-                        {% elif yes_email_msg %}
-                            <p><strong>Email changé</strong></p>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        {{form.password.label}}
-                        {{form.password}}
-                        {% if no_pass_msg %}
-                            <p><strong>Mot de passe non changé</strong></p>
+                    <div class="form-group">
+                        {{form.first_name.label}}
+                        {{form.first_name}}
+                        {% if no_first_name_msg %}
+                            <p><strong>Prenom non changé</strong></p>
+                        {% elif yes_first_name_msg %}
+                            <p><strong>Prenom changé</strong></p>
                         {% endif %}
                     </div>
 
-
-                    <div class="form-group col-md-6">
-                        {{form.password_verification.label}}
-                        {{form.password_verification}}
-                        {% if error_pass_no_match %}
-                            <p><strong>Les mots de passes entrés ne correspondent pas.</strong></p>
-                        {% elif yes_pass_msg %}
-                            <p><strong>Mot de passe changé</strong></p>
+                    <div class="form-group">
+                        {{form.last_name.label}}
+                        {{form.last_name}}
+                        {% if no_last_name_msg %}
+                            <p><strong>Nom non changé</strong></p>
+                        {% elif yes_last_name_msg %}
+                            <p><strong>Nom changé</strong></p>
                         {% endif %}
                     </div>
-                </div>
 
-                <p>
-                    {{form.avatar.label}}
-                    {{form.avatar}}
-                    {% if avatar_added_err %}
-                        <p><strong>Aucun avatar ajouté.</strong></p>
-                    {% elif avatar_added %}
-                        <p><strong>Avatar ajouté</strong></p>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{form.contact.label}}
+                            {{form.contact}}
+                            {% if no_contact_msg %}
+                                <p><strong>Contact non changé</strong></p>
+                            {% elif yes_contact_msg %}
+                                <p><strong>Contact changé</strong></p>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            {{form.email.label}}
+                            {{form.email}}
+                            {% if no_email_msg %}
+                                <p><strong>Email non changé</strong></p>
+                            {% elif yes_email_msg %}
+                                <p><strong>Email changé</strong></p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{form.password.label}}
+                            {{form.password}}
+                            {% if no_pass_msg %}
+                                <p><strong>Mot de passe non changé</strong></p>
+                            {% endif %}
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            {{form.password_verification.label}}
+                            {{form.password_verification}}
+                            {% if error_pass_no_match %}
+                                <p><strong>Les mots de passes entrés ne correspondent pas.</strong></p>
+                            {% elif yes_pass_msg %}
+                                <p><strong>Mot de passe changé</strong></p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <p>
+                        {{form.avatar.label}}
+                        {{form.avatar}}
+                        {% if avatar_added_err %}
+                            <p><strong>Aucun avatar ajouté.</strong></p>
+                        {% elif avatar_added %}
+                            <p><strong>Avatar ajouté</strong></p>
+                        {% endif %}
+                    </p>
+
+                    <div class="text-center"><input class="btn btn-primary" style="width: 50%;" type="submit" value="Modifier" /></div>
+                    
+                    <!--
+                    {% if user.client.user_id != None %}
+                        <a href="{% url 'spaces:landlord_profile' user.id %}"> Retournez à votre profil</a>
                     {% endif %}
-                </p>
-
-                <div class="text-center"><input class="btn btn-primary" style="width: 50%;" type="submit" value="Modifier" /></div>
-                
-                <!--
-                {% if user.client.user_id != None %}
-                    <a href="{% url 'spaces:landlord_profile' user.id %}"> Retournez à votre profil</a>
-                {% endif %}
-                -->
-            </form>
+                    -->
+                </form>
+            </div>
         </div>
 
         <div class="col-md-3"></div>
