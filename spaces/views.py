@@ -441,7 +441,7 @@ def add_house(request, id):
     return render(request, 'spaces/add_house.html', locals())
 
 
-def client_proposal(request, id):
+def client_proposal(request):
     form = ClientProposalForm()
     if request.method == 'POST':
         form = ClientProposalForm(request.POST, request.FILES)
@@ -454,20 +454,49 @@ def client_proposal(request, id):
             house_rooms_number = form.cleaned_data['house_rooms_number']
 
             #client = Client.objects.get(user_id=id)
-            client = Proposal.objects.get(client=request.user.client)
-            client.area_desire = house_area
-            client.township_desire = house_township
-            client.rent_proposal = house_rent
-            client.deposit_proposal = house_deposit
-            client.kind_desire = house_kind
-            client.rooms_number_desire = house_rooms_number
-            client.save()
-            form = ClientProposalForm()
+            client = Proposal(
+                client=request.user.client,
+                area_desire=house_area,
+                township_desire=house_township,
+                rent_proposal=house_rent,
+                deposit_proposal=house_deposit,
+                kind_desire=house_kind,
+                rooms_number_desire=house_rooms_number
+            )
+
+            if client:
+                client.save()
+                form = ClientProposalForm()
             return render(request, 'spaces/client_proposal.html', locals())
-        else:
-            return render(request, 'spaces/client_proposal.html', locals())
+    proposals = Proposal.objects.filter(client=request.user.client)
     return render(request, 'spaces/client_proposal.html', locals())
 
+
+def clientUpdateProposal(request, proposal_id):
+
+    if request.method == 'POST':
+        form = ClientProposalForm(request.POST, request.FILES)
+        if form.is_valid():
+            house_area = form.cleaned_data['house_area']
+            house_township = form.cleaned_data['house_township']
+            house_rent = form.cleaned_data['house_rent']
+            house_deposit = form.cleaned_data['house_deposit']
+            house_kind = form.cleaned_data['house_kind']
+            house_rooms_number = form.cleaned_data['house_rooms_number']
+
+            #client = Client.objects.get(user_id=id)
+            client = Proposal.objects.get(id=proposal_id,client=request.user.client)
+
+            if client:
+                client.area_desire=house_area
+                client.township_desire=house_township
+                client.rent_proposal=house_rent
+                client.deposit_proposal=house_deposit
+                client.kind_desire=house_kind
+                client.rooms_number_desire=house_rooms_number
+                client.save()
+                print(client)
+                return redirect('spaces:client_proposal')
 
 
 def log_out(request):
@@ -519,7 +548,7 @@ def landlordNotifications(request, id):
     if landlord_houses != None:
         for landlord_house in landlord_houses:
             try:
-                clients = Client.objects.filter(Q(rent_proposal = landlord_house.house_rent,
+                clients = Proposal.objects.filter(Q(rent_proposal = landlord_house.house_rent,
                                             deposit_proposal=landlord_house.house_deposit,
                                             area_desire__icontains=landlord_house.house_area,
                                             township_desire__icontains=landlord_house.house_township)|
@@ -553,18 +582,20 @@ def clientNotifications(request, id):
             for room in rooms:
                 users_in_rooms.append(room.user1)
 
-    client = Client.objects.get(user_id=id)
-    houses = House.objects.filter(Q(house_area__icontains=client.area_desire,
-                                    house_township__icontains=client.township_desire,
-                                    house_deposit=client.deposit_proposal,
-                                    house_rent=client.rent_proposal)|
-                                Q(house_area__icontains=client.area_desire,
-                                    house_township__icontains=client.township_desire,
-                                    house_deposit__lte=client.deposit_proposal + client.deposit_proposal * 0.1,
-                                    house_deposit__gte=client.deposit_proposal - client.deposit_proposal * 0.1,
-                                    house_rent__lte=client.rent_proposal + client.rent_proposal * 0.1,
-                                    house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1 ))
-                                     #Meaning more or less 10 percent of the initial value
+    houses = []
+    proposals = Proposal.objects.filter(client=request.user.client)
+    for client in proposals:
+        houses.append(House.objects.filter(Q(house_area__icontains=client.area_desire,
+                                        house_township__icontains=client.township_desire,
+                                        house_deposit=client.deposit_proposal,
+                                        house_rent=client.rent_proposal)|
+                                    Q(house_area__icontains=client.area_desire,
+                                        house_township__icontains=client.township_desire,
+                                        house_deposit__lte=client.deposit_proposal + client.deposit_proposal * 0.1,
+                                        house_deposit__gte=client.deposit_proposal - client.deposit_proposal * 0.1,
+                                        house_rent__lte=client.rent_proposal + client.rent_proposal * 0.1,
+                                        house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1 )))
+    print(houses)    
     if houses == None:
         no_houses_error = True
     return render(request ,'spaces/client_notifications.html' , locals())
