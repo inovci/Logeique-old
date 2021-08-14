@@ -170,19 +170,19 @@
                                 <div>
                                     <nav>
                                     <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
-                                        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Classes Hautes</a>
-                                        <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Classes Moyennes</a>
-                                        <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Classes basses</a>
+                                        <a class="nav-link active" id="nav-big-classes-tab" data-toggle="tab" href="#nav-big-classes" role="tab" aria-controls="nav-big-classes" aria-selected="true">Classes Hautes</a>
+                                        <a class="nav-link" id="nav-middle-classes-tab" data-toggle="tab" href="#nav-middle-classes" role="tab" aria-controls="nav-middle-classes" aria-selected="false">Classes Moyennes</a>
+                                        <a class="nav-link" id="nav-lower-classes-tab" data-toggle="tab" href="#nav-lower-classes" role="tab" aria-controls="nav-lower-classes" aria-selected="false">Classes basses</a>
                                     </div>
                                     </nav>
                                     <div class="tab-content" id="nav-tabContent">
-                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                                        <div class="tab-pane fade show active" id="nav-big-classes" role="tabpanel" aria-labelledby="nav-big-classes-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
                                             {% include 'spaces/for_client_profile/upper_classes.html' %}
                                         </div>
-                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                                        <div class="tab-pane fade" id="nav-middle-classes" role="tabpanel" aria-labelledby="nav-middle-classes-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
                                             {% include 'spaces/for_client_profile/middle_classes.html' %}
                                         </div>
-                                        <div class="tab-pane fade container-fluid" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                                        <div class="tab-pane fade container-fluid" id="nav-lower-classes" role="tabpanel" aria-labelledby="nav-lower-classes-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
                                             {% include 'spaces/for_client_profile/lower_classes.html' %}
                                         </div>
                                     </div>

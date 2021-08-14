@@ -7,20 +7,28 @@ from datetime import datetime
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='client')
     contact = models.CharField(max_length=50)
-    rent_proposal = models.BigIntegerField(null=True)
-    deposit_proposal = models.BigIntegerField(null=True)
-    kind_desire = models.CharField(max_length=50 , null=True , default=None)
-    rooms_number_desire = models.IntegerField(null=True, default=None)
-    area_desire = models.CharField(max_length=50 ,null=True ,  default=None)
-    township_desire = models.CharField(max_length=50 ,null=True , default = None )
     avatar = models.ImageField(null=True, blank=True, upload_to="img/avatars/")
 
-    """def __str__(self):
-        return f'{self.user}'"""
-
     class Meta():
-        ordering = ['user', 'rent_proposal', 'deposit_proposal', 'contact']
+        ordering = ['user', 'contact']
 
+    def __str__(self):
+        return f"{self.user} - {self.contact}"
+
+class Proposal(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="proposals")
+    rent_proposal = models.BigIntegerField(null=True)
+    deposit_proposal = models.BigIntegerField(null=True)
+    kind_desire = models.CharField(max_length=50, null=True, default=None)
+    rooms_number_desire = models.IntegerField(null=True, default=None)
+    area_desire = models.CharField(max_length=50 ,null=True, default=None)
+    township_desire = models.CharField(max_length=50 ,null=True, default=None)
+    
+    class Meta():
+        ordering = ['client', 'rent_proposal', 'deposit_proposal']
+
+    def __str__(self):
+        return f"{self.id} - {self.client}"
 
 class Landlord(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='landlord')
@@ -28,12 +36,11 @@ class Landlord(models.Model):
     avatar = models.ImageField(null=True, blank=True, upload_to="img/avatars/")
     clients = models.ManyToManyField(Client, related_name="landlords", through="Deal")
 
-    """def __str__(self):
-        return f'{self.user}'"""
-
     class Meta():
         ordering = ['user', 'contact']
 
+    def __str__(self):
+        return f"{self.user} - {self.contact}"
 
 class House(models.Model):
     house_township = models.CharField(max_length=50)
@@ -48,19 +55,11 @@ class House(models.Model):
     house_creation_day = models.DateTimeField(default=datetime.now)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE, related_name="houses")
 
-    """def __str__(self):
-        return f'{self.house_township} - {self.house_area} - {self.house_kind} - {self.landlord}'"""
-
     class Meta():
-        ordering = [
-            'house_township',
-            'house_area',
-            'house_kind',
-            'house_rooms_number',
-            'house_rent',
-            'house_deposit'
-        ]
+        ordering = ['house_township', 'house_area', 'house_kind', 'house_rooms_number', 'house_rent', 'house_deposit']
 
+    def __str__(self):
+        return f"{self.id} - {self.landlord}"
 
 class Deal(models.Model):
     client = models.ForeignKey(
@@ -74,3 +73,6 @@ class Deal(models.Model):
         related_name="landlord_deals"
     )
     concluded = models.BooleanField(default=0)
+
+    def __str__(self):
+        return f"{self.Landlord} - {self.client}"

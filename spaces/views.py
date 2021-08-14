@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from .forms import SignUpForm, SignInForm, EditClientForm,EditLandlordForm, AddHouseForm , ClientProposalForm
 from django.contrib.auth.models import User
-from .models import Client, Landlord, House, Deal
+from .models import Client, Landlord, House, Deal, Proposal
 from chat.models import Message, Room
 from django.shortcuts import get_object_or_404, Http404
 from django.contrib.auth.decorators import login_required
@@ -290,8 +290,6 @@ def edit_client_profile(request, id):
             contact = form.cleaned_data['contact']
             password1 = form.cleaned_data['password']
             password2 = form.cleaned_data['password_verification']
-            rent_proposal = form.cleaned_data['rent_proposal']
-            deposit_proposal = form.cleaned_data['deposit_proposal']
             avatar = request.FILES.get('avatar')
             if avatar:
                 client = Client.objects.get(user_id = id)
@@ -444,7 +442,6 @@ def add_house(request, id):
 
 
 def client_proposal(request, id):
-    user = User.objects.get(id = id)
     form = ClientProposalForm()
     if request.method == 'POST':
         form = ClientProposalForm(request.POST, request.FILES)
@@ -456,7 +453,8 @@ def client_proposal(request, id):
             house_kind = form.cleaned_data['house_kind']
             house_rooms_number = form.cleaned_data['house_rooms_number']
 
-            client = Client.objects.get(user_id=id)
+            #client = Client.objects.get(user_id=id)
+            client = Proposal.objects.get(client=request.user.client)
             client.area_desire = house_area
             client.township_desire = house_township
             client.rent_proposal = house_rent
@@ -464,7 +462,10 @@ def client_proposal(request, id):
             client.kind_desire = house_kind
             client.rooms_number_desire = house_rooms_number
             client.save()
-    
+            form = ClientProposalForm()
+            return render(request, 'spaces/client_proposal.html', locals())
+        else:
+            return render(request, 'spaces/client_proposal.html', locals())
     return render(request, 'spaces/client_proposal.html', locals())
 
 
