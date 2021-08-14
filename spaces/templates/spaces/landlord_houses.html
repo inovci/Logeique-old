@@ -23,18 +23,22 @@
 
     <div class="row row-cols-1 row-cols-md-3">
         {% for house in houses %}
-            <div class="col mb-4">
-                <div class="card bg-light mb-3" style="width: 25rem;height: 300px;padding: 5px;border: solid 0.1em #DFDFDF;">
+            <div class="col mb-4" style="width: 30%;">
+                <div class="card bg-light mb-3" style="border-radius: 1rem;height: 300px;padding: 5px;border: solid 0.1em #c5bfbf;">
                     {% if house.house_image %}
-                        <img style="height: 200px;" src="{{house.house_image.url}}" alt="image de maison">
+                        <img style="height: 200px;border-radius: 1rem;" src="{{house.house_image.url}}" alt="image de maison">
                     {% endif %}
                     <div class="card-body">
-                        <p>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseModal-{{house.id}}">
-                              Plus de détails
-                            </button>
-                        </p>
+                        <div class="row">
+                            <div class="col-5">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseModal-{{house.id}}">
+                                    Plus de détails
+                                </button>
+                            </div>
+                            <div class="col-3" style="font-size: 20px;">{% if house.house_available %} À louer {% endif %}</div>
+                            <div class="col-4">{% if house.house_to_sell %} En vente {% endif %}</div>
+                        </div>
                         <!-- Modal -->
                         <div class="modal fade" id="houseModal-{{house.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -49,16 +53,17 @@
                                 <div class="card card-body">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p>Ville/Commune: {{house.house_township}} {{house.id}}</p>
-                                            <p>Quartier:  {{house.house_area}}</p>
-                                            <p>Loyer: {{house.house_rent}} FCFA</p>
-                                            <p>Caution: {{house.house_deposit}} FCFA</p>
-                                            <p>Type: {{house.house_kind}}</p>
-                                            <p>{{house.house_rooms_number}} pieces</p>
+                                            <p><span style="font-weight: bold;">Ville/Commune: </span>{{house.house_township}} {{house.id}}</p>
+                                            <p><span style="font-weight: bold;">Quartier: </span>{{house.house_area}}</p>
+                                            <p><span style="font-weight: bold;">Loyer: </span>{{house.house_rent}} FCFA</p>
+                                            <p><span style="font-weight: bold;">Caution: </span>{{house.house_deposit}} FCFA</p>
+                                            <p><span style="font-weight: bold;">Type: </span>{{house.house_kind}}</p>
+                                            <p><span style="font-weight: bold;">{{house.house_rooms_number}} </span>pieces</p>
                                             {% if house.house_available %}
-                                                <P>Disponible</P>
-                                            {% else %}
-                                                <p>Indisponible</p>
+                                                <P><span style="font-weight: bold;">À louer</span></P>
+                                            {% endif %}
+                                            {% if house.house_to_sell %}
+                                                <p><span style="font-weight: bold;">En vente</span></p>
                                             {% endif %}
                                         </div>
                                         <div class="col-md-6">
