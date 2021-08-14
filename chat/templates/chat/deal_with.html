@@ -1,6 +1,49 @@
-{{room.id}}
-
-<form method="POST" action="{% url 'chat:room' room.id %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-primary">Discutez ?</button>
-</form>
+{% if request.user.landlord %}
+<div class="card" style="width: 30rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-3">
+                {% if room.user2.client.avatar %}
+                    <img style="border-radius: 50%;" width="100%" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
+                {% else %}
+                    <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                {% endif %}
+            </div>
+            <div class="col-9">
+                <header>Monsieur: {{room.user2.last_name}} {{room.user2.first_name}}</header>
+                <hr>
+                <p hidden class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <hr>
+        <form method="POST" action="{% url 'chat:room' room.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Discutez ?</button>
+        </form>
+    </div>
+</div>
+{% elif request.user.client %}
+<div class="card" style="width: 30rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-3">
+                {% if room.user1.landlord.avatar %}
+                    <img style="border-radius: 50%;" width="100%" src="{{room.user1.landlord.avatar.url}}" alt="Image de {{room.user1.landlord.user.username}}">
+                {% else %}
+                    <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                {% endif %}
+            </div>
+            <div class="col-9">
+                <header>Monsieur: {{room.user1.last_name}} {{room.user1.first_name}}</header>
+                <hr>
+                <p hidden class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <hr>
+        <form method="POST" action="{% url 'chat:room' room.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Discutez ?</button>
+        </form>
+    </div>
+</div>
+{% endif %}

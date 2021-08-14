@@ -1,12 +1,24 @@
 <div class="row">
     {% for house in lower_classes %}
-        <div class="col-md-4">
-            <div class="card" style="width: 20rem;height: 20rem;">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" style="background-color: #6F7E95;color: #FFF;">
-                        <h5 class="card-title">Propriétaire: Monsieur {{house.landlord.user.last_name}}</h5>
-                    </li>
-                </ul>
+        <div style="width: 30%;">
+            <div class="card" style="border-radius: 1rem;padding: 5px;border: solid 0.1em #c5bfbf;">
+                <div class="row">
+                    <div class="col-3">
+                        {% if house.landlord.avatar %}
+                            <img style="border-radius: 50%;" width="100%" src="{{house.landlord.avatar.url}}" alt="Image de {{house.landlord.user.username}}">
+                        {% else %}
+                            <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                        {% endif %}
+                    </div>
+                    <div class="col-9">
+                        <header>
+                            <h5 class="card-title">Monsieur {{house.landlord.user.last_name}}</h5>
+                            Contact: {{house.landlord.contact}}
+                        </header>
+                        <hr>
+                    </div>
+                </div>
+
                 {% if house.house_image %}
                     <img style="height: 75%;border-radius: 10px;padding: 5px;" src="{{house.house_image.url}}" alt="image de maison">
                 {% endif %}            
@@ -16,62 +28,61 @@
                         <div class="col-8">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseModal-{{house.id}}">
-                              Plus de détails
+                                Plus de détails
                             </button>
                         </div>
                         <div class="col-4">
-                            {% if house.landlord.avatar %}
-                                <img style="border-radius: 50%;" width="70%" src="{{house.landlord.avatar.url}}" alt="Image de {{house.landlord.user.username}}">
-                            {% endif %}
+                           
                         </div>
                     </div>
                 </div>                
             </div>
+        </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="houseModal-{{house.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Maison de {{house.landlord.user.last_name}} - Cel: {{house.landlord.contact}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body" style="background-color: #fdfdfd;">
-                    <div class="card card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p>Ville/Commune: {{house.house_township}} {{house.id}}</p>
-                                <p>Quartier:  {{house.house_area}}</p>
-                                <p>Loyer: {{house.house_rent}} FCFA</p>
-                                <p>Caution: {{house.house_deposit}} FCFA</p>
-                                <p>Type: {{house.house_kind}}</p>
-                                <p>{{house.house_rooms_number}} pieces</p>
-                                {% if house.house_available %}
-                                    <P>Disponible</P>
-                                {% else %}
-                                    <p>Indisponible</p>
-                                {% endif %}
+        <!-- Modal -->
+        <div class="modal fade" id="houseModal-{{house.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content" style="border-radius: 1rem;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Maison de {{house.landlord.user.last_name}} - Cel: {{house.landlord.contact}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="background-color: #fdfdfd;">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><span style="font-weight: bold;">Ville/Commune: </span>{{house.house_township}} {{house.id}}</p>
+                                    <p><span style="font-weight: bold;">Quartier: </span>{{house.house_area}}</p>
+                                    <p><span style="font-weight: bold;">Loyer: </span>{{house.house_rent}} FCFA</p>
+                                    <p><span style="font-weight: bold;">Caution: </span>{{house.house_deposit}} FCFA</p>
+                                    <p><span style="font-weight: bold;">Type: </span>{{house.house_kind}}</p>
+                                    <p><span style="font-weight: bold;">{{house.house_rooms_number}}</span>pieces</p>
+                                    {% if house.house_available %}
+                                        <p><span style="font-weight: bold;">À louer</span></p>
+                                    {% endif %}
+                                    {% if house.house_to_sell %}
+                                        <p><span style="font-weight: bold;">En vente</span></p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    {% if house.house_image %}
+                                        <img style="max-height: 100%;max-width: 100%;" src="{{house.house_image.url}}" alt="image de maison">
+                                    {% endif %}
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                {% if house.house_image %}
-                                    <img style="height: 200px;width: 200px;" src="{{house.house_image.url}}" alt="image de maison">
-                                {% endif %}
-                            </div>
-                        </div>
 
-                        <div class="text-center">
-                            <a href="{% url 'chat:checkview' house.landlord.user %}" style="width: 50%;" class="btn btn-primary">Allez en négociation</a>
+                            <div class="text-center">
+                                <a href="{% url 'chat:checkview' house.landlord.user %}" style="width: 50%;" class="btn btn-primary">Allez en négociation</a>
+                            </div>
                         </div>
                     </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary">Maison suivante</button>
-                  </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary">Maison suivante</button>
+                    </div>
                 </div>
-              </div>
             </div>
         </div>
     {% endfor %}

@@ -50,9 +50,9 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #247583;">
+    <nav class="navbar sticky-top flex-md-nowrap p-0 shadow" style="background-color: #FFF;">
         {% block a1 %}
-            <a style="font-size: 30px;" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>
+            <a style="font-size: 30px;color: black;" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>
         {% endblock a1 %}
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
             data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,152 +61,157 @@
         <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="{% url 'spaces:logout' %}">Se deconnecter</a>
+                <a style="color: black;" class="nav-link" href="{% url 'spaces:logout' %}">Se deconnecter</a>
             </li>
         </ul>
     </nav>
-    <div class="container-fluid">
+
+    <div class="container-fluid" style="padding: 0;margin: 0;overflow-x: hidden;">
         <div class="row">
-            {% block navigation %}
-                <nav id="sidebarMenu" style="height: 100vh;background-color: #2C2945;" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
-                    <div class="sidebar-sticky pt-3">
-                        <div class="text-center">
-                            {% if user.client.avatar %}
-                                <img style="border-radius: 50%;" width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
-                                <div>
-                                    <p style="color: #1CE;font-size: 18px;">Monsieur {{request.user.last_name}}</p>
-                                </div>
-                            {% else %}
-                                <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
-                            {% endif %}
-                        </div>
-                        
-                        <ul class="nav flex-column" style="background-color: #313A4B;border-radius: 5px;">
-                            <li class="nav-item">
-                                {% block navitem1 %}
-                                    <a  style="border-radius: 5px;color: #fff;" class="btn-outline-secondary nav-link active"
-                                        href="{% url 'spaces:client_profile' user.id %}">
-                                        <span data-feather="home"></span> ACCUEIL <span class="sr-only">(current)</span>
-                                    </a>
-                                {% endblock navitem1 %}
-                            </li>
-                            <li class="nav-item">
-                                {% block navitem2 %}
-                                    <a style="color: #fff;" class="nav-link" href="{% url 'spaces:edit_client_profile' user.id %}">
-                                        <span data-feather="user"></span>
-                                        Modifier profil
-                                    </a>
-                                {% endblock navitem2 %}
-                            </li>
-                            <li class="nav-item">
-                                {% block navitem3 %}
-                                <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_proposal' user.id %}">
-                                    <span data-feather="plus"></span>
-                                    Que désirez vous?
-                                </a>
-                                {% endblock navitem3 %}
-                            </li>
-                            <li class="nav-item">
-                                {% block navitem4 %}
-                                <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_statistics' user.id %}">
-                                    <span data-feather="bar-chart-2"></span>
-                                    Statistiques
-                                </a>
-                                {% endblock navitem4 %}
-                            </li>
-                            <li class="nav-item">
-                                {% block navitem5 %}
-                                <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_notifications' user.id %}">
-                                    <span data-feather="bell"></span>
-                                    Négociations
-                                </a>
-                                {% endblock navitem5 %}
-                            </li>
-                        </ul>
-                        <h6
-                            class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            <span>Statistiques enregistrées</span>
-                            <a style="color: #fff;" class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-                                <span data-feather="plus-circle"></span>
-                            </a>
-                        </h6>
-                        <ul class="nav flex-column mb-2">
-                            <li style="color: #fff;" class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="file-text"></span>
-                                    Ce mois
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </nav>
-            {% endblock navigation %}
-
-            <main style="background-color: #C4D7E5;" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">{% block h1 %}Espace client{% endblock h1 %}</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                        </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                            <span data-feather="calendar"></span>
-                            This week
-                        </button>
-                    </div>
-                </div>
-
-                <div>
-                    <p>
-                        {% block content %}
-                            <h1>Propositions de maisons disponible.</h1>
-                            <div>
-                                <nav>
-                                  <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
-                                    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Classes Hautes</a>
-                                    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Classes Moyennes</a>
-                                    <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Classes basses</a>
-                                  </div>
-                                </nav>
-                                <div class="tab-content" id="nav-tabContent">
-                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
-                                        {% include 'spaces/for_client_profile/upper_classes.html' %}
+            <div class="col-2">
+                {% block navigation %}
+                    <nav id="sidebarMenu" style="height: 100vh;background-color: #2a2a2b;">
+                        <div class="pt-3">
+                            <div class="text-center">
+                                {% if user.client.avatar %}
+                                    <img style="border-radius: 50%;" width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
+                                    <div>
+                                        <p style="color: #1CE;font-size: 18px;">Monsieur {{request.user.last_name}}</p>
                                     </div>
-                                      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
-                                        {% include 'spaces/for_client_profile/middle_classes.html' %}
-                                      </div>
-                                      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
-                                        {% include 'spaces/for_client_profile/lower_classes.html' %}
-                                      </div>
-                                </div>
+                                {% else %}
+                                    <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+                                {% endif %}
                             </div>
-                        {% endblock %}
-                    </p>
-                </div>
+                            
+                            <ul class="nav flex-column" style="width: 100%;">
+                                <li class="nav-item">
+                                    {% block navitem1 %}
+                                        <a  style="border-radius: 5px;color: #fff;" class="btn-outline-secondary nav-link active"
+                                            href="{% url 'spaces:client_profile' user.id %}">
+                                            <span data-feather="home"></span> ACCUEIL <span class="sr-only">(current)</span>
+                                        </a>
+                                    {% endblock navitem1 %}
+                                </li>
+                                <li class="nav-item">
+                                    {% block navitem2 %}
+                                        <a style="color: #fff;" class="nav-link" href="{% url 'spaces:edit_client_profile' user.id %}">
+                                            <span data-feather="user"></span>
+                                            Modifier profil
+                                        </a>
+                                    {% endblock navitem2 %}
+                                </li>
+                                <li class="nav-item">
+                                    {% block navitem3 %}
+                                    <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_proposal' user.id %}">
+                                        <span data-feather="plus"></span>
+                                        Que désirez vous?
+                                    </a>
+                                    {% endblock navitem3 %}
+                                </li>
+                                <li class="nav-item">
+                                    {% block navitem4 %}
+                                    <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_statistics' user.id %}">
+                                        <span data-feather="bar-chart-2"></span>
+                                        Statistiques
+                                    </a>
+                                    {% endblock navitem4 %}
+                                </li>
+                                <li class="nav-item">
+                                    {% block navitem5 %}
+                                    <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_notifications' user.id %}">
+                                        <span data-feather="bell"></span>
+                                        Négociations
+                                    </a>
+                                    {% endblock navitem5 %}
+                                </li>
+                            </ul>
+                            <h6
+                                class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                                <span>Statistiques enregistrées</span>
+                                <a style="color: #fff;" class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                                    <span data-feather="plus-circle"></span>
+                                </a>
+                            </h6>
+                            <ul class="nav flex-column mb-2">
+                                <li style="color: #fff;" class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <span data-feather="file-text"></span>
+                                        Ce mois
+                                    </a>
+                                </li>
 
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                            </ul>
+                        </div>
+                    </nav>
+                {% endblock navigation %}
+            </div>
+
+            <div class="col-10">
+                <main style="background-color: #fff;height: 100vh;" role="main">
+                    <div
+                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">{% block h1 %}Espace client{% endblock h1 %}</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group mr-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
                             </div>
-                            <div class="modal-body">
-                                Plus de détails ici
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                                <span data-feather="calendar"></span>
+                                This week
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p>
+                            {% block content %}
+                                <h1>Propositions de maisons disponible.</h1>
+                                <div>
+                                    <nav>
+                                    <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
+                                        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Classes Hautes</a>
+                                        <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Classes Moyennes</a>
+                                        <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Classes basses</a>
+                                    </div>
+                                    </nav>
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                                            {% include 'spaces/for_client_profile/upper_classes.html' %}
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                                            {% include 'spaces/for_client_profile/middle_classes.html' %}
+                                        </div>
+                                        <div class="tab-pane fade container-fluid" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
+                                            {% include 'spaces/for_client_profile/lower_classes.html' %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endblock %}
+                        </p>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Plus de détails ici
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </main>
+                </main>
+            </div>
         </div>
     </div>
 
