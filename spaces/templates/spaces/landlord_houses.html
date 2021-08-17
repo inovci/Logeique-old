@@ -27,6 +27,13 @@
                 {% for house in houses %}
                     <div class="col-md-4">
                         <div class="card bg-light mb-3" style="border-radius: 1rem;height: 300px;padding: 5px;border: solid 0.1em #c5bfbf;">
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-2">
+                                    <a href="#" data-toggle="modal" data-target="#For-delete-{{house.id}}" class="card-link">X</a>
+                                </div>
+                            </div>
+                            <hr>
                             {% if house.house_image %}
                                 <img style="height: 200px;border-radius: 1rem;" src="{{house.house_image.url}}" alt="image de maison">
                             {% endif %}
@@ -43,6 +50,26 @@
                                 </div>
 
                                 <!-- Modal -->
+                                <div class="modal fade" id="For-delete-{{house.id}}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content" style="border-radius: 1rem;width: 100%;">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalLabel">Vous allez suprime cette maison.</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="alert alert-danger" role="alert">
+                                                Voulez-vous vraiment surprimer cette maison?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="text-center"><a href="{% url 'spaces:landlord_delete_house' house.id %}" class="btn btn-danger">Suprimer</a></div>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="modal fade" id="houseModal-{{house.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                     <div class="modal-content" style="border-radius: 1rem;">

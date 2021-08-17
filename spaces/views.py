@@ -501,6 +501,13 @@ def clientUpdateProposal(request, proposal_id):
                 return redirect('spaces:client_proposal')
 
 
+def clientRemoveProposal(request, proposal_id):
+    proposal = get_object_or_404(Proposal, id=proposal_id, client=request.user.client)
+    if proposal:
+        proposal.delete()
+        return redirect('spaces:client_proposal')
+
+
 def edit_house(request, id):
     form = AddHouseForm()
     house = House.objects.get(id=id)
@@ -534,6 +541,13 @@ def edit_house(request, id):
                 return redirect('spaces:landlord_houses', request.user.id)
         return redirect('spaces:edit_house_founded', house.id)
     return render(request, 'spaces/edit_house_founded.html', locals())
+
+
+def landlordRemoveHouse(request, house_id):
+    house = get_object_or_404(House, id=house_id, landlord=request.user.landlord)
+    if house:
+        house.delete()
+        return redirect('spaces:landlord_houses', request.user.id)
 
 
 def log_out(request):
