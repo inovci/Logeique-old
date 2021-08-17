@@ -75,4 +75,4 @@ class Deal(models.Model):
     concluded = models.BooleanField(default=0)
 
     def __str__(self):
-        return f"{self.Landlord} - {self.client}"
+        return f"{self.landlord} - {self.client}"
