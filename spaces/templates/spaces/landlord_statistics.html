@@ -30,60 +30,82 @@
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-markets" role="tabpanel" aria-labelledby="nav-markets-tab"  style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
-                    Les marchés conclus
-                </div>
-                <div class="tab-pane fade" id="nav-houses" role="tabpanel" aria-labelledby="nav-houses-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
-                    <div class="card" style="width: 25rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-2">
-                                    <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
-                                </div>
-                                <div class="col-10">
-                                    <header>Client Names occupe cette maison</header>
-                                    <hr>
-                                    <img style="max-height: 100%;max-width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;" src="{% static '03_Houses-of-the-future-vitaglass-house.jpg' %}" alt="Card image cap">
-                                </div>
-                            </div>
-                            <hr>
-                            <a href="#" class="card-link">Plus de détails</a>
+                <div class="tab-pane fade show active" id="nav-markets" role="tabpanel" aria-labelledby="nav-markets-tab" style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
+                    <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
+                        <div class="">
+                            Les marchés conclus
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="nav-clients" role="tabpanel" aria-labelledby="nav-clients-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
-                    <div class="card" style="width: 25rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-2">
-                                    <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
-                                </div>
-                                <div class="col-10">
-                                    <header>Client Names</header>
-                                    <hr>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <div class="tab-pane fade" id="nav-houses" role="tabpanel" aria-labelledby="nav-houses-tab" style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
+                    <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card" style="width: 25rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <header>Client Names occupe cette maison</header>
+                                                <hr>
+                                                <img style="max-height: 100%;max-width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;" src="{% static '03_Houses-of-the-future-vitaglass-house.jpg' %}" alt="Card image cap">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <a href="#" class="card-link">Plus de détails</a>
+                                    </div>
                                 </div>
                             </div>
-                            <hr>
-                            <a href="#" class="card-link">Chatter</a>
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="nav-client-pas-a-jour" role="tabpanel" aria-labelledby=nav-client-pas-a-jour-tab" style="overflow-y: scroll;overflow-x: hidden;max-height: 450px;">
-                    <div class="card" style="width: 25rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-2">
-                                    <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
-                                </div>
-                                <div class="col-10">
-                                    <header>Client Names</header>
-                                    <hr>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <div class="tab-pane fade" id="nav-clients" role="tabpanel" aria-labelledby="nav-clients-tab" style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
+                    <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card" style="width: 25rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <header>Client Names</header>
+                                                <hr>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <a href="#" class="card-link">Chatter</a>
+                                    </div>
                                 </div>
                             </div>
-                            <hr>
-                            <a href="#" class="card-link">Chatter</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-client-pas-a-jour" role="tabpanel" aria-labelledby="nav-client-pas-a-jour-tab" style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
+                    <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card" style="width: 25rem;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <header>Client Names</header>
+                                                <hr>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <a href="#" class="card-link">Chatter</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

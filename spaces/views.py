@@ -437,7 +437,9 @@ def add_house(request, id):
                 house_township=house_township
             )
             house.save()
+            return redirect('spaces:landlord_houses', request.user.id)
 
+        return render(request, 'spaces/add_house.html', locals())
     return render(request, 'spaces/add_house.html', locals())
 
 
@@ -495,8 +497,43 @@ def clientUpdateProposal(request, proposal_id):
                 client.kind_desire=house_kind
                 client.rooms_number_desire=house_rooms_number
                 client.save()
-                print(client)
+                
                 return redirect('spaces:client_proposal')
+
+
+def edit_house(request, id):
+    form = AddHouseForm()
+    house = House.objects.get(id=id)
+    
+    if request.method == 'POST':
+        form = AddHouseForm(request.POST, request.FILES)
+        if form.is_valid():
+            house_township = form.cleaned_data['house_township']
+            house_area = form.cleaned_data['house_area']
+            house_rent = form.cleaned_data['house_rent']
+            house_deposit = form.cleaned_data['house_deposit']
+            house_kind = form.cleaned_data['house_kind']
+            house_rooms_number = form.cleaned_data['house_rooms_number']
+            house_available = form.cleaned_data['house_available']
+            house_to_sell = form.cleaned_data['house_to_sell']
+            house_image = request.FILES['house_image']
+
+            if house:
+                house.house_township = house_township
+                house.house_area = house_area
+                house.house_rent = house_rent
+                house.house_deposit = house_deposit
+                house.house_kind = house_kind
+                house.house_rooms_number = house_rooms_number
+                house.house_available = house_available
+                house.house_to_sell = house_to_sell
+                house.save()
+                if house_image:
+                    house.house_image = house_image
+                    house.save()
+                return redirect('spaces:landlord_houses', request.user.id)
+        return redirect('spaces:edit_house_founded', house.id)
+    return render(request, 'spaces/edit_house_founded.html', locals())
 
 
 def log_out(request):
@@ -585,7 +622,7 @@ def clientNotifications(request, id):
     houses = []
     proposals = Proposal.objects.filter(client=request.user.client)
     for client in proposals:
-        houses.append(House.objects.filter(Q(house_area__icontains=client.area_desire,
+        houses=House.objects.filter(Q(house_area__icontains=client.area_desire,
                                         house_township__icontains=client.township_desire,
                                         house_deposit=client.deposit_proposal,
                                         house_rent=client.rent_proposal)|
@@ -594,7 +631,7 @@ def clientNotifications(request, id):
                                         house_deposit__lte=client.deposit_proposal + client.deposit_proposal * 0.1,
                                         house_deposit__gte=client.deposit_proposal - client.deposit_proposal * 0.1,
                                         house_rent__lte=client.rent_proposal + client.rent_proposal * 0.1,
-                                        house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1 )))
+                                        house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1 ))
     print(houses)    
     if houses == None:
         no_houses_error = True
@@ -695,10 +732,6 @@ def test(id, username=None, first_name=None, last_name=None, email=None, contact
     except:
         error = True
 """
-
-def edit_house(request):
-    form = AddHouseForm()
-    return render(request, 'spaces/edit_house_founded.html', locals())
 
 def test2(id):
     try:

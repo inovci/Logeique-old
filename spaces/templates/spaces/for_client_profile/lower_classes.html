@@ -1,6 +1,6 @@
 <div class="row">
     {% for house in lower_classes %}
-        <div style="width: 30%;">
+        <div class="col-md-4">
             <div class="card" style="border-radius: 1rem;padding: 5px;border: solid 0.1em #c5bfbf;">
                 <div class="row">
                     <div class="col-3">
@@ -58,7 +58,7 @@
                                     <p><span style="font-weight: bold;">Loyer: </span>{{house.house_rent}} FCFA</p>
                                     <p><span style="font-weight: bold;">Caution: </span>{{house.house_deposit}} FCFA</p>
                                     <p><span style="font-weight: bold;">Type: </span>{{house.house_kind}}</p>
-                                    <p><span style="font-weight: bold;">{{house.house_rooms_number}}</span>pieces</p>
+                                    <p><span style="font-weight: bold;">{{house.house_rooms_number}}</span> pieces</p>
                                     {% if house.house_available %}
                                         <p><span style="font-weight: bold;">À louer</span></p>
                                     {% endif %}

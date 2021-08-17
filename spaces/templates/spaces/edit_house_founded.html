@@ -5,64 +5,104 @@
 {% block h1 %}Editez la maison{% endblock h1 %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-3"></div>
-
+    <div class="row" style="padding: 1rem;">
         <div class="col-md-6">
-            <form style="padding: 10px;" class="card" method="post" action="{% url 'spaces:edit_house_founded' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group row">
-                    <label for="" class="col-sm-4 col-form-label">{{form.house_township.label}}</label>
-                    <div class="col-sm-8">
-                        {{form.house_township}}
+            <div class="card" style="border: solid 0.1rem #c5bfbf;border-radius: 1rem;">
+                <div class="card-body">
+                    <header style="font-weight: bold;"><h4>Anciennes données</h4></header>
+                    <hr>
+                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Commune: </span><div class="col-6">{{house.house_township}}</div></label>
                     </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="" class="col-sm-4 col-form-label">{{form.house_area.label}}</label>
-                    <div class="col-sm-8">{{form.house_area}}</div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="" class="col-sm-4 col-form-label">{{form.house_rent.label}}</label>
-                    <div class="col-sm-8">{{form.house_rent}}</div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="" class="col-sm-4 col-form-label">{{form.house_deposit.label}}</label>
-                    <div class="col-sm-8">{{form.house_deposit}}</div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="" class="col-sm-4 col-form-label">{{form.house_kind.label}}</label>
-                    <div class="col-sm-8">{{form.house_kind}}</div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="" class="col-sm-4 col-form-label">{{form.house_rooms_number.label}}</label>
-                    <div class="col-sm-8">{{form.house_rooms_number}}</div>
-                </div>
-
-                <div class="text-center">
-                    <div class="form-check">
-                        {{form.house_available}}
-                        <label for="" class="form-check-label" style="margin-right: 10%;">{{form.house_available.label}}</label>
-
-                        {{form.house_to_sell}}
-                        <label for="" class="form-check-label">{{form.house_to_sell.label}}</label>
+            
+                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Quartier: </span><div class="col-6">{{house.house_area}}</div></label>
                     </div>
+            
+                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Prix: </span><div class="col-6">{{house.house_rent}}</div></label>
+                    </div>
+                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Caution: </span><div class="col-6">{{house.house_deposit}}</div></label>
+                    </div>
+            
+                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Type: </span><div class="col-6">{{house.house_kind}}</div></label>
+                    </div>
+            
+                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Nombre de pièces: </span><div class="col-6">{{house.house_rooms_number}}</div></label>
+                    </div>
+
+                    <label for="" class="col-form-label row">
+                    {% if house.house_available %}
+                        <p style="font-weight: bold;" class="col-6">En location</p>
+                    {% endif %}
+                    {% if house.house_to_sell %}
+                        <p style="font-weight: bold;" class="col-6">En vente</p>
+                    {% endif %}
+                    </label>
+                    <hr>
                 </div>
-
-                <p class="form-control-file">
-                    {{form.house_image.label}}
-                    {{form.house_image}}
-                </p>
-
-                <div class="text-center"><input style="width: 50%;" type="submit" class="btn btn-primary" value="Enregistrer" /></div>
-
-            </form>
+            </div>
         </div>
 
-        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="card" style="border: solid 0.1rem #c5bfbf;border-radius: 1rem;">
+                <form class="card-body" method="post" action="{% url 'spaces:edit_house_founded' house.id %}" enctype="multipart/form-data">
+                    <header style="font-weight: bold;"><h4>Nouvelles données</h4></header>
+                    <hr>
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label" style="font-weight: bold;">{{form.house_township.label}}</label>
+                        <div class="col-sm-8">
+                            {{form.house_township}}
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label" style="font-weight: bold;">{{form.house_area.label}}</label>
+                        <div class="col-sm-8">{{form.house_area}}</div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label" style="font-weight: bold;">{{form.house_rent.label}}</label>
+                        <div class="col-sm-8">{{form.house_rent}}</div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label" style="font-weight: bold;">{{form.house_deposit.label}}</label>
+                        <div class="col-sm-8">{{form.house_deposit}}</div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label" style="font-weight: bold;">{{form.house_kind.label}}</label>
+                        <div class="col-sm-8">{{form.house_kind}}</div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label" style="font-weight: bold;">{{form.house_rooms_number.label}}</label>
+                        <div class="col-sm-8">{{form.house_rooms_number}}</div>
+                    </div>
+    
+                    <div class="text-center">
+                        <div class="form-check">
+                            {{form.house_available}}
+                            <label for="" class="form-check-label" style="margin-right: 10%;font-weight: bold;">{{form.house_available.label}}</label>
+    
+                            {{form.house_to_sell}}
+                            <label for="" class="form-check-label" style="margin-right: 10%;font-weight: bold;">{{form.house_to_sell.label}}</label>
+                        </div>
+                    </div>
+    
+                    <p class="form-control-file">
+                        {{form.house_image.label}}
+                        {{form.house_image}}
+                    </p>
+                    <hr>
+                    <div class="text-center"><input style="width: 50%;" type="submit" class="btn btn-primary" value="Enregistrer" /></div>
+                </form>
+            </div> 
+        </div>
     </div>
 {% endblock %}
