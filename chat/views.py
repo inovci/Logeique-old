@@ -4,6 +4,7 @@ from spaces.models import Deal
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.db.models import Q
+from spaces.models import Deal
  
 # Create your views here.
 
@@ -16,6 +17,11 @@ def room(request, room_id):
     print(rooms)
     messages = Message.objects.filter(room=room)
     return render(request, 'chat/room.html', locals())
+
+def dealt(request , room_id):
+     room = Room.objects.get(id=room_id)
+     deal = Deal.objects.get(Q(client = room.user1,landlord = room.user2)
+     |Q(client = room.user2,landlord = room.user1))
 
 
 def checkview(request, other_user):

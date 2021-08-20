@@ -72,7 +72,12 @@ class Deal(models.Model):
         on_delete=models.CASCADE,
         related_name="landlord_deals"
     )
-    concluded = models.BooleanField(default=0)
+    house = models.ForeignKey(
+        House , 
+        on_delete=models.CASCADE,
+        related_name="house_deals",
+    )
+    concluded = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.landlord} - {self.client}"

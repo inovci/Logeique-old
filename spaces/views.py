@@ -580,6 +580,7 @@ def landlordNotifications(request, id):
         in_deals = Deal.objects.filter(landlord=request.user.landlord, concluded=False)
     except:
         in_deals = None
+    print(in_deals)
     # On éssai de récupérer tous les clients en chat avec le propriétaire.
     if in_deals != None:
         try:
@@ -598,7 +599,7 @@ def landlordNotifications(request, id):
     if landlord_houses != None:
         for landlord_house in landlord_houses:
             try:
-                clients = Proposal.objects.filter(Q(rent_proposal = landlord_house.house_rent,
+                proposals = Proposal.objects.filter(Q(rent_proposal = landlord_house.house_rent,
                                             deposit_proposal=landlord_house.house_deposit,
                                             area_desire__icontains=landlord_house.house_area,
                                             township_desire__icontains=landlord_house.house_township)|
