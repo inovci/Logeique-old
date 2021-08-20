@@ -444,9 +444,9 @@ def add_house(request, id):
 
 
 def client_proposal(request):
-    form = ClientProposalForm()
+    
     if request.method == 'POST':
-        form = ClientProposalForm(request.POST, request.FILES)
+        form = ClientProposalForm(request.POST)
         if form.is_valid():
             house_area = form.cleaned_data['house_area']
             house_township = form.cleaned_data['house_township']
@@ -455,7 +455,6 @@ def client_proposal(request):
             house_kind = form.cleaned_data['house_kind']
             house_rooms_number = form.cleaned_data['house_rooms_number']
 
-            #client = Client.objects.get(user_id=id)
             client = Proposal(
                 client=request.user.client,
                 area_desire=house_area,
@@ -465,12 +464,12 @@ def client_proposal(request):
                 kind_desire=house_kind,
                 rooms_number_desire=house_rooms_number
             )
-
+            
             if client:
                 client.save()
-                form = ClientProposalForm()
-            return render(request, 'spaces/client_proposal.html', locals())
+                return redirect('spaces:client_proposal')
     proposals = Proposal.objects.filter(client=request.user.client)
+    form = ClientProposalForm()
     return render(request, 'spaces/client_proposal.html', locals())
 
 
