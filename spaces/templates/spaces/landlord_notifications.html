@@ -19,7 +19,7 @@
 {% block content %}
     {% if not clients %}
         <div>
-            <h1>Nous vous informerons si il y'a du nouveau.</h1>
+            <h1>Nous vous informerons si il y a du nouveau.</h1>
         </div>
     {% endif %}
 
@@ -165,15 +165,16 @@
                 <input type="hidden" id="room-id" value="{{room.id}}">
                 <input type="hidden" id="user-room" value="{{room.user2}}">
                 <div class="col-4">
-                    <a href="{% url 'chat:room' room.id %}" class="row" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;background-color: #2B2F3E;border-radius: 1rem;">
+                    <a href="{% url 'chat:room' room.id %}" class="row" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;border-radius: 3rem;border: solid 0.1rem #CFD9DE;">
                         <div class="col-3" style="margin: auto 0px;">
-                            <img style="border-radius: 50%;" width="70px" height="70px" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
+                            <img style="border-radius: 50%;" width="90px" height="90px" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
                         </div>
                         <div class="col-9">
-                            <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">
+                            <div style="padding-top: 0.2rem;font-size: 16px;">
                                 <p>{{room.user2.last_name}}</p>
                             </div>
-                            <div class="text-white" style="font-size: 10px;">
+                            <hr>
+                            <div style="font-size: 10px;">
                                 <p id="lastest-user-message-{{room.id}}"></p>
                             </div>
                         </div>
@@ -195,9 +196,12 @@
                             }
                         })
                         .then((data) => {
-                            console.log(data);
                             const msg = document.getElementById("lastest-user-message-{{room.id}}");
-                            msg.innerHTML = data.value;
+                            if (data.value.length <= 20) {
+                                msg.innerHTML = data.value;
+                            } else {
+                                msg.innerHTML = data.value.slice(0, 35) + '...';
+                            }
                         })
                         .catch((error) => {
                             console.log(error);

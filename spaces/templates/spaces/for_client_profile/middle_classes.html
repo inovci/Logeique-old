@@ -1,8 +1,8 @@
 <div class="row">
     {% for house in middle_classes %}
         <div class="col-md-4">
-            <div class="card" style="border-radius: 1rem;padding: 5px;border: solid 0.1em #c5bfbf;">
-                <div class="row">
+            <div class="card" style="border-radius: 1rem;padding: 5px;border: solid 0.1em #c5bfbf;position: relative;background-color: rgb(252, 250, 250);">
+                <div class="row" style="padding: 0;margin: 0;">
                     <div class="col-3">
                         {% if house.landlord.avatar %}
                             <img style="border-radius: 50%;" width="100%" src="{{house.landlord.avatar.url}}" alt="Image de {{house.landlord.user.username}}">
@@ -24,7 +24,7 @@
                 {% endif %}            
 
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row" style="padding: 0;margin: 0;">
                         <div class="col-8">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseModal-{{house.id}}">
