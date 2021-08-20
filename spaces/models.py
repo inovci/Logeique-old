@@ -73,7 +73,7 @@ class Deal(models.Model):
         related_name="landlord_deals"
     )
     house = models.ForeignKey(
-        House , 
+        House, 
         on_delete=models.CASCADE,
         related_name="house_deals",
     )
