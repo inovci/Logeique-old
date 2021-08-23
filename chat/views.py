@@ -75,8 +75,8 @@ def checkview(request, other_user):
             deal = Deal.objects.create(client=user2.client, landlord=user1.landlord, concluded=False)
             deal.save()
             try:
-                user1.landlord.user_id != None
+                user2.landlord.user_id != None
                 return render(request , 'chat/discuss_with_client.html' , locals())
             except:
-                user1.client.user_id != None
+                user2.client.user_id != None
                 return render(request , 'chat/discuss_with_landlord.html' , locals())
