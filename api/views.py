@@ -10,17 +10,26 @@ from .serializers import MessageSerializer, RoomSerializer
 from chat.models import Message, Room
 from django.contrib.auth.models import User
 
+"""
+    -   Nous essaierons d'afficher toute sorte d'objet au format json.
+    -   La méthode get_object nous permet retourner l'objet recherché.
+    -   La méthode get nous permet de récuper l'objet retourné par la méthode get_object et d'appliquer notre sérialisation.
+"""
 
+
+# Classe pour lister au format json tous les messages .
 class MessagesListView(generics.ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
 
 
+# Classe pour lister au format json tous les rooms (salles de chat).
 class RoomListView(generics.ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
 
 
+# Classe pour lister au format json les détails d'un objet de type message.
 class MessageDetailView(APIView):
 
     def get_object(self, id):
@@ -35,6 +44,7 @@ class MessageDetailView(APIView):
         return Response(serializer.data)
 
 
+# Classe pour lister au format json les détails d'un objet de type room (salle de chat).
 class RoomDetailView(APIView):
 
     def get_object(self, id):
@@ -49,6 +59,7 @@ class RoomDetailView(APIView):
         return Response(serializer.data)
 
 
+# Classe pour lister au format json tous les objets de type message d'un utilisateur.
 class GetUserMessagesView(APIView):
 
     def get_object(self, user):
@@ -68,6 +79,7 @@ class GetUserMessagesView(APIView):
         return Response(serializer.data)
 
 
+# Classe pour lister au format json tous les objets de type room (salles de chat) d'un utilisateur.
 class GetUserRoomsView(APIView):
 
     def get_object(self, user):
@@ -89,6 +101,7 @@ class GetUserRoomsView(APIView):
         return Response(serializer.data)
 
 
+# Classe pour lister au format json tous les objets de type message d'un utilisateur par room (salle de chat).
 class GetUserRoomMessageView(APIView):
 
     def get_object(self, id, user):
@@ -109,6 +122,7 @@ class GetUserRoomMessageView(APIView):
         return Response(serializer.data)
 
 
+# Classe pour lister au format json les détails du dernier objet de type message d'un utilisateur par room (salle de chat).
 class GetUserRoomLatestMessageView(APIView):
 
     def get_object(self, id, user):

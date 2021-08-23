@@ -580,7 +580,6 @@ def landlordNotifications(request, id):
         in_deals = Deal.objects.filter(landlord=request.user.landlord, concluded=False)
     except:
         in_deals = None
-    print(in_deals)
     # On éssai de récupérer tous les clients en chat avec le propriétaire.
     if in_deals != None:
         try:
