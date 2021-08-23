@@ -272,8 +272,8 @@ def see_profile(request, id):
         except:
             user.landlord.user_id != None
             return render(request, 'spaces/landlord_profile.html', locals())
-    except:
-        return render(request, 'spaces/see_profile.html', locals())
+    except Exception as e:
+        raise e
 
 
 @login_required()

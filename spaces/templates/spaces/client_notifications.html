@@ -71,7 +71,7 @@
                                             <h6 class="text-muted f-w-400">{{house.house_deposit}} FCFA</h6>
                                         </div>
                                         <div class="col-sm-12 text-center">
-                                            <form method="POST" action="{% url 'chat:checkview' house.landlord.user %}">
+                                            <form method="POST" action="{% url 'chat:checkviewClient' house.id %}">
                                                 {% csrf_token %}
                                                 <button type="submit" class="btn btn-primary">Négocier ?</button>
                                             </form>
@@ -137,7 +137,7 @@
                                                 <h6 class="text-muted f-w-400">{{house.house_deposit}} FCFA</h6>
                                             </div>
                                             <div class="col-sm-12 text-center">
-                                                <form method="POST" action="{% url 'chat:checkview' house.landlord.user %}">
+                                                <form method="POST" action="{% url 'chat:checkviewClient' house.id %}">
                                                     {% csrf_token %}
                                                     <button type="submit" class="btn btn-primary">Négocier ?</button>
                                                 </form>

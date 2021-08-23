@@ -76,7 +76,7 @@
                                             <h6 class="text-muted f-w-400">{{proposal.deposit_proposal}} FCFA</h6>
                                         </div>
                                         <div class="col-sm-12 text-center">
-                                            <form method="POST" action="{% url 'chat:checkview' proposal.client.user %}">
+                                            <form method="POST" action="{% url 'chat:checkviewLandlord' proposal.client.user %}">
                                                 {% csrf_token %}
                                                 <button type="submit" class="btn btn-primary">Négocier ?</button>
                                             </form>
@@ -142,7 +142,7 @@
                                                 <h6 class="text-muted f-w-400">{{proposal.deposit_proposal}} FCFA</h6>
                                             </div>
                                             <div class="col-sm-12 text-center">
-                                                <form method="POST" action="{% url 'chat:checkview' proposal.client.user %}">
+                                                <form method="POST" action="{% url 'chat:checkviewLandlord' proposal.client.user %}">
                                                     {% csrf_token %}
                                                     <button type="submit" class="btn btn-primary">Négocier ?</button>
                                                 </form>
