@@ -122,7 +122,7 @@ class GetUserRoomLatestMessageView(APIView):
                 messages = Message.objects.filter(user=user, room=room)
                 return messages.latest('id')
             except Exception as e:
-                raise e
+                pass
 
     def get(self, request, id, user, format=None):
         user_room_messages = self.get_object(id, user)
