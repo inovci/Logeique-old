@@ -18,10 +18,10 @@ def room(request, room_id):
     messages = Message.objects.filter(room=room)
     return render(request, 'chat/room.html', locals())
 
-def dealt(request , room_id):
+"""def dealt(request , room_id):
      room = Room.objects.get(id=room_id)
      deal = Deal.objects.get(Q(client = room.user1,landlord = room.user2)
-     |Q(client = room.user2,landlord = room.user1))
+     |Q(client = room.user2,landlord = room.user1))"""
 
 
 def checkviewClient(request, house_id):
