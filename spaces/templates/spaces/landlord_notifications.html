@@ -165,9 +165,13 @@
                 <input type="hidden" id="room-id" value="{{room.id}}">
                 <input type="hidden" id="user-room" value="{{room.user2}}">
                 <div class="col-4">
-                    <a href="{% url 'chat:room' room.id %}" class="row" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;border-radius: 3rem;border: solid 0.1rem #CFD9DE;">
+                    <a href="{% url 'chat:room' room.id %}" class="row over_user" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;border-radius: 3rem;border: solid 0.1rem #CFD9DE;">
                         <div class="col-3" style="margin: auto 0px;">
-                            <img style="border-radius: 50%;" width="90px" height="90px" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
+                            {% if room.user2.client.avatar %}
+                                <img style="border-radius: 50%;" width="90px" height="90px" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
+                            {% else %}
+                                <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+                            {% endif %}
                         </div>
                         <div class="col-9">
                             <div style="padding-top: 0.2rem;font-size: 16px;">
