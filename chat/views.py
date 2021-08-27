@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect , get_object_or_404
 from chat.models import Room, Message
 from spaces.models import Deal, House, Landlord
-from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.db.models import Q
 from spaces.models import Deal
@@ -18,10 +17,10 @@ def room(request, room_id):
     messages = Message.objects.filter(room=room)
     return render(request, 'chat/room.html', locals())
 
-
-def dealt(request , room_id):
-    room = Room.objects.get(id=room_id)
-    deal = Deal.objects.get(Q(client = room.user1,landlord = room.user2)|Q(client = room.user2,landlord = room.user1))
+"""def dealt(request , room_id):
+     room = Room.objects.get(id=room_id)
+     deal = Deal.objects.get(Q(client = room.user1,landlord = room.user2)
+     |Q(client = room.user2,landlord = room.user1))"""
 
 
 def checkviewClient(request, house_id):
@@ -83,7 +82,7 @@ def checkviewLandlord(request, other_user):
         room.save()
         return render(request, 'chat/discuss_with_client.html', locals())
 
-
+"""
 def checkview(request, house_id, other_user):
     house = get_object_or_404(House, id=house_id)
     other_user = get_object_or_404(User, username=other_user)
@@ -103,7 +102,7 @@ def checkview(request, house_id, other_user):
             return render(request , 'chat/discuss_with_landlord.html' , locals())
 
     else:
-        """
+        
         1 - On vérifie si l'utilisateur est un landlord ou un client.
         2 - Si l'utilisateur est un landlord:
             a - Alors la varariable user1 reçoit le landlord.
@@ -112,7 +111,7 @@ def checkview(request, house_id, other_user):
             a - Alors la varariable user1 reçoit le landlord.
             b - La variable user2 reçoit le client.
         Le but est de mettre en premier le landlord puis en second le client pour faciliter les liens urls.
-        """
+        
         try:
             request.user.landlord != None
             user1 = get_object_or_404(User, username=request.user)
@@ -141,3 +140,4 @@ def checkview(request, house_id, other_user):
             except:
                 user2.client.user_id != None
                 return render(request , 'chat/discuss_with_landlord.html' , locals())
+"""

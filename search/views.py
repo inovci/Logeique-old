@@ -1,88 +1,45 @@
 from django.shortcuts import render
 from .forms import SearchForm
-from spaces.models import House , Landlord , Client
+from spaces.models import House , Landlord , Client, Proposal
 from django.db.models import Q
 from django.shortcuts import Http404
 
 # Create your views here.
-
 def get_result(value, choice = 1):
     #the case where the user select all checkbox
     clients = []
     landlords = []
     houses = []
     clients_list = []
+    proposals_list = []
     landlords_list = []
     houses_list = []
     if (choice == 1):
         try:
             value = int(value)
-            houses_list = list(
-                House.objects.filter(
-                    Q(house_township__icontains=value) |
-                    Q(house_area__icontains=value) |
-                    Q(house_kind__icontains=value)|
-                    Q(house_rent=int(value))|
-                    Q(house_deposit=int(value))
-                )
-            )
+            houses_list = filter_house_objects1(value)
         except ValueError:
-            houses_list = list(
-                House.objects.filter(
-                    Q(house_township__icontains=value) |
-                    Q(house_area__icontains=value) |
-                    Q(house_kind__icontains=value)
-                )
-            )
+            houses_list = filter_house_objects2(value)
         if not houses_list:
             houses = houses_list = []
         try:
             value = int(value)
-            clients_list = list(
-                Client.objects.filter(
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains=value)|
-                    Q(user__last_name__icontains=value) |
-                    Q(kind_desire__icontains=value) |
-                    Q(rooms_number_desire__icontains=int(value)) |
-                    Q(rent_proposal__icontains=int(value))|
-                    Q(deposit_proposal__icontains=int(value))
-                )
-            )
+            proposals_list = filter_proposal_objects1(value)
+            clients = filter_client_objects(value)
+            add_client_in_clients_list(clients , clients_list)
+            add_client_in_clients_list(proposals_list , clients_list)
         except ValueError:
-            clients_list = list(
-                Client.objects.filter(
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains=value)|
-                    Q(user__last_name__icontains=value) |
-                    Q(kind_desire__icontains=value)
-                )
-            )
+            clients = filter_client_objects(value)
+            proposals_list = filter_proposal_objects2(value)
+            add_client_in_clients_list(clients , clients_list)
+            add_client_in_clients_list(proposals_list , clients_list)
         if not clients_list:
             clients = clients_list = []
         try:
             value = int(value)
-            landlords_list = list(
-                Landlord.objects.filter(
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains=value)|
-                    Q(user__last_name__icontains=value)|
-                    Q(houses__house_township__icontains=value) |
-                    Q(houses__house_area__icontains=value) |
-                    Q(houses__house_rent=int(value))|
-                    Q(houses__house_deposit=int(value))
-                )
-            )
+            landlords_list = filter_landlord_objects1(value)
         except ValueError:
-            landlords_list = list(
-                Landlord.objects.filter(
-                   Q(user__username__icontains = value)|
-                   Q(user__first_name__icontains=value)|
-                   Q(user__last_name__icontains=value)|
-                   Q(houses__house_township__icontains=value) |
-                   Q(houses__house_area__icontains=value)
-                )
-            )
+            landlords_list = filter_landlord_objects2(value)
         if not landlords_list:
             landlords = landlords_list = []
 
@@ -90,23 +47,9 @@ def get_result(value, choice = 1):
     elif choice == 2:
         try:
             value = int(value)
-            houses_list = list(
-                House.objects.filter(
-                    Q(house_township__icontains=value) |
-                    Q(house_area__icontains=value) |
-                    Q(house_kind__icontains=value)|
-                    Q(house_rent =int(value)) |
-                    Q(house_deposit=int(value))
-                )
-            )
+            houses_list = filter_house_objects1(value)
         except ValueError:
-            houses_list = list(
-                House.objects.filter(
-                    Q(house_township__icontains=value) |
-                    Q(house_area__icontains=value) |
-                    Q(house_kind__icontains=value)
-                )
-            )
+            houses_list = filter_house_objects2(value)
         if not houses_list:
             houses = houses_list = []
 
@@ -114,25 +57,15 @@ def get_result(value, choice = 1):
     elif choice == 3:
         try:
             value = int(value)
-            clients_list = list(
-                Client.objects.filter(
-    
-                    Q(rooms_number_desire=int(value)) |
-                    Q(rent_proposal = int(value))|
-                    Q(deposit_proposal = int(value))
-                )
-            )
+            proposals_list =filter_proposal_objects1(value)
+            clients = filter_house_objects1(value)
+            add_client_in_clients_list(clients , clients_list)
+            add_client_in_clients_list(proposals_list , clients_list)
         except ValueError:
-            clients_list = list(
-                Client.objects.filter(
-                    Q(kind_desire__icontains=value) |
-                    Q(area_desire__icontains=value) |
-                    Q(township_desire__icontains = value)|
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains = value)|
-                    Q(user__last_name__icontains = value)
-                )
-            )
+            proposals_list =filter_proposal_objects2(value)
+            clients = filter_house_objects2(value)
+            add_client_in_clients_list(clients , clients_list)
+            add_client_in_clients_list(proposals_list , clients_list)
                 #We will look for different clients registered which are looking for a particular house or with a particular name
         if not clients_list:
             clients = clients_list = []
@@ -142,27 +75,9 @@ def get_result(value, choice = 1):
     elif choice == 4:
         try:
             value = int(value)
-            landlords_list = list(
-                Landlord.objects.filter(
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains=value)|
-                    Q(user__last_name__icontains=value)|
-                    Q(houses__house_township__icontains=value) |
-                    Q(houses__house_area__icontains=value) |
-                    Q(houses__house_rent=int(value))|
-                    Q(houses__house_deposit=int(value))
-                )
-            )
+            landlords_list = filter_landlord_objects1(value)
         except ValueError:
-            landlords_list = list(
-                Landlord.objects.filter(
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains=value)|
-                    Q(user__last_name__icontains=value)|
-                    Q(houses__house_township__icontains=value) |
-                    Q(houses__house_area__icontains=value)
-                )
-            )
+            landlords_list = filter_landlord_objects2(value)
             #We will look for different landlords registered which own a particular house or with a particular name
         if not landlords_list:
             landlords = landlords_list = []
@@ -194,48 +109,22 @@ def get_result_two(value , choice1 , choice2):
     if ((choice1 == 2 and  choice2 ==3) or (choice1 == 3 and choice2 == 2)):
         try:
             value = int(value)
-            houses_list = list(
-                House.objects.filter(
-                    Q(house_township__icontains=value) |
-                    Q(house_area__icontains=value) |
-                    Q(house_kind__icontains=value)|
-                    Q(house_rent =int(value)) |
-                    Q(house_deposit=int(value))
-                )
-            )
+            houses_list = filter_house_objects1(value)
         except ValueError:
-            houses_list = list(
-                House.objects.filter(
-                    Q(house_township__icontains=value) |
-                    Q(house_area__icontains=value) |
-                    Q(house_kind__icontains=value)
-                )
-            )
-        if not houses_list:
+            houses_list = filter_house_objects2(value)
             houses = houses_list = []
         try:
             value = int(value)
-            clients_list = list(
-                Client.objects.filter(
-                    Q(kind_desire__icontains=value) |
-                    Q(rooms_number_desire=int(value)) |
-                    Q(rent_proposal = int(value))|
-                    Q(deposit_proposal = int(value))|
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains = value)|
-                    Q(user__last_name__icontains = value)
-                )
-            )
+            propsals_list = filter_proposal_objects1(value)
+            clients = filter_client_objects(value)
+            add_client_in_clients_list(clients , clients_list)
+            add_client_in_clients_list(propsals_list , clients_list)
             #We will look for different clients registered which are looking for a particular house or with a particular name
         except ValueError:
-            clients_list = list(
-                Client.objects.filter(
-                    Q(kind_desire__icontains=value)|
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains = value)|
-                    Q(user__last_name__icontains = value)
-                )
-            )
+            proposals_list = filter_proposal_objects2(value)
+            clients = filter_client_objects(value)
+            add_client_in_clients_list(clients , clients_list)
+            add_client_in_clients_list(proposals_list , clients_list)
         if not clients_list:
             clients = clients_list = []
             
@@ -244,103 +133,42 @@ def get_result_two(value , choice1 , choice2):
     if((choice1 == 2 and choice2 == 4) or (choice1 == 4 and choice2 == 2)):
         try:
             value = int(value)
-            houses_list = list(
-                House.objects.filter(
-                    Q(house_township__icontains=value) |
-                    Q(house_area__icontains=value) |
-                    Q(house_kind__icontains=value)|
-                    Q(house_rent =int(value)) |
-                    Q(house_deposit=int(value))
-                )
-            )
+            houses_list = filter_house_objects1(value)
         except ValueError:
-            houses_list = list(
-                House.objects.filter(
-                    Q(house_township__icontains=value) |
-                    Q(house_area__icontains=value) |
-                    Q(house_kind__icontains=value)
-                )
-            )
+            houses_list = filter_house_objects2(value)
         if not houses_list:
             houses = houses_list = []
         try:
             value = int(value)
-            landlords_list = list(
-                Landlord.objects.filter(
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains=value)|
-                    Q(user__last_name__icontains=value)|
-                    Q(houses__house_township__icontains=value) |
-                    Q(houses__house_area__icontains=value) |
-                    Q(houses__house_rent=int(value))|
-                    Q(houses__house_deposit=int(value))
-                )
-            )
+            landlords_list = filter_landlord_objects1(value)
             #We will look for different landlords registered which own a particular house or with a particular name
         except ValueError:
-            landlords_list = list(
-                Landlord.objects.filter(
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains=value)|
-                    Q(user__last_name__icontains=value)|
-                    Q(houses__house_township__icontains=value) |
-                    Q(houses__house_area__icontains=value)
-                )
-            )
+            landlords_list = filter_landlord_objects2(value)
         if not landlords_list:
             landlords = landlords_list = []
     #The case where client and landlord checkbox are selected
     if((choice1 == 3 and choice2 == 4) or (choice1 == 4 and choice2 == 3)):
         try:
             value = int(value)
-            clients_list = list(
-                Client.objects.filter(
-                    Q(kind_desire__icontains=value) |
-                    Q(rooms_number_desire=int(value)) |
-                    Q(rent_proposal = int(value))|
-                    Q(deposit_proposal = int(value))|
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains = value)|
-                    Q(user__last_name__icontains = value)
-                )
-            )
+            proposals_list = filter_proposal_objects1(value)
+            clients = filter_client_objects(value)
+            add_client_in_clients_list(clients , clients_list)
+            add_client_in_clients_list(proposals_list , clients_list)
                 #We will look for different clients registered which are looking for a particular house or with a particular name
         except ValueError:
-            clients_list = list(
-                Client.objects.filter(
-                    Q(kind_desire__icontains=value)|
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains = value)|
-                    Q(user__last_name__icontains = value)
-                )
-            )
+            proposals_list = filter_proposal_objects2(value)
+            clients = filter_client_objects(value)
+            add_client_in_clients_list(clients , clients_list)
+            add_client_in_clients_list(proposals_list , clients_list)
         if not clients_list:
             clients = clients_list = []
     #The case where landlord checkbox is selected
         try:
             value = int(value)
-            landlords_list = list(
-                Landlord.objects.filter(
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains=value)|
-                    Q(user__last_name__icontains=value)|
-                    Q(houses__house_township__icontains=value) |
-                    Q(houses__house_area__icontains=value) |
-                    Q(houses__house_rent=int(value))|
-                    Q(houses__house_deposit=int(value))
-                )
-            )
+            landlords_list = filter_landlord_objects1(value)
                 #We will look for different landlords registered which own a particular house or with a particular name
         except ValueError:
-            landlords_list = list(
-                Landlord.objects.filter(
-                    Q(user__username__icontains = value)|
-                    Q(user__first_name__icontains=value)|
-                    Q(user__last_name__icontains=value)|
-                    Q(houses__house_township__icontains=value) |
-                    Q(houses__house_area__icontains=value)
-                )
-            )
+            landlords_list = filter_landlord_objects2(value)
         if not landlords_list:
             landlords = landlords_list = []
     if (len(clients_list) > 0 or len(houses_list) > 0 or len(landlords_list)> 0):
@@ -405,3 +233,102 @@ def test(value):
     )
     for client in clients:
         print(client.user.username)
+def filter_landlord_objects1(value):
+    landlords_list = list(
+                Landlord.objects.filter(
+                    Q(user__username__icontains = value)|
+                    Q(user__first_name__icontains=value)|
+                    Q(user__last_name__icontains=value)|
+                    Q(houses__house_township__icontains=value) |
+                    Q(houses__house_area__icontains=value) |
+                    Q(houses__house_rent=int(value))|
+                    Q(houses__house_deposit=int(value))
+                )
+            )
+    return landlords_list
+
+def filter_landlord_objects2(value):
+    landlords_list = list(
+                Landlord.objects.filter(
+                   Q(user__username__icontains = value)|
+                   Q(user__first_name__icontains=value)|
+                   Q(user__last_name__icontains=value)|
+                   Q(houses__house_township__icontains=value) |
+                   Q(houses__house_area__icontains=value)
+                )
+            )
+    return landlords_list
+def filter_house_objects1(value):
+    houses_list = list(
+                House.objects.filter(
+                    Q(house_township__icontains=value) |
+                    Q(house_area__icontains=value) |
+                    Q(house_kind__icontains=value)|
+                    Q(house_rent=int(value))|
+                    Q(house_deposit=int(value))
+                )
+            )
+    return houses_list
+
+def filter_house_objects2(value):
+    houses_list = list(
+                House.objects.filter(
+                    Q(house_township__icontains=value) |
+                    Q(house_area__icontains=value) |
+                    Q(house_kind__icontains=value)
+                )
+            )
+    return houses_list
+
+def filter_proposal_objects1(value):
+    proposals_list = list(
+            Proposal.objects.filter(
+                Q(kind_desire__icontains=value) |
+                Q(area_desire__icontains = value)|
+                Q(township_desire__icontains = value)|
+                Q(rooms_number_desire=int(value)) |
+                Q(rent_proposal=int(value))|
+                Q(deposit_proposal=int(value))
+            )
+        )
+    return proposals_list
+def filter_proposal_objects2(value):
+    proposals_list = list(Proposal.objects.filter(
+                Q(kind_desire__icontains=value) |
+                Q(area_desire__icontains = value)|
+                Q(township_desire__icontains = value)
+                 ))
+    return proposals_list
+
+def filter_client_objects(value):
+    clients = list(
+            Client.objects.filter(
+                Q(user__username__icontains = value)|
+                Q(user__first_name__icontains=value)|
+                Q(user__last_name__icontains=value) 
+            )
+        )
+    return clients
+
+def add_client_in_clients_list(clients , clients_list):
+    if clients != []:
+        for client in clients:
+            if client not in clients_list:
+                clients_list.append(client)
+    
+
+def filter_clients(value , clients_list):
+    try:
+        value = int(value)
+        proposals_list = filter_proposal_objects1(value)
+        clients = filter_client_objects(value)
+        add_client_in_clients_list(clients , clients_list)
+        add_client_in_clients_list(proposals_list , clients_list)
+    except ValueError:
+        clients = filter_client_objects(value)
+        proposals_list = filter_proposal_objects2(value)
+        add_client_in_clients_list(clients , clients_list)
+        add_client_in_clients_list(proposals_list , clients_list)
+    if not clients_list:
+        clients = clients_list = []
+
