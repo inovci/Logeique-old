@@ -41,7 +41,7 @@
   {% endblock display %}
 </div>
 
-<div style="font-weight: bold;position: fixed;bottom: 10px;width: 100%;">
+<div style="position: absolute;min-width: 100%;">
   {% block form %}
     <form id="form" method="POST">
       {% csrf_token %}
@@ -50,7 +50,7 @@
         <input type="text" class="form-control" name="message" id="chat-message-input" data-emoji-input="unicode" data-emojiable="true"/>
       </p>
       -->
-      <input class="form-control" type="text" name="message" id="chat-message-input" data-emoji-input="unicode" data-emojiable="true"/>
+      <input style="border: solid 0.1rem #CFD9DE;" class="form-control" type="text" name="message" id="chat-message-input" data-emoji-input="unicode" data-emojiable="true" rows="4" cols="50"/>
       <!--
       <input type="hidden" value="Envoyez" id="chat-message-submit" class="btn btn-secondary btn-sm"/>
       -->

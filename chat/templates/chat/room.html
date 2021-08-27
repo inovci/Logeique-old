@@ -81,7 +81,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
   </head>
-  <body style="position: relative;">
+  <body style="position: relative;height: 100%;font-family: Arial, Helvetica, sans-serif;">
     <header class="shadow rounded">
       <div style="background-color: #5D5B8D;">
         <nav class="navbar navbar-light">
@@ -115,7 +115,7 @@
     
     <main style="background-color: #f0f0f0; overflow-x: hidden;">
       <div class="row" style="padding: 0;margin: 0;">
-        <div class="col-3" style="height: 95vh;background-color: #3B395E;">
+        <div class="col-3" style="min-height: 90vh;background-color: #3B395E;">
           <div style="padding: 5px;" class="text-white text-center">
             <div class="card-img-top">
               {% if request.user.landlord.avatar %}
@@ -184,7 +184,7 @@
             {% elif request.user.client %}
               <!-- Ici on affiche les les utilisateurs receveurs du client -->
               {% for room in rooms %}
-                <a style="margin: 0.1rem 0.5rem;text-decoration: none;background-color: #5D5B8D;border-radius: 1rem;" class="row" href="{% url 'chat:room' room.id %}">
+                <a style="margin: 0.1rem 0.5rem;text-decoration: none;background-color: #5D5B8D;border-radius: 2rem;" class="row" href="{% url 'chat:room' room.id %}">
                   <div class="col-3">
                     {% if room.user1.landlord.avatar %}
                       <img style="border-radius: 50%;margin: 5px;" width="50px" height="50px" src="{{room.user1.landlord.avatar.url}}" alt="Image de {{room.user1.username}}">
@@ -227,21 +227,15 @@
                 </script>
               {% endfor %}
             {% endif %}
-
-            <a style="margin: 0 0.5rem;" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
             <a style="margin: 0 0.5rem;" href="{% url 'spaces:logout' %}" class="nav-link" href="#">Déconnexion</a>
           </div>
         </div>
         <div class="col-9" style="background-color: #DCDCF6;">
-          <div>
-            <div class="tab-content" id="v-pills-tabContent">
-              <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                <div style="padding: 1rem;">
-                  {% include "chat/for_room/chat.html" %}
-                </div>
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+              <div style="position: relative;">
+                {% include "chat/for_room/chat.html" %}
               </div>
-
-              <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Profile</div>
             </div>
           </div>
         </div>

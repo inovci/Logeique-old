@@ -50,7 +50,7 @@
         }
 
         .over_user:hover {
-            background-color: rgb(37, 37, 32);
+            background-color: #272C30;
             color: #fff;
         }
 
@@ -65,7 +65,7 @@
     {% include "spaces/html_css/client_profile_css.html" %}
 </head>
 
-<body>
+<body style="font-family: Arial, Helvetica, sans-serif;">
     <nav class="navbar sticky-top flex-md-nowrap p-0 shadow" style="background-color: #FFF;">
         {% block a1 %}
             <a style="font-size: 30px;color: black;" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>

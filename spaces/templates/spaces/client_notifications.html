@@ -158,7 +158,7 @@
         <div class="row">
             {% for room in rooms %}
                 <div class="col-4">
-                    <a href="{% url 'chat:room' room.id %}" class="row over_user" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;border-radius: 3rem;border: solid 0.1rem #CFD9DE;">
+                    <a href="{% url 'chat:room' room.id %}" class="row over_user" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;border-radius: 3rem;border: solid 0.1rem #272C30;">
                         <div class="col-3" style="margin: auto 0px;">
                             {% if room.user1.landlord.avatar %}
                                 <img style="border-radius: 50%;" width="90px" height="90px" src="{{room.user1.landlord.avatar.url}}" alt="Image de {{room.user1.username}}">
