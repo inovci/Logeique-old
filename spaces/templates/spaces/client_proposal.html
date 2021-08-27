@@ -108,7 +108,7 @@
                                         <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Nombre de pièces: </span><div class="col-6">{{proposal.rooms_number_desire}}</div></label>
                                     </div>
                                     <hr>
-                                    <div class="text-center"><a href="#" data-toggle="modal" data-target="#ProposalModal-{{proposal.id}}" class="card-link">Modifier</a></div>
+                                    <div class="text-center"><a href="#" data-toggle="modal" data-target="#ProposalModal-{{proposal.id}}" class="card-link for-chatter"><span aria-hidden="true"><i class="fas fa-pen"></i></span> Modifier</a></div>
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
                                         Voulez-vous vraiment surprimer cette maison?
                                     </div>
                                     <div class="modal-footer">
-                                        <div class="text-center"><a href="{% url 'spaces:client_remove_proposal' proposal.id %}" class="btn btn-danger">Suprimer</a></div>
+                                        <div class="text-center"><a href="{% url 'spaces:client_remove_proposal' proposal.id %}" class="btn btn-danger"><span aria-hidden="true"><i class="fas fa-trash"></i></span> Suprimer</a></div>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                                     </div>
                                 </div>
@@ -138,7 +138,7 @@
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content" style="border-radius: 1rem;width: 200%;">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Maison</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel"><span aria-hidden="true"><i class="fas fa-home"></i></span> Maison</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -148,7 +148,12 @@
                                             <div class="col-6">
                                                 <div class="card" style="width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
                                                     <div class="card-body">
-                                                        <header style="font-weight: bold;"><h4>Anciennes données</h4></header>
+                                                        <header style="font-weight: bold;">
+                                                            <div class="row">
+                                                                <div class="col-9"><h4>Anciennes données</h4></div>
+                                                                <div class="col-3"><span class="float-right" aria-hidden="true"><i class="fas fa-trash-alt"></i></span></div>
+                                                            </div>
+                                                        </header>
                                                         <hr>
                                                         <div class="form-group" style="margin: 1rem 0;padding: 0;">
                                                             <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Commune: </span><div class="col-6">{{proposal.township_desire}}</div></label>
@@ -179,7 +184,12 @@
                                             <div class="col-6">
                                                 <div class="card" style="width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
                                                     <form class="card-body" method="post" action="{% url 'spaces:client_update_proposal' proposal.id %}" enctype="multipart/form-data">
-                                                        <header style="font-weight: bold;"><h4>Nouvelles données</h4></header>
+                                                        <header style="font-weight: bold;">
+                                                            <div class="row">
+                                                                <div class="col-9"><h4>Nouvelles données</h4></div>
+                                                                <div class="col-3"><span class="float-right" aria-hidden="true"><i class="fas fa-pen"></i></span></div>
+                                                            </div>
+                                                        </header>
                                                         <hr>
                                                         {% csrf_token %}
                                                         <div class="form-group row">
