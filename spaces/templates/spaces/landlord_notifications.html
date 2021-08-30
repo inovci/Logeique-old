@@ -23,12 +23,11 @@
         </div>
     {% endif %}
 
-    {% if  not in_deals  %}
-        <h1>Notifications</h1>
-        <div class="row" style="padding: 20px;">
+    {% if not in_deals  %}
+        <div class="row">
             {% for proposal in proposals %}
-                <div style="padding: 5px;" class="col-xl-6 col-md-6">
-                    <div class="card user-card-full" style="width: 100%;">
+                <div class="col-md-4">
+                    <div class="card user-card-full" style="border-radius: 1rem;border: rgb(216, 214, 214) solid 0.1rem;">
                         <div class="row m-l-0 m-r-0">
                             <div class="col-sm-4 bg-c-lite-green">
                                 <div class="text-white">
@@ -39,6 +38,7 @@
                                             <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
                                         {% endif %}
                                     </div>
+                                    <hr>
                                     <div>
                                         <h6 class="f-w-600">{{proposal.client.user.first_name}}</h6>
                                         <h6 class="f-w-600">{{proposal.client.user.last_name}}</h6>
@@ -78,7 +78,7 @@
                                         <div class="col-sm-12 text-center">
                                             <form method="POST" action="{% url 'chat:checkviewLandlord' proposal.client.user %}">
                                                 {% csrf_token %}
-                                                <button type="submit" class="btn btn-primary">Négocier ?</button>
+                                                <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Négocier ?</button>
                                             </form>
                                         </div>
                                     </div>
@@ -93,8 +93,8 @@
         <div class="row">
             {% for proposal in proposals %}
                 {% if proposal.client.user not in users_in_rooms %}
-                    <div style="padding: 5px;" class="col-xl-6 col-md-6">
-                        <div class="card user-card-full" style="width: 100%;">
+                    <div class="col-md-4">
+                        <div class="card user-card-full" style="border-radius: 1rem;border: rgb(216, 214, 214) solid 0.1rem;">
                             <div class="row m-l-0 m-r-0">
                                 <div class="col-sm-4 bg-c-lite-green">
                                     <div class="text-white">
@@ -105,6 +105,7 @@
                                                 <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
                                             {% endif %}
                                         </div>
+                                        <hr>
                                         <div>
                                             <h6 class="f-w-600">{{proposal.client.user.first_name}}</h6>
                                             <h6 class="f-w-600">{{proposal.client.user.last_name}}</h6>
@@ -144,7 +145,7 @@
                                             <div class="col-sm-12 text-center">
                                                 <form method="POST" action="{% url 'chat:checkviewLandlord' proposal.client.user %}">
                                                     {% csrf_token %}
-                                                    <button type="submit" class="btn btn-primary">Négocier ?</button>
+                                                    <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Négocier ?</button>
                                                 </form>
                                             </div>
                                         </div>

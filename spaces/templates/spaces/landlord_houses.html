@@ -28,7 +28,8 @@
                     <div class="col-md-4">
                         <div class="card bg-light" style="border-radius: 1rem;padding: 5px;border: solid 0.1em #c5bfbf;">
                             <div class="row" style="margin: 0;padding: 0;">
-                                <div class="col-10"></div>
+                                <div class="col-5" style="padding: 0;margin: 0;font-size: 20px;">{% if house.house_available %} À louer {% endif %}</div>
+                                <div class="col-5"  style="padding: 0;margin: 0;font-size: 20px;">{% if house.house_to_sell %} En vente {% endif %}</div>
                                 <div class="col-2">
                                     <a href="#" data-toggle="modal" data-target="#For-delete-{{house.id}}" class="card-link float-right"><i class="fas fa-times"></i></a>
                                 </div>
@@ -41,12 +42,11 @@
                                 <div class="row">
                                     <div class="col-6" style="padding: 0;margin: 0;">
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseModal-{{house.id}}">
+                                        <button style="border-radius: 1rem;" type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#houseModal-{{house.id}}">
                                             <span aria-hidden="true"><i style="font-size: 1.3rem;" class="fas fa-info-circle"></i></span> Plus de détails
                                         </button>
                                     </div>
-                                    <div class="col-3" style="padding: 0;margin: 0;font-size: 20px;">{% if house.house_available %} À louer {% endif %}</div>
-                                    <div class="col-3"  style="padding: 0;margin: 0;font-size: 20px;">{% if house.house_to_sell %} En vente {% endif %}</div>
+                                    <div class="col-6"></div>
                                 </div>                                
                             </div>
                         </div>
@@ -105,12 +105,11 @@
                                       </div>
                                   </div>
 
-                                  <div class="text-center"><a href="{% url 'spaces:edit_house_founded' house.id %}" style="width: 50%;" class="btn btn-primary"><span aria-hidden="true"><i class="fas fa-pen"></i></span> Editez cette maison</a></div>
+                                  <div class="text-center"><a href="{% url 'spaces:edit_house_founded' house.id %}" style="width: 50%;border-radius: 1rem;" class="btn btn-outline-dark"><span aria-hidden="true"><i class="fas fa-pen"></i></span> Editez cette maison</a></div>
                               </div>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                              <button type="button" class="btn btn-primary">Maison suivante</button>
                             </div>
                           </div>
                         </div>
