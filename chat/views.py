@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect , get_object_or_404
 from chat.models import Room, Message
-from spaces.models import Deal, House, Landlord
+from spaces.models import Deal, House, Landlord, Proposal
 from django.contrib.auth.models import User
 from django.db.models import Q
 from spaces.models import Deal
@@ -54,7 +54,24 @@ def checkviewClient(request, house_id):
         return render(request , 'chat/discuss_with_landlord.html' , locals())
 
 
-def checkviewLandlord(request, other_user):
+def checkviewLandlord(request, other_user, proposal_id):
+    # On éssai de récupérer l'id du proposal.
+    proposal = get_object_or_404(Proposal, id=proposal_id)
+    # On éssai de récupérer toutes les maisons du landlord (propriétaire).
+    houses = House.objects.filter(landlord=request.user.landlord)
+    # On éssai de récupérer la maison qui match avec les données du proposal trouvé.
+    house = houses.get(
+        Q(house_area__icontains=proposal.area_desire,
+        house_township__icontains=proposal.township_desire,
+        house_deposit=proposal.deposit_proposal,
+        house_rent=proposal.rent_proposal)|
+        Q(house_area__icontains=proposal.area_desire,
+        house_township__icontains=proposal.township_desire,
+        house_deposit__lte=proposal.deposit_proposal + proposal.deposit_proposal * 0.1,
+        house_deposit__gte=proposal.deposit_proposal - proposal.deposit_proposal * 0.1,
+        house_rent__lte=proposal.rent_proposal + proposal.rent_proposal * 0.1,
+        house_rent__gte=proposal.rent_proposal - proposal.rent_proposal * 0.1 )
+    )
     other_user = get_object_or_404(User, username=other_user)
 
     try:
@@ -80,6 +97,8 @@ def checkviewLandlord(request, other_user):
         user2 = get_object_or_404(User, username=other_user)
         room = Room.objects.create(user1 = user1, user2 = user2)
         room.save()
+        deal = Deal.objects.create(client=user2.client, landlord=user1.landlord, house=house,concluded=False)
+        deal.save()
         return render(request, 'chat/discuss_with_client.html', locals())
 
 """

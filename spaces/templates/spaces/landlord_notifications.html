@@ -17,12 +17,6 @@
 {% block h1 %}Négociations/Notifications{% endblock h1 %}
 
 {% block content %}
-    {% if not clients %}
-        <div>
-            <h1>Nous vous informerons si il y a du nouveau.</h1>
-        </div>
-    {% endif %}
-
     {% if not in_deals  %}
         <div class="row">
             {% for proposal in proposals %}
@@ -76,7 +70,7 @@
                                             <h6 class="text-muted f-w-400">{{proposal.deposit_proposal}} FCFA</h6>
                                         </div>
                                         <div class="col-sm-12 text-center">
-                                            <form method="POST" action="{% url 'chat:checkviewLandlord' proposal.client.user %}">
+                                            <form method="POST" action="{% url 'chat:checkviewLandlord' proposal.client.user proposal.id %}">
                                                 {% csrf_token %}
                                                 <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Négocier ?</button>
                                             </form>
@@ -143,7 +137,7 @@
                                                 <h6 class="text-muted f-w-400">{{proposal.deposit_proposal}} FCFA</h6>
                                             </div>
                                             <div class="col-sm-12 text-center">
-                                                <form method="POST" action="{% url 'chat:checkviewLandlord' proposal.client.user %}">
+                                                <form method="POST" action="{% url 'chat:checkviewLandlord' proposal.client.user proposal.id %}">
                                                     {% csrf_token %}
                                                     <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Négocier ?</button>
                                                 </form>
