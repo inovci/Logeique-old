@@ -26,6 +26,11 @@
     <script defer src="{% static 'fontawesome/js/solid.js' %}"></script>
     <script defer src="{% static 'fontawesome/js/fontawesome.js' %}"></script>
 
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -62,7 +67,7 @@
     {% include "spaces/html_css/landlord_profile_css.html" %}
 </head>
 
-<body style="font-family: Arial, Helvetica, sans-serif;">
+<body style="font-family: 'Roboto', sans-serif;">
     <nav class="navbar sticky-top flex-md-nowrap p-0 shadow" style="background-color: #FFF;">
         {% block a1 %}
             <a style="font-size: 30px;color: black;" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{% url 'spaces:landlord_profile' user.id %}">{{user.username}}</a>
