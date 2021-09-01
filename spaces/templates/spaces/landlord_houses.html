@@ -26,11 +26,12 @@
             <div class="row">
                 {% for house in houses %}
                     <div class="col-md-4">
-                        <div class="card bg-light mb-3" style="border-radius: 1rem;height: 300px;padding: 5px;border: solid 0.1em #c5bfbf;">
-                            <div class="row">
-                                <div class="col-10"></div>
+                        <div class="card bg-light" style="border-radius: 1rem;padding: 5px;border: solid 0.1em #c5bfbf;">
+                            <div class="row" style="margin: 0;padding: 0;">
+                                <div class="col-5" style="padding: 0;margin: 0;font-size: 20px;">{% if house.house_available %} À louer {% endif %}</div>
+                                <div class="col-5"  style="padding: 0;margin: 0;font-size: 20px;">{% if house.house_to_sell %} En vente {% endif %}</div>
                                 <div class="col-2">
-                                    <a href="#" data-toggle="modal" data-target="#For-delete-{{house.id}}" class="card-link">X</a>
+                                    <a href="#" data-toggle="modal" data-target="#For-delete-{{house.id}}" class="card-link float-right"><i class="fas fa-times"></i></a>
                                 </div>
                             </div>
                             <hr>
@@ -39,81 +40,78 @@
                             {% endif %}
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-5">
+                                    <div class="col-6" style="padding: 0;margin: 0;">
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseModal-{{house.id}}">
-                                            Plus de détails
+                                        <button style="border-radius: 1rem;" type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#houseModal-{{house.id}}">
+                                            <span aria-hidden="true"><i style="font-size: 1.3rem;" class="fas fa-info-circle"></i></span> Plus de détails
                                         </button>
                                     </div>
-                                    <div class="col-3" style="font-size: 20px;">{% if house.house_available %} À louer {% endif %}</div>
-                                    <div class="col-4">{% if house.house_to_sell %} En vente {% endif %}</div>
+                                    <div class="col-6"></div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="For-delete-{{house.id}}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content" style="border-radius: 1rem;width: 100%;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel">Vous allez suprime cette maison.</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="For-delete-{{house.id}}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                        <div class="modal-content" style="border-radius: 1rem;width: 100%;">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modalLabel">Vous allez suprime cette maison.</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="alert alert-danger" role="alert">
-                                                Voulez-vous vraiment surprimer cette maison?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div class="text-center"><a href="{% url 'spaces:landlord_delete_house' house.id %}" class="btn btn-danger">Suprimer</a></div>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="alert alert-danger" role="alert">
+                                    Voulez-vous vraiment surprimer cette maison?
                                 </div>
-
-                                <div class="modal fade" id="houseModal-{{house.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                    <div class="modal-content" style="border-radius: 1rem;">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Maison</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                      </div>
-                                      <div class="modal-body" style="background-color: #fdfdfd;">
-                                        <div class="card">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <p><span style="font-weight: bold;">Ville/Commune: </span>{{house.house_township}} {{house.id}}</p>
-                                                    <p><span style="font-weight: bold;">Quartier: </span>{{house.house_area}}</p>
-                                                    <p><span style="font-weight: bold;">Loyer: </span>{{house.house_rent}} FCFA</p>
-                                                    <p><span style="font-weight: bold;">Caution: </span>{{house.house_deposit}} FCFA</p>
-                                                    <p><span style="font-weight: bold;">Type: </span>{{house.house_kind}}</p>
-                                                    <p><span style="font-weight: bold;">{{house.house_rooms_number}} </span>pieces</p>
-                                                    {% if house.house_available %}
-                                                        <P><span style="font-weight: bold;">À louer</span></P>
-                                                    {% endif %}
-                                                    {% if house.house_to_sell %}
-                                                        <p><span style="font-weight: bold;">En vente</span></p>
-                                                    {% endif %}
-                                                </div>
-                                                <div class="col-md-6">
-                                                    {% if house.house_image %}
-                                                        <img style="max-height: 100%;max-width: 100%;" src="{{house.house_image.url}}" alt="image de maison">
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-        
-                                            <div class="text-center"><a href="{% url 'spaces:edit_house_founded' house.id %}" style="width: 50%;" class="btn btn-primary">Editez cette maison</a></div>
-                                        </div>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                        <button type="button" class="btn btn-primary">Maison suivante</button>
-                                      </div>
-                                    </div>
-                                  </div>
+                                <div class="modal-footer">
+                                    <div class="text-center"><a href="{% url 'spaces:landlord_delete_house' house.id %}" class="btn btn-danger"><span aria-hidden="true"><i class="fas fa-trash"></i></span> Suprimer</a></div>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="houseModal-{{house.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                          <div class="modal-content" style="border-radius: 1rem;">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel"><span aria-hidden="true"><i class="fas fa-home"></i></span> Maison</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body" style="background-color: #fdfdfd;">
+                              <div class="card">
+                                  <div class="row">
+                                      <div class="col-md-6">
+                                          <p><span style="font-weight: bold;">Ville/Commune: </span>{{house.house_township}} {{house.id}}</p>
+                                          <p><span style="font-weight: bold;">Quartier: </span>{{house.house_area}}</p>
+                                          <p><span style="font-weight: bold;">Loyer: </span>{{house.house_rent}} FCFA</p>
+                                          <p><span style="font-weight: bold;">Caution: </span>{{house.house_deposit}} FCFA</p>
+                                          <p><span style="font-weight: bold;">Type: </span>{{house.house_kind}}</p>
+                                          <p><span style="font-weight: bold;">{{house.house_rooms_number}} </span>pieces</p>
+                                          {% if house.house_available %}
+                                              <P><span style="font-weight: bold;">À louer</span></P>
+                                          {% endif %}
+                                          {% if house.house_to_sell %}
+                                              <p><span style="font-weight: bold;">En vente</span></p>
+                                          {% endif %}
+                                      </div>
+                                      <div class="col-md-6">
+                                          {% if house.house_image %}
+                                              <img style="max-height: 100%;max-width: 100%;" src="{{house.house_image.url}}" alt="image de maison">
+                                          {% endif %}
+                                      </div>
+                                  </div>
+
+                                  <div class="text-center"><a href="{% url 'spaces:edit_house_founded' house.id %}" style="width: 50%;border-radius: 1rem;" class="btn btn-outline-dark"><span aria-hidden="true"><i class="fas fa-pen"></i></span> Editez cette maison</a></div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            </div>
+                          </div>
                         </div>
                     </div>
                 {% endfor %}

@@ -9,7 +9,12 @@
         <div class="col-md-6">
             <div class="card" style="border: solid 0.1rem #c5bfbf;border-radius: 1rem;">
                 <div class="card-body">
-                    <header style="font-weight: bold;"><h4>Anciennes données</h4></header>
+                    <header style="font-weight: bold;">
+                        <div class="row">
+                            <div class="col-9"><h4>Anciennes données</h4></div>
+                            <div class="col-3"><span class="float-right" aria-hidden="true"><i class="fas fa-trash-alt"></i></span></div>
+                        </div>
+                    </header>
                     <hr>
                     <div class="form-group" style="margin: 1rem 0;padding: 0;">
                         <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Commune: </span><div class="col-6">{{house.house_township}}</div></label>
@@ -50,7 +55,12 @@
         <div class="col-md-6">
             <div class="card" style="border: solid 0.1rem #c5bfbf;border-radius: 1rem;">
                 <form class="card-body" method="post" action="{% url 'spaces:edit_house_founded' house.id %}" enctype="multipart/form-data">
-                    <header style="font-weight: bold;"><h4>Nouvelles données</h4></header>
+                    <header style="font-weight: bold;">
+                        <div class="row">
+                            <div class="col-9"><h4>Nouvelles données</h4></div>
+                            <div class="col-3"><span class="float-right" aria-hidden="true"><i class="fas fa-pen"></i></span></div>
+                        </div>
+                    </header>
                     <hr>
                     {% csrf_token %}
                     <div class="form-group row">

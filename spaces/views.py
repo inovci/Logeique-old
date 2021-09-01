@@ -645,7 +645,7 @@ def clientNotifications(request, id):
                                         house_deposit__gte=client.deposit_proposal - client.deposit_proposal * 0.1,
                                         house_rent__lte=client.rent_proposal + client.rent_proposal * 0.1,
                                         house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1 ))
-    print(houses)    
+    print(in_deals)    
     if houses == None:
         no_houses_error = True
     return render(request ,'spaces/client_notifications.html' , locals())

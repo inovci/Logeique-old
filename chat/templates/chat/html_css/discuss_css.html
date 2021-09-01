@@ -1,13 +1,17 @@
 <style>
+    input[type=text]{
+        word-break: break-word;
+        overflow: auto;
+    }
+
     input[type=text],
     select {
-        width: 73%;
-        /*padding: 12px 20px;*/
-        /*margin: 8px 0;*/
-        /*display: inline-block;*/
-        border: 1px solid #ccc;
+        width: 100%;
+        border: 1rem solid rgb(235, 226, 226);
         border-radius: 4px;
         box-sizing: border-box;
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
     }
 
     input[type=submit] {
@@ -22,8 +26,7 @@
     }
 
     .chat-board {
-        min-height: 81vh;
-        height: 82%;
+        min-height: 84vh;
     }
 
     input[type=submit]:hover {

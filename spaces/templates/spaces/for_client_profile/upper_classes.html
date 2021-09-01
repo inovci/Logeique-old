@@ -24,14 +24,14 @@
                 {% endif %}            
 
                 <div class="card-body">
-                    <div class="row" style="padding: 0;margin: 0;">
-                        <div class="col-8">
+                    <div class="row">
+                        <div class="col-8" style="padding: 0;margin: 0;">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseModal-{{house.id}}">
-                              Plus de détails
+                            <button style="border-radius: 1rem;" type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#houseModal-{{house.id}}">
+                                <span aria-hidden="true"><i style="font-size: 1.3rem;" class="fas fa-info-circle"></i></span> Plus de détails
                             </button>
                         </div>
-                        <div class="col-4">
+                        <div class="col-4" style="padding: 0;margin: 0;">
                             
                         </div>
                     </div>
@@ -73,13 +73,12 @@
                         </div>
 
                         <div class="text-center">
-                            <a href="{% url 'chat:checkview' house.id house.landlord.user %}" style="width: 50%;" class="btn btn-primary">Allez en négociation</a>
+                            <a href="{% url 'chat:checkview' house.id house.landlord.user %}" style="width: 50%;border-radius: 1rem;" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Allez en négociation</a>
                         </div>
                     </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary">Maison suivante</button>
                   </div>
                 </div>
               </div>

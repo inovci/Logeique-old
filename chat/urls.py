@@ -5,6 +5,6 @@ app_name = "chat"
 
 urlpatterns = [
 	path('<int:house_id>', views.checkviewClient, name='checkviewClient'),
-	path('<str:other_user>', views.checkviewLandlord, name='checkviewLandlord'),
+	path('<str:other_user>-<int:proposal_id>', views.checkviewLandlord, name='checkviewLandlord'),
 	path('room/<int:room_id>', views.room, name='room'),
 ]

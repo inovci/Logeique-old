@@ -18,12 +18,12 @@
 {% block h1 %}Négociations/Notifications{% endblock h1 %}
 
 {% block content %}
-    {% if in_deals is None %}
-        <h1>Notifications</h1>
-        <div class="row" style="padding: 20px;">
+    {% if not in_deals %}
+        <div class="row">
             {% for house in houses %}
-                <div style="padding: 5px;" class="col-xl-6 col-md-12">
-                    <div class="card user-card-full">
+            <div class="col-md-4">
+                <div>
+                    <div class="card user-card-full" style="border-radius: 1rem;border: rgb(216, 214, 214) solid 0.1rem;">
                         <div class="row m-l-0 m-r-0">
                             <div class="col-sm-4 bg-c-lite-green">
                                 <div class="text-white">
@@ -34,6 +34,7 @@
                                             <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
                                         {% endif %}
                                     </div>
+                                    <hr>
                                     <div>
                                         <h6 class="f-w-600">{{house.landlord.user.first_name}}</h6>
                                         <h6 class="f-w-600">{{house.landlord.user.last_name}}</h6>
@@ -73,7 +74,7 @@
                                         <div class="col-sm-12 text-center">
                                             <form method="POST" action="{% url 'chat:checkviewClient' house.id %}">
                                                 {% csrf_token %}
-                                                <button type="submit" class="btn btn-primary">Négocier ?</button>
+                                                <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Négocier ?</button>
                                             </form>
                                         </div>
                                     </div>
@@ -82,14 +83,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
             {% endfor %}
         </div>
     {% elif in_deals and users_in_rooms %}
         <div class="row">
             {% for house in houses %}
                 {% if house.landlord.user not in users_in_rooms %}
-                    <div style="padding: 5px;" class="col-xl-6 col-md-12">
-                        <div class="card user-card-full">
+                <div class="col-md-4">
+                    <div>
+                        <div class="card user-card-full" style="border-radius: 1rem;border: rgb(216, 214, 214) solid 0.1rem;">
                             <div class="row m-l-0 m-r-0">
                                 <div class="col-sm-4 bg-c-lite-green">
                                     <div class="text-white">
@@ -100,6 +103,7 @@
                                                 <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
                                             {% endif %}
                                         </div>
+                                        <hr>
                                         <div>
                                             <h6 class="f-w-600">{{house.landlord.user.first_name}}</h6>
                                             <h6 class="f-w-600">{{house.landlord.user.last_name}}</h6>
@@ -139,7 +143,7 @@
                                             <div class="col-sm-12 text-center">
                                                 <form method="POST" action="{% url 'chat:checkviewClient' house.id %}">
                                                     {% csrf_token %}
-                                                    <button type="submit" class="btn btn-primary">Négocier ?</button>
+                                                    <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Négocier ?</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -148,6 +152,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 {% endif %}
             {% endfor %}
         </div>
@@ -158,17 +163,20 @@
         <div class="row">
             {% for room in rooms %}
                 <div class="col-4">
-                    <a href="{% url 'chat:room' room.id %}" class="row" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;background-color: #2B2F3E;border-radius: 1rem;">
+                    <a href="{% url 'chat:room' room.id %}" class="row over_user" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;border-radius: 3rem;border: solid 0.1rem #272C30;">
                         <div class="col-3" style="margin: auto 0px;">
-                        {% if room.user1.landlord.avatar.url %}
-                            <img style="border-radius: 50%;" width="70px" height="70px" src="{{room.user1.landlord.avatar.url}}" alt="Image de {{room.user1.username}}">
-                        {% endif %}
+                            {% if room.user1.landlord.avatar %}
+                                <img style="border-radius: 50%;" width="90px" height="90px" src="{{room.user1.landlord.avatar.url}}" alt="Image de {{room.user1.username}}">
+                            {% else %}
+                                <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+                            {% endif %}
                         </div>
                         <div class="col-9">
-                            <div class="text-white" style="padding-top: 0.2rem;font-size: 20px;">
+                            <div style="padding-top: 0.2rem;font-size: 16px;">
                                 <p style="font-style: bold;">{{room.user1.last_name}}</p>
                             </div>
-                            <div class="text-white" style="font-size: 10px;">
+                            <hr>
+                            <div style="font-size: 10px;">
                                 <p id="lastest-user-message-{{room.id}}"></p>
                             </div>
                         </div>
