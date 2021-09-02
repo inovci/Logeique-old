@@ -157,8 +157,6 @@
         <h1>Salles de chat</h1>
         <div class="row">
             {% for room in rooms %}
-                <input type="hidden" id="room-id" value="{{room.id}}">
-                <input type="hidden" id="user-room" value="{{room.user2}}">
                 <div class="col-4">
                     <a href="{% url 'chat:room' room.id %}" class="row over_user" style="margin: 0.1rem 0.5rem;padding: 0.2rem;text-decoration: none;border-radius: 3rem;border: solid 0.1rem #272C30;">
                         <div class="col-3" style="margin: auto 0px;">
@@ -169,7 +167,7 @@
                             {% endif %}
                         </div>
                         <div class="col-9">
-                            <div style="padding-top: 0.2rem;font-size: 16px;">
+                            <div style="font-size: 30px;">
                                 <p>{{room.user2.last_name}}</p>
                             </div>
                             <hr>
@@ -182,24 +180,32 @@
 
                 <script type="text/javascript">                   
                     fetch(
-                        "http://127.0.0.1:8000/api/rooms/messages/latest/{{room.id}}/{{room.user2}}/", 
+                        "http://127.0.0.1:8000/api/rooms/room-last-message/{{room.id}}/",
                         {
                             method: "GET",
                             headers: {
                                 "Accept": "application/json",
                                 "Content-Type": "application/json"
-                        },
-                    }).then((response) => {
+                            },
+                        }).then((response) => {
                             if (response.ok) {
                                 return response.json();
                             }
                         })
                         .then((data) => {
                             const msg = document.getElementById("lastest-user-message-{{room.id}}");
-                            if (data.value.length <= 20) {
-                                msg.innerHTML = data.value;
+                            if (data.user == "{{request.user.id}}") {
+                                if (data.value.length <= 20) {
+                                    msg.innerHTML = "Vous: " + data.value;
+                                } else {
+                                    msg.innerHTML = "Vous: " + data.value.slice(0, 25) + '...';
+                                }
                             } else {
-                                msg.innerHTML = data.value.slice(0, 35) + '...';
+                                if (data.value.length <= 20) {
+                                    msg.innerHTML = data.value;
+                                } else {
+                                    msg.innerHTML = data.value.slice(0, 25) + '...';
+                                }
                             }
                         })
                         .catch((error) => {

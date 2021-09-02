@@ -1,5 +1,5 @@
 from django.core.checks import messages
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import Http404
 from rest_framework.response import Response
 
@@ -56,6 +56,38 @@ class RoomDetailView(APIView):
     def get(self, request, id, format=None):
         room = self.get_object(id)
         serializer = RoomSerializer(room)
+        return Response(serializer.data)
+
+
+# Classe pour lister au format json tous les objets de type message d'un room (salle de chat).
+class RoomMessagesView(APIView):
+
+    def get_object(self, id):
+        try:
+            room = get_object_or_404(Room, id=id)
+            return Message.objects.filter(room=room)
+        except Exception as e:
+            pass
+
+    def get(self, request, id, format=None):
+        room_messages = self.get_object(id)
+        serializer = MessageSerializer(room_messages, many=True)
+        return Response(serializer.data)
+
+
+# Classe pour lister au format json le dernier objet de type message d'un room (salle de chat).
+class RoomLatestMessageView(APIView):
+
+    def get_object(self, id):
+        try:
+            room = get_object_or_404(Room, id=id)
+            return Message.objects.filter(room=room).latest('id')
+        except Exception as e:
+            raise e
+
+    def get(self, request, id, format=None):
+        room_last_message = self.get_object(id)
+        serializer = MessageSerializer(room_last_message)
         return Response(serializer.data)
 
 
