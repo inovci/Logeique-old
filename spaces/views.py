@@ -12,6 +12,10 @@ import re
 import os
 from PIL import Image 
 from search.forms import SearchForm
+import time
+from datetime import datetime
+
+
 
 max_height= 540
 max_width= 304
@@ -668,88 +672,17 @@ def see_clients(request, id):
         no_client_err = True
 
     return render(request, 'spaces/landlord_clients.html', locals())
-    #
-    #clients = []
-    #deal = Deal.objects.filter(landlord=id)
-    """
-    if deals:
-        no_client_err = False
-        for deal in deals:
-            client = deal.client
-            clients.append(client)
-    else:
-        no_client_err = True
-    """
-    
 
-    
-    
-"""def test(id =  1):
-    all_clients = Client.objects.all()
-    all_clients = list(all_clients)
-    landlord_clients = []
-    for client in all_clients:
-        deal = Deal.objects.filter(landlord=id, client=client.id)
-        if deal != None:
-            for single_deal in deal:
-                landlord_clients.append(client)
-        
-    for client in landlord_clients:
-        print (client.user)"""
+def news(request):
+    new_houses = []
+    current_time = time.time()
+    a_week_ago = current_time - 604800
+    #today = date.today()
+    all_houses = House.objects.all()
+    for house in all_houses:
+        house_creation_timestamp = datetime.timestamp(house.house_creation_day) 
+        if house_creation_timestamp >= a_week_ago:
+            new_houses.append(house)
 
-
-"""
-def test(id, username=None, first_name=None, last_name=None, email=None, contact=None, password1=None, password2=None, ):
-    user = User.objects.get(id=id)
-    try:
-        if username:
-            user.username = username
-            print(user.username)
-        else:
-            no_username_msg = True
-            print("username not changed")
-        if first_name:
-            user.first_name = first_name
-        else:
-            no_first_name_msg = True
-            print("first name not changed")
-        if last_name:
-            user.last_name = last_name
-        else:
-            no_last_name_msg = True
-            print("last name not changed")
-        if email:
-            user.email = email
-        else:
-            no_email_msg = True
-            print("email not changed")
-        if contact:
-            try:
-                user.client.user_id != None
-                user.client.contact = contact
-            except:
-                user.landlord.user_id != None
-                user.landlord.contact = contact
-        else:
-            no_contact_msg = True
-            print("contact not changed")
-        if password1 and password2:
-            if password1 == password2:
-                user.set_password(password1)
-            else:
-                error_pass_no_match = True
-        else:
-            no_pass_msg = True
-            print("no password changed")
-        user.save()
-    except:
-        error = True
-"""
-
-def test2(id):
-    try:
-        houses = House.objects.filter(landlord__user_id = id)
-    except:
-        error = True 
-        print(error)
+    return render(request , 'spaces/news.html' , locals())
     
