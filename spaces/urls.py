@@ -24,4 +24,5 @@ urlpatterns = [
     path('see/client/notifications/<int:id>' , views.clientNotifications, name="client_notifications"),
     path('edit/house/<int:id>', views.edit_house, name="edit_house_founded"),
     path('delete/house/<int:house_id>', views.landlordRemoveHouse, name="landlord_delete_house"),
+    path('news' ,views.news , name = "news" )
 ]
