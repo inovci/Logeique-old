@@ -1,0 +1,11 @@
+{% extends 'spaces/base.html' %}
+{% load static %}
+{% block title %}News{% endblock %}
+
+{% block content %}
+    {% if new_houses %}
+        {% for house in new_houses %}
+        {{house}}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
