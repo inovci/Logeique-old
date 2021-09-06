@@ -9,7 +9,7 @@ class SignUpForm(forms.Form):
                 'class': 'form-control inbox',
                 'title': 'Pseudo',
                 'placeholder': 'Entrez votre pseudo',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -21,7 +21,7 @@ class SignUpForm(forms.Form):
                 'class': 'form-control inbox',
                 'title': 'Prenom',
                 'placeholder': 'Entrez votre Prenom',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -33,7 +33,7 @@ class SignUpForm(forms.Form):
                 'class': 'form-control inbox',
                 'title': 'Nom',
                 'placeholder': 'Entrez votre Nom',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -44,9 +44,9 @@ class SignUpForm(forms.Form):
             attrs={
                 'class': 'form-control inbox',
                 'title': 'Email',
-                'placeholder': 'Entrez votre addresse electronique',
+                'placeholder': 'Adresse électronique',
                 'id': 'lo_em',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -58,7 +58,7 @@ class SignUpForm(forms.Form):
                 'title': 'Contact',
                 'placeholder': 'Exemple : 00-00-00-00',
                 'id': 'lo_nu',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -71,7 +71,7 @@ class SignUpForm(forms.Form):
                 'onclick': 'active()',
                 'id': 'is_cl',
                 'type': 'radio',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -84,7 +84,7 @@ class SignUpForm(forms.Form):
                 'onclick': 'active()',
                 'id': 'is_la',
                 'type': 'radio',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -96,7 +96,7 @@ class SignUpForm(forms.Form):
                 'class': 'form-control inbox',
                 'title': 'Mot de passe',
                 'placeholder': 'Mot de passe',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -108,7 +108,7 @@ class SignUpForm(forms.Form):
                 'class': 'form-control inbox',
                 'title': 'Vérification',
                 'placeholder': 'Entrez votre mot de passe à nouveau',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -124,7 +124,7 @@ class SignInForm(SignUpForm):
 
 class EditClientForm(forms.Form):
     username = forms.CharField(
-        label='Pseudo : ',
+        label='Pseudo ',
         max_length=200,
         required=False,
         widget=forms.TextInput(
@@ -132,12 +132,12 @@ class EditClientForm(forms.Form):
                 'class': 'form-control inbox',
                 'title': 'Pseudo',
                 'placeholder': 'Entrez votre pseudo',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
     first_name = forms.CharField(
-        label='Prénom : ',
+        label='Prénom ',
         max_length=200,
         required=False,
         widget=forms.TextInput(
@@ -145,12 +145,12 @@ class EditClientForm(forms.Form):
                 'class': 'form-control inbox',
                 'title': 'Prenom',
                 'placeholder': 'Entrez votre Prenom',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
     last_name = forms.CharField(
-        label='Nom : ',
+        label='Nom ',
         max_length=200,
         required=False,
         widget=forms.TextInput(
@@ -158,38 +158,38 @@ class EditClientForm(forms.Form):
                 'class': 'form-control inbox',
                 'title': 'Nom',
                 'placeholder': 'Entrez votre Nom',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
     email = forms.EmailField(
-        label='Email : ',
+        label='Email ',
         required=False,
         widget=forms.EmailInput(
             attrs={
                 'class': 'form-control inbox',
                 'title': 'Email',
-                'placeholder': 'Entrez votre addresse electronique',
+                'placeholder': 'Adresse électronique',
                 'id': 'lo_em',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
     contact = forms.CharField(
-        label='Contact : ',
+        label='Contact ',
         required=False,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control inbox',
                 'title': 'Contact',
-                'placeholder': 'Exemple : + 225 00-00-00-00-00',
+                'placeholder': 'Ex : +225 00-00-00-00-00',
                 'id': 'lo_nu',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
     password = forms.CharField(
-        label='Mot de passe : ',
+        label='Mot de passe ',
         required=False,
         max_length=200,
         widget=forms.PasswordInput(
@@ -197,20 +197,20 @@ class EditClientForm(forms.Form):
                 'class': 'form-control inbox',
                 'title': 'Mot de passe',
                 'placeholder': 'Nouveau mot de passe',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
     password_verification = forms.CharField(
-        label='Vérification : ',
+        label='Vérification ',
         required=False,
         max_length=200,
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control inbox',
                 'title': 'Vérification',
-                'placeholder': 'Entrez votre nouveau mot de passe à nouveau',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'placeholder': 'Entrez le à nouveau',
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -223,7 +223,7 @@ class EditClientForm(forms.Form):
         required=False
     )
     avatar = forms.ImageField(
-        label='Ajoutez un avatar',
+        label='Avatar ',
         required=False
     )
 
@@ -240,7 +240,7 @@ class AddHouseForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Commune de la maison',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -251,7 +251,7 @@ class AddHouseForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Quartier de la maison',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -261,7 +261,7 @@ class AddHouseForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Prix du Loyer',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -271,7 +271,7 @@ class AddHouseForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Caution de la caution',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -282,7 +282,7 @@ class AddHouseForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Type de maison',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )
@@ -292,7 +292,7 @@ class AddHouseForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Nombre de pièces',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem;'
+                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
     )

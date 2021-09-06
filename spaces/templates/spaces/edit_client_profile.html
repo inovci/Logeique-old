@@ -19,7 +19,7 @@
 
 {% block content %}
     {% if error %}
-        <p><strong>une erreur inhabituelle est survenue</strong></p>
+        <p>une erreur inhabituelle est survenue</p>
     {% endif %}
 
     <div class="row">
@@ -31,86 +31,48 @@
                 <form style="padding: 3rem;" method="post" action="{% url 'spaces:edit_client_profile' user.id %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
-                        <div style="font-weight: bold;">{{form.username.label}}</div>
+                        <div>{{form.username.label}}{% if no_username_msg %}<span style="color:yellow">inchangé</span>{% elif yes_username_msg %}<span style="color:green">changé</span>{% endif %}</div>
                         {{form.username}}
-                        {% if no_username_msg %}
-                        <p><strong>Pseudo non changé</strong></p>
-                        {% elif yes_username_msg %}
-                        <p><strong>Pseudo changé</strong></p>
-                        {% endif %}
                     </div>
             
                     <div class="form-group">
-                        <div style="font-weight: bold;">{{form.first_name.label}}</div>
+                        <div>{{form.first_name.label}}{% if no_first_name_msg %}<span style="color:yellow">inchangé</span>{% elif yes_first_name_msg %}<span style="color:green">changé</span>{% endif %}</div>
                         {{form.first_name}}
-                        {% if no_first_name_msg %}
-                        <p><strong>Prenom non changé</strong></p>
-                        {% elif yes_first_name_msg %}
-                        <p><strong>Prenom changé</strong></p>
-                        {% endif %}
                     </div>
             
                     <div class="form-group">
-                        <div style="font-weight: bold;">{{form.last_name.label}}</div>
+                        <div>{{form.last_name.label}}{% if no_last_name_msg %}<span style="color:yellow">inchangé</span>{% elif yes_last_name_msg %}<span style="color:green">changé</span>{% endif %}</div>
                         {{form.last_name}}
-                        {% if no_last_name_msg %}
-                        <p><strong>Nom non changé</strong></p>
-                        {% elif yes_last_name_msg %}
-                        <p><strong>Nom changé</strong></p>
-                        {% endif %}
                     </div>
             
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <div style="font-weight: bold;">{{form.contact.label}}</div>
+                            <div>{{form.contact.label}}{% if no_contact_msg %}<span style="color:yellow">inchangé</span>{% elif yes_contact_msg %}<span style="color:green">changé</span>{% endif %}</div>
                             {{form.contact}}
-                            {% if no_contact_msg %}
-                            <p><strong>Contact non changé</strong></p>
-                            {% elif yes_contact_msg %}
-                            <p><strong>Contact changé</strong></p>
-                            {% endif %}
                         </div>
             
                         <div class="form-group col-md-6">
-                            <div style="font-weight: bold;">{{form.email.label}}</div>
+                            <div>{{form.email.label}}{% if no_email_msg %}<span style="color:yellow">inchangé</span>{% elif yes_email_msg %}<span style="color:green">changé</span>{% endif %}</div>
                             {{form.email}}
-                            {% if no_email_msg %}
-                            <p><strong>Email non changé</strong></p>
-                            {% elif yes_email_msg %}
-                            <p><strong>Email changé</strong></p>
-                            {% endif %}
                         </div>
                     </div>
             
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <div style="font-weight: bold;">{{form.password.label}}</div>
+                            <div>{{form.password.label}}{% if no_pass_msg %}<span style="color:yellow">inchangé</span>{% endif %}</div>
                             {{form.password}}
-                            {% if no_pass_msg %}
-                            <p><strong>Mot de passe non changé</strong></p>
-                            {% endif %}
                         </div>
             
             
                         <div class="form-group col-md-6">
-                            <div style="font-weight: bold;">{{form.password_verification.label}}</div>
+                            <div>{{form.password_verification.label}}{% if error_pass_no_match %}<span style="color:red"> Erreur.</span>{% elif yes_pass_msg %}<span style="color:green">changé</span>{% endif %}</div>
                             {{form.password_verification}}
-                            {% if error_pass_no_match %}
-                            <p><strong>Les mots de passes entrés ne correspondent pas.</strong></p>
-                            {% elif yes_pass_msg %}
-                            <p><strong>Mot de passe changé</strong></p>
-                            {% endif %}
                         </div>
                     </div>
             
                     <p>
-                        <div style="font-weight: bold;">{{form.avatar.label}}</div>
+                        <div>{{form.avatar.label}}{% if avatar_added_err %}<span style="color:yellow">Aucun avatar ajouté.</span>{% elif avatar_added %}<span style="color:green">ajouté</span>{% endif %}</div>
                         {{form.avatar}}
-                        {% if avatar_added_err %}
-                    <p><strong>Aucun avatar ajouté.</strong></p>
-                    {% elif avatar_added %}
-                    <p><strong>Avatar ajouté</strong></p>
-                    {% endif %}
                     </p>
             
                     <div class="text-center"><input class="btn btn-outline-dark" style="width: 50%;border-radius: 1rem;" type="submit" value="Modifier" /></div>

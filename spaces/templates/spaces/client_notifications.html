@@ -71,7 +71,7 @@
                                             <p class="m-b-10 f-w-600">Caution</p>
                                             <h6 class="text-muted f-w-400">{{house.house_deposit}} FCFA</h6>
                                         </div>
-                                        <div class="col-sm-12 text-center">
+                                        <div class="text-center col-sm-12">
                                             <form method="POST" action="{% url 'chat:checkviewClient' house.id %}">
                                                 {% csrf_token %}
                                                 <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Négocier ?</button>
@@ -140,7 +140,7 @@
                                                 <p class="m-b-10 f-w-600">Caution</p>
                                                 <h6 class="text-muted f-w-400">{{house.house_deposit}} FCFA</h6>
                                             </div>
-                                            <div class="col-sm-12 text-center">
+                                            <div class="text-center col-sm-12">
                                                 <form method="POST" action="{% url 'chat:checkviewClient' house.id %}">
                                                     {% csrf_token %}
                                                     <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Négocier ?</button>
