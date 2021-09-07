@@ -156,7 +156,7 @@
 
                 <script type="text/javascript">                   
                   fetch(
-                    "http://127.0.0.1:8000/api/rooms/messages/latest/{{room.id}}/{{room.user2}}/", 
+                    "http://127.0.0.1:8000/api/rooms/room-last-message/{{room.id}}/", 
                     {
                       method: "GET",
                       headers: {
@@ -170,10 +170,18 @@
                       })
                       .then((data) => {
                         const msg = document.getElementById("lastest-user-message-{{room.id}}");
-                        if (data.value.length <= 20) {
-                          msg.innerHTML = data.value;
+                        if (data.user == "{{request.user.id}}") {
+                          if (data.value.length <= 20) {
+                            msg.innerHTML = "Vous: " + data.value;
+                          } else {
+                            msg.innerHTML = "Vous: " + data.value.slice(0, 25) + '...';
+                          }
                         } else {
-                          msg.innerHTML = data.value.slice(0, 25) + '...';
+                          if (data.value.length <= 20) {
+                            msg.innerHTML = data.value;
+                          } else {
+                            msg.innerHTML = data.value.slice(0, 25) + '...';
+                          }
                         }
                       })
                       .catch((error) => {
@@ -204,7 +212,7 @@
 
                 <script type="text/javascript">                   
                   fetch(
-                    "http://127.0.0.1:8000/api/rooms/messages/latest/{{room.id}}/{{room.user1}}/", 
+                    "http://127.0.0.1:8000/api/rooms/room-last-message/{{room.id}}/", 
                     {
                       method: "GET",
                       headers: {
@@ -217,9 +225,20 @@
                         }
                       })
                       .then((data) => {
-                        console.log(data);
                         const msg = document.getElementById("lastest-user-message-{{room.id}}");
-                        msg.innerHTML = data.value;
+                        if (data.user == "{{request.user.id}}") {
+                          if (data.value.length <= 20) {
+                            msg.innerHTML = "Vous: " + data.value;
+                          } else {
+                            msg.innerHTML = "Vous: " + data.value.slice(0, 25) + '...';
+                          }
+                        } else {
+                          if (data.value.length <= 20) {
+                            msg.innerHTML = data.value;
+                          } else {
+                            msg.innerHTML = data.value.slice(0, 25) + '...';
+                          }
+                        }
                       })
                       .catch((error) => {
                         console.log(error);
