@@ -6,8 +6,9 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.views import APIView
 
-from .serializers import MessageSerializer, RoomSerializer
+from .serializers import MessageSerializer, RoomSerializer, DealSerializer
 from chat.models import Message, Room
+from spaces.models import Deal
 from django.contrib.auth.models import User
 
 """
@@ -29,6 +30,12 @@ class RoomListView(generics.ListAPIView):
     serializer_class = RoomSerializer
 
 
+# Classe pour lister au format json tous les rooms (salles de chat).
+class DealListView(generics.ListAPIView):
+    queryset = Deal.objects.all()
+    serializer_class = DealSerializer
+
+
 # Classe pour lister au format json les détails d'un objet de type message.
 class MessageDetailView(APIView):
 
@@ -41,6 +48,21 @@ class MessageDetailView(APIView):
     def get(self, request, id, format=None):
         message = self.get_object(id)
         serializer = MessageSerializer(message)
+        return Response(serializer.data)
+
+
+# Classe pour lister au format json les détails d'un objet de type deal.
+class DealDetailView(APIView):
+
+    def get_object(self, id):
+        try:
+            return Deal.objects.get(id=id)
+        except Deal.DoesNotExist:
+            raise Http404
+
+    def get(self, request, id, format=None):
+        deal = self.get_object(id)
+        serializer = DealSerializer(deal)
         return Response(serializer.data)
 
 

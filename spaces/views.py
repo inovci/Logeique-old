@@ -670,7 +670,7 @@ def see_clients(request, id):
         no_client_error = False
     else:
         no_client_err = True
-
+    deals = Deal.objects.filter(landlord=request.user.landlord, concluded=True)
     return render(request, 'spaces/landlord_clients.html', locals())
 
 def news(request):
@@ -686,4 +686,19 @@ def news(request):
 
     return render(request , 'spaces/news.html' , locals())
 
+def concluded_deal(request):
+    deals = Deal.objects.filter(concluded=False)
+    return render(request, "spaces/for_landlord/concluded_deal.html", locals())
 
+
+def concluded(request, deal_id):
+    deal = get_object_or_404(Deal, id=deal_id)
+    deal.concluded = True
+    deal.save()
+    return redirect('spaces:landlord_clients', request.user.id)
+
+
+def aborted(request, deal_id):
+    deal = get_object_or_404(Deal, id=deal_id)
+    deal.delete()
+    return redirect('spaces:landlord_clients', request.user.id)

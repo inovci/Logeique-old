@@ -16,4 +16,7 @@ urlpatterns = [
     path('rooms/room-last-message/<int:id>/', RoomLatestMessageView.as_view()),
     path('rooms/messages/<int:id>/<str:user>/', GetUserRoomMessageView.as_view()),
     path('rooms/messages/latest/<int:id>/<str:user>/', GetUserRoomLatestMessageView.as_view()),
+    # For Deal
+    path('deals/', DealListView.as_view()),
+    path('deals/<int:id>/', DealDetailView.as_view()),
 ]
