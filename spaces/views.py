@@ -685,4 +685,5 @@ def news(request):
             new_houses.append(house)
 
     return render(request , 'spaces/news.html' , locals())
-    
+
+

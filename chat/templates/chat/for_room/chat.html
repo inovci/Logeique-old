@@ -12,7 +12,7 @@
 
       <div>
         {% if request.user.landlord %}
-          <input type="button" name="" value="Marché Conclus" class="btn btn-primary">
+          <a href="{% url 'chat:concluded_deal' request.user.landlord.id user2.client.id house.id %}"  class="btn btn-primary">Marché Conclus</a>
         {% endif %}
       </div>
     </div>
@@ -24,7 +24,7 @@
             <div class='d-flex justify-content-end'>
               <div class="mycontainer" style="background-color: #474B7B;color: #fff;border-radius: 20px 0 20px 20px;max-width: 70%;">
                 <p style="font-size: 15px;">{{message.value}}</p>
-                <span class="time-right text-white" style="font-size: 10px;">{{message.date}}</span>
+                <span class="text-white time-right" style="font-size: 10px;">{{message.date}}</span>
               </div>
             </div>
           {% else %}
@@ -94,7 +94,7 @@
 
     if (chatDataMsg.username === "{{request.user.username}}") {
       chatHolder.append(
-        "<div class='d-flex justify-content-end'><div  class='mycontainer' style='background-color: #474B7B;color: #fff;border-radius: 20px 0 20px 20px;max-width: 70%;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='time-right text-white'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
+        "<div class='d-flex justify-content-end'><div  class='mycontainer' style='background-color: #474B7B;color: #fff;border-radius: 20px 0 20px 20px;max-width: 70%;'>" + "<p style='font-size: 15px;'>" + chatDataMsg.message + "</p>" + "<span class='text-white time-right'>" + moment().format('MMMM Do YYYY, H:mm:ss') + "</span></div></div>"
       )
     } else {
       chatHolder.append(
