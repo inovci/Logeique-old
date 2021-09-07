@@ -26,13 +26,13 @@ def get_result(value, choice = 1):
             value = int(value)
             proposals_list = filter_proposal_objects1(value)
             clients = filter_client_objects(value)
-            add_client_in_clients_list(clients , clients_list)
-            add_client_in_clients_list(proposals_list , clients_list)
+            add_client_in_clients_list1(clients ,clients_list) 
+            add_client_in_clients_list2(proposals_list , clients_list)
         except ValueError:
             clients = filter_client_objects(value)
             proposals_list = filter_proposal_objects2(value)
-            add_client_in_clients_list(clients , clients_list)
-            add_client_in_clients_list(proposals_list , clients_list)
+            add_client_in_clients_list1(clients ,clients_list) 
+            add_client_in_clients_list2(proposals_list , clients_list)
         if not clients_list:
             clients = clients_list = []
         try:
@@ -59,13 +59,13 @@ def get_result(value, choice = 1):
             value = int(value)
             proposals_list =filter_proposal_objects1(value)
             clients = filter_house_objects1(value)
-            add_client_in_clients_list(clients , clients_list)
-            add_client_in_clients_list(proposals_list , clients_list)
+            add_client_in_clients_list1(clients ,clients_list) 
+            add_client_in_clients_list2(proposals_list , clients_list)
         except ValueError:
             proposals_list =filter_proposal_objects2(value)
             clients = filter_house_objects2(value)
-            add_client_in_clients_list(clients , clients_list)
-            add_client_in_clients_list(proposals_list , clients_list)
+            add_client_in_clients_list1(clients ,clients_list) 
+            add_client_in_clients_list2(proposals_list , clients_list)
                 #We will look for different clients registered which are looking for a particular house or with a particular name
         if not clients_list:
             clients = clients_list = []
@@ -115,16 +115,16 @@ def get_result_two(value , choice1 , choice2):
             houses = houses_list = []
         try:
             value = int(value)
-            propsals_list = filter_proposal_objects1(value)
+            proposals_list = filter_proposal_objects1(value)
             clients = filter_client_objects(value)
-            add_client_in_clients_list(clients , clients_list)
-            add_client_in_clients_list(propsals_list , clients_list)
+            add_client_in_clients_list1(clients ,clients_list) 
+            add_client_in_clients_list2(proposals_list , clients_list)
             #We will look for different clients registered which are looking for a particular house or with a particular name
         except ValueError:
             proposals_list = filter_proposal_objects2(value)
             clients = filter_client_objects(value)
-            add_client_in_clients_list(clients , clients_list)
-            add_client_in_clients_list(proposals_list , clients_list)
+            add_client_in_clients_list1(clients ,clients_list) 
+            add_client_in_clients_list2(proposals_list , clients_list)
         if not clients_list:
             clients = clients_list = []
             
@@ -152,14 +152,14 @@ def get_result_two(value , choice1 , choice2):
             value = int(value)
             proposals_list = filter_proposal_objects1(value)
             clients = filter_client_objects(value)
-            add_client_in_clients_list(clients , clients_list)
-            add_client_in_clients_list(proposals_list , clients_list)
+            add_client_in_clients_list1(clients ,clients_list) 
+            add_client_in_clients_list2(proposals_list , clients_list)
                 #We will look for different clients registered which are looking for a particular house or with a particular name
         except ValueError:
             proposals_list = filter_proposal_objects2(value)
             clients = filter_client_objects(value)
-            add_client_in_clients_list(clients , clients_list)
-            add_client_in_clients_list(proposals_list , clients_list)
+            add_client_in_clients_list1(clients ,clients_list) 
+            add_client_in_clients_list2(proposals_list , clients_list)
         if not clients_list:
             clients = clients_list = []
     #The case where landlord checkbox is selected
@@ -190,9 +190,7 @@ def search(request):
             value = form.cleaned_data['query']
             value_for_all = form.cleaned_data['query_for_all']
             value_for_house = form.cleaned_data['query_for_house']
-            print(value_for_house)
             value_for_client = form.cleaned_data['query_for_client']
-            print(value_for_client)
             value_for_landlord = form.cleaned_data['query_for_lanlord']
             values_array = [
                 value_for_all,
@@ -202,11 +200,9 @@ def search(request):
             ] 
             if values_array[0]:
                 context = get_result(value)
-                print(f"context:{context}")
-            elif (values_array[1] and values_array[2]):
-                print("ok")
-                context = get_result_two(value, 2, 3)
                 print(context)
+            elif (values_array[1] and values_array[2]):
+                context = get_result_two(value, 2, 3)
             elif (values_array[1] and values_array[3]):
                 context = get_result_two (value, 2, 4)
             elif (values_array[2] and values_array[3]):
@@ -310,11 +306,17 @@ def filter_client_objects(value):
         )
     return clients
 
-def add_client_in_clients_list(clients , clients_list):
+def add_client_in_clients_list1(clients ,clients_list) :
     if clients != []:
         for client in clients:
             if client not in clients_list:
                 clients_list.append(client)
+
+def add_client_in_clients_list2(proposals_list , clients_list):
+    if proposals_list != []:
+        for proposal in proposals_list:
+            if proposal.client not in clients_list:
+                clients_list.append(proposal.client)
     
 
 def filter_clients(value , clients_list):
@@ -322,13 +324,13 @@ def filter_clients(value , clients_list):
         value = int(value)
         proposals_list = filter_proposal_objects1(value)
         clients = filter_client_objects(value)
-        add_client_in_clients_list(clients , clients_list)
-        add_client_in_clients_list(proposals_list , clients_list)
+        add_client_in_clients_list1(clients ,clients_list) 
+        add_client_in_clients_list2(proposals_list , clients_list)
     except ValueError:
         clients = filter_client_objects(value)
         proposals_list = filter_proposal_objects2(value)
-        add_client_in_clients_list(clients , clients_list)
-        add_client_in_clients_list(proposals_list , clients_list)
+        add_client_in_clients_list1(clients ,clients_list) 
+        add_client_in_clients_list2(proposals_list , clients_list)
     if not clients_list:
         clients = clients_list = []
 

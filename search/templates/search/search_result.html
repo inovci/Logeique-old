@@ -1,78 +1,79 @@
-<html lang="en">
+{% extends 'spaces/base.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-</head>
+{% block title %}Resultats de recherche{% endblock %}
 
-<body>
-    <div>
+{% block content %}
+    <div class = "row">
+        <div class="col-4">
         {% if context.clients %}
-        <h3>Clients interessés par ce genre de maisons</h3>
-        {% for client in context.clients %}
-        <p>{{client.user.username}} , au numéro : {{client.contact}}</p>
-        {% endfor %}
-        {% endif %}
-    </div>
-
-    <div>
-        {% if context.landlords %}
-        <h3>Proprietaires concernés</h3>
-        {% for landlord in context.landlords %}
-        <div>
-            {{landlord.user.username}}
-            {{landlord.contact}}
-        </div>
-        {% endfor %}
-        {% endif %}
-    </div>
-
-    <div>
-        {% if context.houses %}
-        <h3>Maisons concernés</h3>
-        {% for house in context.houses %}
-        <div class="row row-cols-1 row-cols-md-2">
-            <div class="col mb-4">
-                <div class="card">
-                    <img src="{{house.house_image.url}}" class="card-img-top" alt="pas d'image">
-                    <div class="card-body">
-                        <h5 class="card-title">TYpe: {{house.house_kind}}</h5>
-                        <p class="card-text">COmmune: {{house.house_township}}</p>
-                    </div>
+            <h3>Clients interessés </h3>
+            {% for client in context.clients %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Pseudo: {{client.user.username}}</h5>
+                    <p class="card-text">Contact : {{client.contact}}</p>
+                    <a href="#" class="btn btn-primary">Voir details</a>
                 </div>
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
         {% endif %}
-    </div>
-    <!--
-            <div>
-                
-               QUartier: {{house.house_area}} 
-                
-               LOyer: {{house.house_rent}}
-               CAution: {{house.house_deposit}}
-               NOmbre de pieces: {{house.house_rooms_number}}
-               {% if house.house_to_sell %}
-                    maison à vendre
-               {% else %}
-                    pas à vendre
-               {% endif %}
-               {% if house.house_available %}
-                    Maison disponible
-               {% else %}
-                    Maison occupée
-                {% endif %}
+        </div>
+        <div class="col-4">
+            {% if context.landlords %}
+            <h3>Propriétaires interessés </h3>
+            {% for landlord in context.landlords %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Pseudo: {{landlord.user.username}}</h5>
+                    <p class="card-text">Contact : {{landlord.contact}}</p>
+                    <a href="#" class="btn btn-primary">Voir details</a>
+                </div>
             </div>
-        
-        {% if not context.clients and not context.landlords and not context.houses %}
-            <h1> Aucun resultat</h1>
+            {% endfor %}
         {% endif %}
         </div>
-        -->
-</body>
+        <div class="col-4">
+        {% if context.houses %}
+            <h3>Maisons concernées </h3>
+            {% for house in context.houses %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">COmmune: {{house.house_township}}</h5>
+                    <p class="card-text">Maison de type : {{house.house_kind}} dans le quartier : {{house.house_area}}.</p>
+                    <a href="#" class="btn btn-primary">Voir details</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        
+        <!--
+                <div>
+                    
+                QUartier: {{house.house_area}} 
+                    
+                LOyer: {{house.house_rent}}
+                CAution: {{house.house_deposit}}
+                NOmbre de pieces: {{house.house_rooms_number}}
+                {% if house.house_to_sell %}
+                        maison à vendre
+                {% else %}
+                        pas à vendre
+                {% endif %}
+                {% if house.house_available %}
+                        Maison disponible
+                {% else %}
+                        Maison occupée
+                    {% endif %}
+                </div>
+            
+            {% if not context.clients and not context.landlords and not context.houses %}
+                <h1> Aucun resultat</h1>
+            {% endif %}
+            </div>
+            -->
+</div>
+{% endblock %}
+
 
 </html>
