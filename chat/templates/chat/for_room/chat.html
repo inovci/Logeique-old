@@ -12,7 +12,8 @@
 
       <div>
         {% if request.user.landlord %}
-          <a href="{% url 'chat:concluded_deal' request.user.landlord.id room.user2.client.id house.id %}"  class="btn btn-primary">Marché Conclus</a>
+
+          <a href="{% url 'spaces:concluded_deal' %}"  class="btn btn-primary">Marché Conclus</a>
         {% endif %}
       </div>
     </div>

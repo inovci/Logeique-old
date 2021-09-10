@@ -1,3 +1,4 @@
+from chat.models import Room
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
@@ -78,6 +79,11 @@ class Deal(models.Model):
         on_delete=models.CASCADE,
         related_name="house_deals",
         default=None
+    )
+    room = models.ForeignKey(
+        Room, 
+        on_delete=models.CASCADE,
+        related_name="room_deals",
     )
     concluded = models.BooleanField(default=False)
 

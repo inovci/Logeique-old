@@ -1,0 +1,37 @@
+{% extends "spaces/landlord_profile.html" %}
+{% block title %}Conclure Marché{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% for deal in deals %}
+        <div class="col-md-4">
+            <div class="card" style="border: solid 0.1rem #CFD9DE;border-radius: 2rem;">
+                <div class="card-body" style="margin: 0.5rem;padding: 0.5px;">
+                    <div class="row" style="margin: 0;padding: 0;">
+                        <div class="col-3">
+                            {% if deal.client.avatar %}
+                                <img style="border-radius: 50%;" width="90px" height="90px" src="{{deal.client.avatar.url}}" alt="Image de {{deal.client.user.username}}">
+                            {% else %}
+                                <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+                            {% endif %}
+                        </div>
+                        <div class="col-9" style="position: relative;">
+                            <header>Client Names: {{deal.client.user.first_name}} {{deal.client.user.last_name}}</header>
+                            <hr>
+                            <p style="margin: 0;padding: 0;">
+                                {% if deal.house.house_image %}
+                                <img style="max-width: 100%;max-height: 75%;border-radius: 10px;padding: 5px;" src="{{deal.house.house_image.url}}" alt="image de maison">
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" style="margin: 0;padding: 0;">
+                        <a href="{% url 'spaces:concluded' deal.id %}" class="card-link for-chatter" style="padding: 0.5rem 1rem;"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Conclure</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
