@@ -16,7 +16,7 @@
             </div>
         </div>
         <hr>
-        <form method="POST" action="{% url 'chat:room' room.id %}">
+        <form method="POST" action="{% url 'chat:room' room.id  %}">
             {% csrf_token %}
             <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-comments"></i></span> Discutez ?</button>
         </form>
@@ -40,7 +40,7 @@
             </div>
         </div>
         <hr>
-        <form method="POST" action="{% url 'chat:room' room.id %}">
+        <form method="POST" action="{% url 'chat:room' room.id  %}">
             {% csrf_token %}
             <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-comments"></i></span> Discutez ?</button>
         </form>

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from chat.models import Room
 
 # Create your models here.
 
@@ -76,8 +77,12 @@ class Deal(models.Model):
         House, 
         on_delete=models.CASCADE,
         related_name="house_deals",
+        default=None
     )
     concluded = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.landlord} - {self.client}"
+
+
+
