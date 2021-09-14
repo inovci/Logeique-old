@@ -662,7 +662,7 @@ def see_clients(request, id):
     all_clients = list(all_clients)
     landlord_clients = []
     for client in all_clients:
-        deals = Deal.objects.filter(landlord=id, client=client.id)
+        deals = Deal.objects.filter(landlord=id, client=client.id , concluded = True)
         if deals != None:
             for deal in deals:
                 landlord_clients.append(client)
