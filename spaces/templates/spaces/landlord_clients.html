@@ -17,10 +17,9 @@
 
 {% block content %}
 <div>
-    {% if no_client_err %}
     <div>
         <nav>
-          <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
+          <div class="mb-3 nav nav-pills" id="nav-tab" role="tablist">
             <a class="nav-link" id="nav-tuto-tab" data-toggle="tab" href="#nav-tuto" role="tab" aria-controls="nav-tuto" aria-selected="true">Tuto</a>
             <a class="nav-link active" id="nav-clients-tab" data-toggle="tab" href="#nav-clients" role="tab" aria-controls="nav-clients" aria-selected="false">Clients</a>
           </div>
@@ -98,46 +97,5 @@
             </div>
         </div>
     </div>
-    
-    {% else %}
-        <table class="table table-borderless table-dark">
-            <thead>
-                <tr>
-                    <th scope="col">{{current_year}}</th>
-                    <th scope="col">Janvier</th>
-                    <th scope="col">Fevrier</th>
-                    <th scope="col">Mars</th>
-                    <th scope="col">Avril</th>
-                    <th scope="col">Mai</th>
-                    <th scope="col">Juin</th>
-                    <th scope="col">Juillet</th>
-                    <th scope="col">Aout</th>
-                    <th scope="col">Septembre</th>
-                    <th scope="col">Octobre</th>
-                    <th scope="col">Novembre</th>
-                    <th scope="col">Decembre</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for client in landlord_clients %}
-                    <tr>
-                        <th scope="row">{{client.user.username}}</th>
-                        <td><input type="checkbox" value="" id="janCheck"></td>
-                        <td><input type="checkbox" value="" id="febCheck"></td>
-                        <td><input type="checkbox" value="" id="marCheck"></td>
-                        <td><input type="checkbox" value="" id="aprCheck"></td>
-                        <td><input type="checkbox" value="" id="mayCheck"></td>
-                        <td><input type="checkbox" value="" id="junCheck"></td>
-                        <td><input type="checkbox" value="" id="julCheck"></td>
-                        <td><input type="checkbox" value="" id="auCheck"></td>
-                        <td><input type="checkbox" value="" id="sepCheck"></td>
-                        <td><input type="checkbox" value="" id="octCheck"></td>
-                        <td><input type="checkbox" value="" id="novCheck"></td>
-                        <td><input type="checkbox" value="" id="decCheck"></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
 </div>
 {% endblock %}
