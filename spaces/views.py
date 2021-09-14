@@ -655,7 +655,7 @@ def clientNotifications(request, id):
     return render(request ,'spaces/client_notifications.html' , locals())
 
 
-def see_clients(request, id):
+def see_clients(request):
     deals = Deal.objects.filter(landlord=request.user.landlord, concluded=True)
     return render(request, 'spaces/landlord_clients.html', locals())
     """from datetime import date
