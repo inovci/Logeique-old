@@ -84,6 +84,7 @@ class Deal(models.Model):
         Room, 
         on_delete=models.CASCADE,
         related_name="room_deals",
+        default=None
     )
     concluded = models.BooleanField(default=False)
 
