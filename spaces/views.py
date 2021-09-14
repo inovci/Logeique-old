@@ -656,7 +656,9 @@ def clientNotifications(request, id):
 
 
 def see_clients(request, id):
-    from datetime import date
+    deals = Deal.objects.filter(landlord=request.user.landlord, concluded=True)
+    return render(request, 'spaces/landlord_clients.html', locals())
+    """from datetime import date
     current_year = date.today().year
     all_clients = Client.objects.all()
     all_clients = list(all_clients)
@@ -669,9 +671,7 @@ def see_clients(request, id):
     if landlord_clients != []:
         no_client_error = False
     else:
-        no_client_err = True
-    deals = Deal.objects.filter(landlord=request.user.landlord, concluded=True)
-    return render(request, 'spaces/landlord_clients.html', locals())
+        no_client_err = True"""
 
 def news(request):
     new_houses = []
