@@ -569,6 +569,13 @@ def see_houses(request , id):
 
 @login_required()
 def landlordStatistics(request, id):
+    houses = []
+    try:
+        deals = Deal.objects.filter(landlord = request.user.landlord , concluded = True)
+        for deal in deals:
+            houses.append(deal.house)
+    except:
+        in_deals = None
     return render(request, 'spaces/landlord_statistics.html', locals())
     
 @login_required()
