@@ -122,5 +122,7 @@ class ClientFile(models.Model):
 
     balance = models.BigIntegerField()
 
+    departure_date = models.DateField(default=datetime.now)
+
 
 
