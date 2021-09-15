@@ -92,4 +92,35 @@ class Deal(models.Model):
         return f"{self.landlord} - {self.client}"
 
 
+class ClientFile(models.Model):
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        related_name="client_client_files"
+    )
+
+    house = models.OneToOneField(
+        House , 
+        on_delete=models.CASCADE,
+        primary_key= True,
+        related_name="house_client_files"
+    )
+    
+    id_card = models.ImageField(upload_to="img/id_cards/")
+
+    payslip1 = models.ImageField(upload_to = "img/payslips/")
+    payslip1 = models.ImageField(upload_to = "img/payslips/")
+    payslip1 = models.ImageField(upload_to = "img/payslips/") 
+
+    energy_bill1 = models.ImageField(upload_to = "img/bills/")
+    energy_bill2 = models.ImageField(upload_to = "img/bills/")
+
+    last_rent_receipt1 = models.ImageField(upload_to = "img/last_rent_receipts/")
+    last_rent_receipt2 = models.ImageField(upload_to = "img/last_rent_receipts/")
+
+    occupancy_date = models.DateField()
+
+    balance = models.BigIntegerField()
+
+
 
