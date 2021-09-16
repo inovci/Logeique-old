@@ -68,9 +68,9 @@ class SignUpForm(forms.Form):
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-check-input stick',
-                'onclick': 'active()',
                 'id': 'is_cl',
                 'type': 'radio',
+                'checked':'checked',
                 'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
@@ -81,7 +81,6 @@ class SignUpForm(forms.Form):
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'form-check-input stick',
-                'onclick': 'active()',
                 'id': 'is_la',
                 'type': 'radio',
                 'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
