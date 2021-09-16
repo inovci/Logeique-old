@@ -569,6 +569,13 @@ def see_houses(request , id):
 
 @login_required()
 def landlordStatistics(request, id):
+    houses = []
+    try:
+        deals = Deal.objects.filter(landlord = request.user.landlord , concluded = True)
+        for deal in deals:
+            houses.append(deal.house)
+    except:
+        in_deals = None
     return render(request, 'spaces/landlord_statistics.html', locals())
     
 @login_required()
@@ -655,23 +662,23 @@ def clientNotifications(request, id):
     return render(request ,'spaces/client_notifications.html' , locals())
 
 
-def see_clients(request, id):
-    from datetime import date
+def see_clients(request):
+    deals = Deal.objects.filter(landlord=request.user.landlord, concluded=True)
+    return render(request, 'spaces/landlord_clients.html', locals())
+    """from datetime import date
     current_year = date.today().year
     all_clients = Client.objects.all()
     all_clients = list(all_clients)
     landlord_clients = []
     for client in all_clients:
-        deals = Deal.objects.filter(landlord=id, client=client.id)
+        deals = Deal.objects.filter(landlord=id, client=client.id , concluded = True)
         if deals != None:
             for deal in deals:
                 landlord_clients.append(client)
     if landlord_clients != []:
         no_client_error = False
     else:
-        no_client_err = True
-    deals = Deal.objects.filter(landlord=request.user.landlord, concluded=True)
-    return render(request, 'spaces/landlord_clients.html', locals())
+        no_client_err = True"""
 
 def news(request):
     new_houses = []

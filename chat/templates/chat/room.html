@@ -82,7 +82,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
   </head>
   <body style="position: relative;height: 100%;font-family: Arial, Helvetica, sans-serif;">
-    <header class="shadow rounded">
+    <header class="rounded shadow">
       <div style="background-color: #5D5B8D;">
         <nav class="navbar navbar-light">
           <div>
@@ -93,7 +93,7 @@
             {% endif %}
           </div>
           
-          <ul class="nav ml-auto">
+          <ul class="ml-auto nav">
             <li class="nav-item">
               {% if request.user.landlord %}
                 <a style="color: #fff;" class="nav-link active" href="{% url 'spaces:landlord_profile' request.user.id %}">Accueil</a>
@@ -116,7 +116,7 @@
     <main style="background-color: #f0f0f0; overflow-x: hidden;">
       <div class="row" style="padding: 0;margin: 0;">
         <div class="col-3" style="min-height: 90vh;background-color: #3B395E;">
-          <div style="padding: 5px;" class="text-white text-center">
+          <div style="padding: 5px;" class="text-center text-white">
             <div class="card-img-top">
               {% if request.user.landlord.avatar %}
                 <img style="border-radius: 50%;" width="100px" height="100px" src="{{request.user.landlord.avatar.url}}" alt="Image de {{request.user.username}}">

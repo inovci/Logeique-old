@@ -94,3 +94,4 @@ def checkviewLandlord(request, other_user, proposal_id):
         deal = Deal.objects.create(client=user2.client, landlord=user1.landlord, house=house, room=room, concluded=False)
         deal.save()
         return render(request, 'chat/discuss_with_client.html', locals())
+
