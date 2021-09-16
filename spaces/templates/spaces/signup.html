@@ -3,164 +3,167 @@
 {% block title %}Enregistrement{% endblock %}
 
 {% block content %}
-    <div class="row" style="margin-top: 1rem;">
-        <div class="col-1 col-sm-2 col-md-3"></div>
-        <div class="col-10 col-sm-8 col-md-6">
-            <div class="card" style="padding: 1rem;border-radius: 1rem;background-color: #F6F8FA;margin: 1rem 2rem; border: solid 0.1rem #DFDFDF;">
-                <div class="text-center">
-                    <i class="fas fa-user-circle" style="font-size: 4rem; color: cornflowerblue;padding: 2px;"></i>
-                    <p id="">
-                        Inscrivez-vous!
-                    </p>
-                </div>
-                <hr>
-                <form method='POST' action="{% url 'spaces:signup' %}">
-                    {% csrf_token %}   
-                    <div class="form-group">
-                        <!--
+<div class="row" style="margin-top: 8%;">
+    <div class="col-1 col-sm-2 col-md-3"></div>
+    <div class="col-10 col-sm-8 col-md-6">
+        <div class="card"
+            style="padding: 1rem;border-radius: 1rem;background-color: #F6F8FA;margin: 1rem 2rem; border: solid 0.1rem #DFDFDF;">
+            <div class="text-center">
+                <i class="fas fa-user-circle" style="font-size: 4rem; color: cornflowerblue;padding: 2px;"></i>
+                <p id="">
+                    Inscrivez-vous!
+                </p>
+            </div>
+            <hr>
+            <form method='POST' action="{% url 'spaces:signup' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <!--
                         <p style="font-size: 12px;font-weight: bold;">
                             {{form.first_name.label}}
                         </p>
                         -->
-                        {{form.first_name}}
-                    </div>
+                    {{form.first_name}}
+                </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <!--
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <!--
                             <p style="font-size: 12px;font-weight: bold;">
                                 {{form.last_name.label}}
                             </p>
                             -->
-                            {{form.last_name}}
-                        </div>
+                        {{form.last_name}}
+                    </div>
 
-                        <div class="form-group col-md-6">
-                            <!--
+                    <div class="form-group col-md-6">
+                        <!--
                             <p style="font-size: 12px;font-weight: bold;">
                                 {{form.username.label}}
                             </p>
                             -->
-                            {{form.username}}
-                        </div>
+                        {{form.username}}
                     </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <!--
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <!--
                             <p style="font-size: 12px;font-weight: bold;">
                                 {{form.contact.label}}
                             </p>
                             -->
-                            {{form.contact}}
-                        </div>
+                        {{form.contact}}
+                    </div>
 
-                        {% if invalid_contact_err %}
-                            Le format de contact est invalide.
-                        {% endif %}
+                    {% if invalid_contact_err %}
+                    Le format de contact est invalide.
+                    {% endif %}
 
-                        {% if contact_exist_error %}
-                            Le contact que vous avez entré existe déja veuillez le changer.
-                        {% endif %}
+                    {% if contact_exist_error %}
+                    Le contact que vous avez entré existe déja veuillez le changer.
+                    {% endif %}
 
-                        <div class="form-group col-md-6">
-                            <!--
+                    <div class="form-group col-md-6">
+                        <!--
                             <p style="font-size: 12px;font-weight: bold;">
                                 {{form.email.label}}
                             </p>
                             -->
-                            {{form.email}}
-                        </div>
-
-                        {% if email_unique_error %}
-                            L'email que vous avez entré existe déja veuillez le changer.
-                        {% endif %}
+                        {{form.email}}
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <!--
+                    {% if email_unique_error %}
+                    L'email que vous avez entré existe déja veuillez le changer.
+                    {% endif %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <!--
                             <p style="font-size: 12px;font-weight: bold;">
                                 {{form.password.label}}
                             </p>
                             -->
-                            {{form.password}}
-                        </div>
+                        {{form.password}}
+                    </div>
 
-                        <div class="form-group col-md-6">
-                            <!--
+                    <div class="form-group col-md-6">
+                        <!--
                             <p style="font-size: 12px;font-weight: bold;">
                                 {{form.password_verification.label}}
                             </p>
                             -->
-                            {{form.password_verification}}
-                        </div>
-
-                        {% if pass_different_err %}
-                            Les mots de passe entrés ne correspondent pas.
-                        {% endif %}
+                        {{form.password_verification}}
                     </div>
 
-                    <div class="text-center form-group">
-                        <div class="form-check form-check-inline">
-                            <p style="font-weight: bold;">
-                                {{form.client.label}}
-                                {{form.client}}
-                            </p>
-                            
-                            <p style="font-weight: bold;">
-                                {{form.landlord.label}}
-                                {{form.landlord}}
-                            </p> 
-                        </div>
-                    </div>
+                    {% if pass_different_err %}
+                    Les mots de passe entrés ne correspondent pas.
+                    {% endif %}
+                </div>
 
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary" name="Creer compte" value="Creer compte">
-                            S'inscrire
-                        </button> 
+                <div class="text-center form-group">
+                    <div class="form-check form-check-inline">
+                        <p style="font-weight: bold;">
+                            {{form.client.label}}
+                            {{form.client}}
+                        </p>
+
+                        <p style="font-weight: bold;">
+                            {{form.landlord.label}}
+                            {{form.landlord}}
+                        </p>
                     </div>
-                    <hr>
-                    <p style="font-weight: bold;font-size: 10px;" class="text-center">Déjà sur LOGEIQUE? <a href="{% url 'spaces:signin' %}">Connectez-vous ici</a></p>    
-                </form>
-            </div>
+                </div>
+
+                <div class="text-center">
+                    <button style="width: 100%;border-radius: 1rem;" type="submit" class="btn btn-primary"
+                        name="Creer compte" value="Creer compte">
+                        S'inscrire
+                    </button>
+                </div>
+                <hr>
+                <p style="font-weight: bold;font-size: 12px;" class="text-center">Déjà sur LOGEIQUE? <a
+                        href="{% url 'spaces:signin' %}">Connectez-vous ici</a></p>
+            </form>
         </div>
-        <div class="col-1 col-sm-2 col-md-3"></div>
     </div>
+    <div class="col-1 col-sm-2 col-md-3"></div>
+</div>
 {% endblock %}
 
 {% block scripts %}
-    <script>
-        const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
-        const check_client = document.querySelector('#is_cl');
-        const check_landlord = document.querySelector('#is_la');
-        const choix = document.querySelectorAll('.stick');
+<script>
+    const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+    const check_client = document.querySelector('#is_cl');
+    const check_landlord = document.querySelector('#is_la');
+    const choix = document.querySelectorAll('.stick');
 
-        function active(){
-            if (check_client.checked === true){
-                check_client.checked === false;
-                this.checked === true;
-            }
-            else if(check_landlord.checked === true){
-                check_client.checked === false
+    function active() {
+        if (check_client.checked === true) {
+            check_client.checked === false;
+            this.checked === true;
+        }
+        else if (check_landlord.checked === true) {
+            check_client.checked === false
+        }
+    }
+
+    function handleCheck(e) {
+        if (choix[0].checked === true && choix[1].checked === true) {
+            for (let i = 0; i < choix.length; i++) {
+                choix[i].checked = false;
             }
         }
-
-        function handleCheck(e){
-            if (choix[0].checked === true && choix[1].checked === true){
-                for (let i = 0; i < choix.length; i++){
-                    choix[i].checked=false;
-                }
-            }
-            else if(check_client.checked===true){
-                check_landlord.checked===false
-            }
-            else if(check_landlord===true){
-                check_client===true
-            }
-            checkboxes.forEach(
-                checkbox=>checkbox.addEventListener('click', handleCheck)
-            );
+        else if (check_client.checked === true) {
+            check_landlord.checked === false
         }
-    </script>
+        else if (check_landlord === true) {
+            check_client === true
+        }
+        checkboxes.forEach(
+            checkbox => checkbox.addEventListener('click', handleCheck)
+        );
+    }
+</script>
 {% endblock %}
