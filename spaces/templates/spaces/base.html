@@ -98,7 +98,36 @@
 
 
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    {% block scripts %}{% endblock %}
+    {% block scripts %}
+        <script>
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const check_tout = document.querySelector('#tout');
+            const choix = document.querySelectorAll('.stick');
+
+            function active() {
+                if (check_tout.checked === true) {
+                    check_tout.checked = false;
+                    this.checked = true;
+                } 
+            }
+            function handleCheck(e) {
+                if (choix[0].checked === true && choix[1].checked === true && choix[2].checked === true) {
+                    for (let i = 0; i < choix.length; i++) {
+                        choix[i].checked = false;   
+                    }
+                    check_tout.checked = true;
+                } 
+                else if (check_tout.checked === true){
+                    for (let i = 0; i < choix.length; i++) {
+                        choix[i].checked = false;   
+                    }
+                    
+                }
+            }
+
+            checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+        </script>
+    {% endblock %}
     <script type="text/javascript">
         $('#myModal').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
