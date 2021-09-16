@@ -20,7 +20,7 @@ class SignUpForm(forms.Form):
             attrs={
                 'class': 'form-control inbox',
                 'title': 'Prenom',
-                'placeholder': 'Entrez votre Prenom',
+                'placeholder': 'Entrez votre Prénom',
                 'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
