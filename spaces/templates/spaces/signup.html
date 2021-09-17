@@ -101,19 +101,12 @@
                         {% endif %}
                     </div>
 
-                    <div class="text-center form-group">
-                        <div class="form-check form-check-inline">
+                        <div class = "form-check form-check-inline">
                             <p style="font-weight: bold;">
-                                {{form.client.label}}
-                                {{form.client}}
+                                {{form.status.label}}
+                                {{form.status}}
                             </p>
-                            
-                            <p style="font-weight: bold;">
-                                {{form.landlord.label}}
-                                {{form.landlord}}
-                            </p> 
                         </div>
-                    </div>
 
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary" name="Creer compte" value="Creer compte">
@@ -131,36 +124,5 @@
 
 {% block scripts %}
     <script>
-        const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
-        const check_client = document.querySelector('#is_cl');
-        const check_landlord = document.querySelector('#is_la');
-        const choix = document.querySelectorAll('.stick');
-
-        function active(){
-            if (check_client.checked === true){
-                check_client.checked === false;
-                this.checked === true;
-            }
-            else if(check_landlord.checked === true){
-                check_client.checked === false
-            }
-        }
-
-        function handleCheck(e){
-            if (choix[0].checked === true && choix[1].checked === true){
-                for (let i = 0; i < choix.length; i++){
-                    choix[i].checked=false;
-                }
-            }
-            else if(check_client.checked===true){
-                check_landlord.checked===false
-            }
-            else if(check_landlord===true){
-                check_client===true
-            }
-            checkboxes.forEach(
-                checkbox=>checkbox.addEventListener('click', handleCheck)
-            );
-        }
     </script>
 {% endblock %}
