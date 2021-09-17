@@ -20,7 +20,7 @@ class SearchForm(forms.Form):
         widget=forms.CheckboxInput(
             attrs={
                 'id':'tout',
-                'class':'form-check-input stick',
+                'class':'form-check-input sticka',
                 'checked':'checked'
             }
         )
