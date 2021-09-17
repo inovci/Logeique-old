@@ -1,4 +1,18 @@
 from django import forms
+from django.utils.safestring import mark_safe
+
+class HorizRadioRenderer(forms.RadioSelect):
+    """ this overrides widget method to put radio buttons horizontally
+        instead of vertically.
+    """
+    def render(self):
+            """Outputs radios"""
+            return mark_safe(u'\n'.join([u'%s\n' % w for w in self]))
+
+STATUS_CHOICES = [
+    ('client' , 'Client'),
+    ('landlord' , 'Propriétaire')
+]
 
 class SignUpForm(forms.Form):
     username = forms.CharField(
@@ -62,12 +76,13 @@ class SignUpForm(forms.Form):
             }
         )
     )
-    client = forms.BooleanField(
+    status = forms.CharField(widget=forms.RadioSelect(attrs={'class': 'form-check-input'},choices=STATUS_CHOICES))
+    """client = forms.BooleanField(
         label='Client : ',
         required=False,
         widget=forms.CheckboxInput(
             attrs={
-                'class': 'form-check-input stick',
+                'class': 'form-check-input',
                 'id': 'is_cl',
                 'type': 'radio',
                 'checked':'checked',
@@ -80,13 +95,13 @@ class SignUpForm(forms.Form):
         required=False,
         widget=forms.CheckboxInput(
             attrs={
-                'class': 'form-check-input stick',
+                'class': 'form-check-input',
                 'id': 'is_la',
                 'type': 'radio',
                 'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
-    )
+    )"""
     password = forms.CharField(
         label='Mot de passe : ',
         max_length=200,
