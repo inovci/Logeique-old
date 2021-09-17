@@ -3,20 +3,21 @@
 {% block title %}Connexion{% endblock %}
 
 {% block content %}
-<div class="row">
+<div class="row" style="margin-top: 8%;">
     <div class="col-1 col-sm-2 col-md-3"></div>
     <div class="col-10 col-sm-8 col-md-6">
-        <div class="card" style="padding: 1rem;border-radius: 1rem;background-color: #F6F8FA;margin: 1rem 4rem; border: solid 0.1rem #DFDFDF;">
+        <div class="card"
+            style="padding: 1rem;border-radius: 1rem;background-color: #F6F8FA;margin: 1rem 4rem; border: solid 0.1rem #DFDFDF;">
             <div class="text-center">
                 <i class="fas fa-user-circle" style="font-size: 4rem; color: cornflowerblue;padding: 2px;"></i>
                 <p id="">
                     Connectez-vous!
-                </p> 
+                </p>
             </div>
             {% if error %}
-                <p>
-                    <strong>Utilisateur inconnu ou mauvais de mot de passe.</strong>
-                </p>
+            <p>
+                <strong>Utilisateur inconnu ou mauvais de mot de passe.</strong>
+            </p>
             {% endif %}
             <hr>
             <form method="post" action="{% url 'spaces:signin' %}">
@@ -34,10 +35,11 @@
 
                     <div class="form-group">
                         <p style="font-weight: bold;">
-                            <!--{{form.password.label}}--> 
+                            <!--{{form.password.label}}-->
                             {{form.password}}
                         </p>
-                        <p class="d-flex justify-content-end" style="font-size: 12px;"><a href="#">Mot de passe oublié?</a></p>
+                        <p class="d-flex justify-content-end" style="font-size: 12px;"><a href="#">Mot de passe
+                                oublié?</a></p>
                     </div>
 
                     <div class="text-center form-group">
@@ -54,31 +56,35 @@
                         </div>
                     </div>
 
-                    <button style="width: 100%;" type="submit" class="btn btn-primary" name="Connectez vous" value="Connectez vous">
+                    <button style="width: 100%;border-radius: 1rem;" type="submit" class="btn btn-primary"
+                        name="Connectez vous" value="Connectez vous">
                         Connectez-vous
                     </button>
                 </div>
                 <hr>
-                <p style="font-weight: bold;font-size: 10px;" class="text-center">Nouveau sur LOGEIQUE? <a href="{% url 'spaces:signup' %}">Créer un compte ici</a></p>
+                <p style="font-weight: bold;font-size: 12px;" class="text-center">
+                    Nouveau sur LOGEIQUE? <a href="{% url 'spaces:signup' %}">Créer un compte ici</a>
+                </p>
             </form>
 
             <div class="text-center">
                 {% if client_user.is_authenticated %}
-                    <p>
-                        Vous êtes connecté client {{ client_user.last_name }} !
-                    </p>
-                    <P>
-                        <a href="{% url 'spaces:client_profile' client_user.id %}" class="btn btn-lg btn-secondary">Allez à votre compte</a>
-                    </P>
+                <p>
+                    Vous êtes connecté client {{ client_user.last_name }} !
+                </p>
+                <P>
+                    <a href="{% url 'spaces:client_profile' client_user.id %}" class="btn btn-lg btn-secondary">Allez à
+                        votre compte</a>
+                </P>
                 {% elif landlord_user.is_authenticated %}
-                    <p>
-                        Vous êtes connecté propietaire {{ landlord_user.last_name }}!
-                    </p>
-                    <P>
-                        <a href=" {% url 'spaces:landlord_profile' landlord_user.id %}" class="btn btn-lg btn-secondary">
-                            Allez à votre compte
-                        </a>
-                    </P>
+                <p>
+                    Vous êtes connecté propietaire {{ landlord_user.last_name }}!
+                </p>
+                <P>
+                    <a href=" {% url 'spaces:landlord_profile' landlord_user.id %}" class="btn btn-lg btn-secondary">
+                        Allez à votre compte
+                    </a>
+                </P>
                 {% endif %}
             </div>
         </div>
@@ -86,4 +92,3 @@
     <div class="col-1 col-sm-2 col-md-3"></div>
 </div>
 {% endblock %}
-
