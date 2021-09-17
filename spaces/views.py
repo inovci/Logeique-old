@@ -93,8 +93,7 @@ def sign_up(request):
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
             contact = form.cleaned_data['contact']
-            client = form.cleaned_data['client']
-            landlord = form.cleaned_data['landlord']
+            status = form.cleaned_data['status']
             password1 = form.cleaned_data['password']
             password2 = form.cleaned_data['password_verification']
 
@@ -103,7 +102,7 @@ def sign_up(request):
                 return render(request, 'spaces/signup.html', locals())
 
             if password1 == password2:
-                if client:
+                if status == 'client':
                     if email:
                         for each_user in users:
                             each_user.email = each_user.email.lower()
@@ -152,7 +151,7 @@ def sign_up(request):
                         client = Client(user=user, contact=contact)
                         client.save()
 
-                elif landlord:
+                elif status == 'landlord':
                     if email:
                         for each_user in users:
                             each_user.email = each_user.email.lower()
