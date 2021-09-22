@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 {% load static %}
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,18 +11,26 @@
     <title>{% block title %}Profil Client{% endblock title %}</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+        crossorigin="anonymous"></script>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 
-    <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet"> <!--load all styles -->
+    <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet">
+    <!--load all styles -->
 
     <!-- Our project just needs Font Awesome Solid + Brands -->
     <script defer src="{% static 'fontawesome/js/brands.js' %}"></script>
@@ -59,7 +68,7 @@
             color: #fff;
         }
 
-        .for-chatter:hover{
+        .for-chatter:hover {
             border: solid 1px cornflowerblue;
             padding: 0.5rem 1rem;
             border-radius: 1rem;
@@ -73,7 +82,8 @@
 <body style="font-family: 'Roboto', sans-serif;">
     <nav class="navbar sticky-top flex-md-nowrap p-0 shadow" style="background-color: #FFF;">
         {% block a1 %}
-            <a style="font-size: 30px;color: black;" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>
+        <a style="font-size: 30px;color: black;" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
+            href="{% url 'spaces:client_profile' user.id %}">{{user.username}}</a>
         {% endblock a1 %}
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
             data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,79 +101,87 @@
         <div class="row">
             <div class="col-2">
                 {% block navigation %}
-                    <nav id="sidebarMenu" style="height: 100vh;background-color: #2a2a2b;">
-                        <div class="pt-3">
-                            <div class="text-center">
-                                {% if user.client.avatar %}
-                                    <img style="border-radius: 50%;" width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
-                                    <div>
-                                        <p style="color: #1CE;font-size: 18px;">Monsieur {{request.user.last_name}}</p>
-                                    </div>
-                                {% else %}
-                                    <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
-                                {% endif %}
-                            </div>
-                            
-                            <ul class="nav flex-column" style="width: 100%;">
-                                <li class="nav-item">
-                                    {% block navitem1 %}
-                                        <a  style="border-radius: 5px;color: #fff;" class="btn-outline-secondary nav-link active"
-                                            href="{% url 'spaces:client_profile' user.id %}">
-                                            <span data-feather="home"></span> ACCUEIL <span class="sr-only">(current)</span>
-                                        </a>
-                                    {% endblock navitem1 %}
-                                </li>
-                                <li class="nav-item">
-                                    {% block navitem2 %}
-                                        <a style="color: #fff;" class="nav-link" href="{% url 'spaces:edit_client_profile' user.id %}">
-                                            <span data-feather="user"></span>
-                                            Modifier profil
-                                        </a>
-                                    {% endblock navitem2 %}
-                                </li>
-                                <li class="nav-item">
-                                    {% block navitem3 %}
-                                    <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_proposal' %}">
-                                        <span data-feather="plus"></span>
-                                        Que désirez vous?
-                                    </a>
-                                    {% endblock navitem3 %}
-                                </li>
-                                <li class="nav-item">
-                                    {% block navitem4 %}
-                                    <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_statistics' user.id %}">
-                                        <span data-feather="bar-chart-2"></span>
-                                        Statistiques
-                                    </a>
-                                    {% endblock navitem4 %}
-                                </li>
-                                <li class="nav-item">
-                                    {% block navitem5 %}
-                                    <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_notifications' user.id %}">
-                                        <span data-feather="bell"></span>
-                                        Négociations
-                                    </a>
-                                    {% endblock navitem5 %}
-                                </li>
-                            </ul>
-                            <h6
-                                class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                                <span>Statistiques enregistrées</span>
-                                <a style="color: #fff;" class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-                                    <span data-feather="plus-circle"></span>
-                                </a>
-                            </h6>
-                            <ul class="nav flex-column mb-2">
-                                <li style="color: #fff;" class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        <span data-feather="file-text"></span>
-                                        Ce mois
-                                    </a>
-                                </li>
-
-                            </ul>
+                <nav id="sidebarMenu" style="height: 100vh;background-color: #2a2a2b;">
+                    <div class="pt-3">
+                        <div class="text-center">
+                            {% if user.client.avatar %}
+                            <a href="{% url 'spaces:seeProfile' request.user.id %}">
+                                <img style="border-radius: 50%;" width="50%" src="{{user.client.avatar.url}}"
+                                    alt="Image de {{user.username}}">
+                                <div>
+                                    <p style="color: #1CE;font-size: 18px;">Monsieur {{request.user.last_name}}</p>
+                                </div>
+                            </a>
+                            {% else %}
+                            <i class="fas fa-user-circle"
+                                style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+                            {% endif %}
                         </div>
-                    </nav>
+
+                        <ul class="nav flex-column" style="width: 100%;">
+                            <li class="nav-item">
+                                {% block navitem1 %}
+                                <a style="border-radius: 5px;color: #fff;" class="btn-outline-secondary nav-link active"
+                                    href="{% url 'spaces:client_profile' user.id %}">
+                                    <span data-feather="home"></span> ACCUEIL <span class="sr-only">(current)</span>
+                                </a>
+                                {% endblock navitem1 %}
+                            </li>
+                            <li class="nav-item">
+                                {% block navitem2 %}
+                                <a style="color: #fff;" class="nav-link"
+                                    href="{% url 'spaces:edit_client_profile' user.id %}">
+                                    <span data-feather="user"></span>
+                                    Modifier profil
+                                </a>
+                                {% endblock navitem2 %}
+                            </li>
+                            <li class="nav-item">
+                                {% block navitem3 %}
+                                <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_proposal' %}">
+                                    <span data-feather="plus"></span>
+                                    Que désirez vous?
+                                </a>
+                                {% endblock navitem3 %}
+                            </li>
+                            <li class="nav-item">
+                                {% block navitem4 %}
+                                <a style="color: #fff;" class="nav-link"
+                                    href="{% url 'spaces:client_statistics' user.id %}">
+                                    <span data-feather="bar-chart-2"></span>
+                                    Statistiques
+                                </a>
+                                {% endblock navitem4 %}
+                            </li>
+                            <li class="nav-item">
+                                {% block navitem5 %}
+                                <a style="color: #fff;" class="nav-link"
+                                    href="{% url 'spaces:client_notifications' user.id %}">
+                                    <span data-feather="bell"></span>
+                                    Négociations
+                                </a>
+                                {% endblock navitem5 %}
+                            </li>
+                        </ul>
+                        <h6
+                            class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Statistiques enregistrées</span>
+                            <a style="color: #fff;" class="d-flex align-items-center text-muted" href="#"
+                                aria-label="Add a new report">
+                                <span data-feather="plus-circle"></span>
+                            </a>
+                        </h6>
+                        <ul class="nav flex-column mb-2">
+                            <li style="color: #fff;" class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file-text"></span>
+                                    Ce mois
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
                 {% endblock navigation %}
             </div>
 
@@ -187,39 +205,52 @@
                     <div>
                         <p>
                             {% block content %}
-                                <h1>Propositions de maisons disponible.</h1>
-                                <div>
-                                    <nav>
-                                    <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
-                                        <a class="nav-link active" id="nav-big-classes-tab" data-toggle="tab" href="#nav-big-classes" role="tab" aria-controls="nav-big-classes" aria-selected="true">Classes Hautes</a>
-                                        <a class="nav-link" id="nav-middle-classes-tab" data-toggle="tab" href="#nav-middle-classes" role="tab" aria-controls="nav-middle-classes" aria-selected="false">Classes Moyennes</a>
-                                        <a class="nav-link" id="nav-lower-classes-tab" data-toggle="tab" href="#nav-lower-classes" role="tab" aria-controls="nav-lower-classes" aria-selected="false">Classes basses</a>
-                                    </div>
-                                    </nav>
-                                    <div class="tab-content" id="nav-tabContent">
-                                        <div class="tab-pane fade show active" id="nav-big-classes" role="tabpanel" aria-labelledby="nav-big-classes-tab" style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
-                                            <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
-                                                {% include 'spaces/for_client_profile/upper_classes.html' %}
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="nav-middle-classes" role="tabpanel" aria-labelledby="nav-middle-classes-tab" style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
-                                            <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
-                                                {% include 'spaces/for_client_profile/middle_classes.html' %}
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade container-fluid" id="nav-lower-classes" role="tabpanel" aria-labelledby="nav-lower-classes-tab" style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
-                                            <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
-                                                {% include 'spaces/for_client_profile/lower_classes.html' %}
-                                            </div>
-                                        </div>
+                        <h1>Propositions de maisons disponible.</h1>
+                        <div>
+                            <nav>
+                                <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
+                                    <a class="nav-link active" id="nav-big-classes-tab" data-toggle="tab"
+                                        href="#nav-big-classes" role="tab" aria-controls="nav-big-classes"
+                                        aria-selected="true">Classes Hautes</a>
+                                    <a class="nav-link" id="nav-middle-classes-tab" data-toggle="tab"
+                                        href="#nav-middle-classes" role="tab" aria-controls="nav-middle-classes"
+                                        aria-selected="false">Classes Moyennes</a>
+                                    <a class="nav-link" id="nav-lower-classes-tab" data-toggle="tab"
+                                        href="#nav-lower-classes" role="tab" aria-controls="nav-lower-classes"
+                                        aria-selected="false">Classes basses</a>
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-big-classes" role="tabpanel"
+                                    aria-labelledby="nav-big-classes-tab"
+                                    style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
+                                    <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
+                                        {% include 'spaces/for_client_profile/upper_classes.html' %}
                                     </div>
                                 </div>
-                            {% endblock %}
+                                <div class="tab-pane fade" id="nav-middle-classes" role="tabpanel"
+                                    aria-labelledby="nav-middle-classes-tab"
+                                    style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
+                                    <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
+                                        {% include 'spaces/for_client_profile/middle_classes.html' %}
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade container-fluid" id="nav-lower-classes" role="tabpanel"
+                                    aria-labelledby="nav-lower-classes-tab"
+                                    style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
+                                    <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
+                                        {% include 'spaces/for_client_profile/lower_classes.html' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endblock %}
                         </p>
                     </div>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -254,7 +285,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     <script src="{% static 'js/dashboard.js' %}"></script>
-    
+
     </div>
     </div>
 

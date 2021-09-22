@@ -1,7 +1,9 @@
+from django import http
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from .forms import SignUpForm, SignInForm, EditClientForm,EditLandlordForm, AddHouseForm , ClientProposalForm
+from .forms import SignUpForm, SignInForm, EditClientForm, EditLandlordForm, AddHouseForm, ClientProposalForm
 from django.contrib.auth.models import User
 from .models import Client, Landlord, House, Deal, Proposal
 from chat.models import Message, Room
@@ -10,40 +12,80 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 import re
 import os
-from PIL import Image 
+from django.core.files.storage import default_storage, FileSystemStorage
+from django.core import files
+import cv2
+import json
+import base64
+import requests
+from PIL import Image
 from search.forms import SearchForm
 import time
 from datetime import datetime
 
+from .utilities import save_temp_profile_image_from_base64String
+
+max_height = 540
+max_width = 304
+extensions = ['PNG', 'JPG']
 
 
-max_height= 540
-max_width= 304
-extensions= ['PNG','JPG']
+def crop_image(request, *args, **kwargs):
+    payload = {}
+    user = request.user
+    if request.POST and user.is_authenticated:
+        try:
+            imageString = request.POST.get('avatar')
+            url = save_temp_profile_image_from_base64String(imageString, user)
+            img = cv2.imread(url)
 
-def adjusted_size(width,height):
-    if width>max_width or height>max_height:
-        if width>height:
-            return max_width, int (max_width * height/ width)
+            cropX = int(float(str(request.POST.get('cropX'))))
+            cropY = int(float(str(request.POST.get('cropY'))))
+            cropWidth = int(float(str(request.POST.get('cropWidth'))))
+            cropHeight = int(float(str(request.POST.get('cropHeight'))))
+
+            if cropX < 0:
+                cropX = 0
+            if cropY < 0:
+                cropY = 0
+            crop_img = img[cropY:cropY + cropHeight, cropX:cropX + cropWidth]
+            cv2.imwrite(url, crop_img)
+            user.client.avatar.delete()
+            user.client.avatar.save("avatar.png", files.File(open(url, "rb")))
+            user.save()
+            payload['result'] = "success"
+            payload['cropped_profile_image'] = user.client.avatar.url
+            os.remove(url)
+        except Exception as e:
+            payload['result'] = "error"
+            payload['exception'] = str(e)
+    return HttpResponse(json.dumps(payload), content_type="application/json")
+
+
+def adjusted_size(width, height):
+    if width > max_width or height > max_height:
+        if width > height:
+            return max_width, int(max_width * height / width)
         else:
-            return int (max_height*width/height), max_height
+            return int(max_height*width/height), max_height
     else:
-        return width,height
+        return width, height
 
-  
-def resize(path , f): 
+
+def resize(path, f):
     try:
         if f in os.listdir(path):
-            if os.path.isfile(os.path.join(path,f)):
+            if os.path.isfile(os.path.join(path, f)):
                 f_text, f_ext = os.path.splitext(f)
-                f_ext= f_ext[1:].upper()
+                f_ext = f_ext[1:].upper()
                 if f_ext in extensions:
-                    image = Image.open(os.path.join(path,f))
-                    width, height= image.size
-                    image = image.resize(adjusted_size(width , height))
+                    image = Image.open(os.path.join(path, f))
+                    width, height = image.size
+                    image = image.resize(adjusted_size(width, height))
                     return f
-    except IOError: 
+    except IOError:
         pass
+
 
 def is_valid_contact(number):
     contact_valid = False
@@ -58,7 +100,7 @@ def is_valid_contact(number):
         (-) #separator
         \d{2}
         )''', re.VERBOSE
-    )
+                            )
 
     mo = phoneRegex.search(number)
     if mo == None:
@@ -113,7 +155,8 @@ def sign_up(request):
                                 return render(request, 'spaces/signup.html', locals())
 
                         for each_client in clients:
-                            each_client.contact = each_client.contact.split('-')
+                            each_client.contact = each_client.contact.split(
+                                '-')
                             each_client.contact = "".join(each_client.contact)
                             contact_mo = contact.split('-')
                             contact_mo = "".join(contact)
@@ -134,7 +177,8 @@ def sign_up(request):
 
                     elif not email:
                         for each_client in clients:
-                            each_client.contact = each_client.contact.split('-')
+                            each_client.contact = each_client.contact.split(
+                                '-')
                             each_client.contact = "".join(each_client.contact)
                             contact_mo = contact.split('-')
                             contact_mo = "".join(contact)
@@ -161,8 +205,10 @@ def sign_up(request):
                                 email_unique_error = True
                                 return render(request, 'spaces/signup.html', locals())
                         for each_landlord in landlords:
-                            each_landlord.contact = each_landlord.contact.split('-')
-                            each_landlord.contact = "".join(each_landlord.contact)
+                            each_landlord.contact = each_landlord.contact.split(
+                                '-')
+                            each_landlord.contact = "".join(
+                                each_landlord.contact)
                             contact_mo = contact.split('-')
                             contact_mo = "".join(contact)
                             if each_landlord.contact == contact_mo:
@@ -182,8 +228,10 @@ def sign_up(request):
 
                     elif not email:
                         for each_landlord in landlords:
-                            each_landlord.contact = each_landlord.contact.split('-')
-                            each_landlord.contact = "".join(each_landlord.contact)
+                            each_landlord.contact = each_landlord.contact.split(
+                                '-')
+                            each_landlord.contact = "".join(
+                                each_landlord.contact)
                             contact_mo = contact.split('-')
                             contact_mo = "".join(contact)
                             if each_landlord.contact == contact_mo:
@@ -221,9 +269,11 @@ def sign_in(request):
             if client_check:
                 try:
                     user_tempt = get_object_or_404(User, username=username)
-                    client_user = get_object_or_404(Client, user_id=user_tempt.id)
+                    client_user = get_object_or_404(
+                        Client, user_id=user_tempt.id)
                     if client_user:
-                        client_user = authenticate(username=username, password=password)
+                        client_user = authenticate(
+                            username=username, password=password)
 
                         if client_user:
                             login(request, client_user)
@@ -237,9 +287,11 @@ def sign_in(request):
             elif landlord_check:
                 try:
                     user_tempt = get_object_or_404(User, username=username)
-                    landlord_user = get_object_or_404(Landlord, user_id=user_tempt.id)
+                    landlord_user = get_object_or_404(
+                        Landlord, user_id=user_tempt.id)
                     if landlord_user:
-                        landlord_user = authenticate(username=username, password=password)
+                        landlord_user = authenticate(
+                            username=username, password=password)
 
                         if landlord_user:
                             login(request, landlord_user)
@@ -256,7 +308,7 @@ def sign_in(request):
 def see_profile(request, id):
     form = SearchForm()
     user = User.objects.get(id=id)
-    
+
     try:
         user.is_superuser == 0
         try:
@@ -285,7 +337,7 @@ def edit_client_profile(request, id):
     user = User.objects.get(id=id)
     form = EditClientForm()
     if request.method == 'POST':
-        form = EditClientForm(request.POST , request.FILES)
+        form = EditClientForm(request.POST, request.FILES)
         if form.is_valid():
             username = form.cleaned_data['username']
             first_name = form.cleaned_data['first_name']
@@ -296,11 +348,11 @@ def edit_client_profile(request, id):
             password2 = form.cleaned_data['password_verification']
             avatar = request.FILES.get('avatar')
             if avatar:
-                client = Client.objects.get(user_id = id)
+                client = Client.objects.get(user_id=id)
                 client.avatar = avatar
                 client.save()
                 avatar_added = True
-                        
+
             else:
                 avatar_added_err = True
             if username:
@@ -329,10 +381,10 @@ def edit_client_profile(request, id):
                     invalid_contact_err = True
                     return render(request, 'spaces/edit_client_profile.html', locals())
 
-                client = Client.objects.get(user_id = id)
+                client = Client.objects.get(user_id=id)
                 client.contact = contact
                 client.save()
-                yes_contact_msg =   True
+                yes_contact_msg = True
             else:
                 no_contact_msg = True
             if password1 and password2:
@@ -346,12 +398,13 @@ def edit_client_profile(request, id):
             user.save()
     return render(request, 'spaces/edit_client_profile.html', locals())
 
+
 @login_required()
 def edit_landlord_profile(request, id):
     user = User.objects.get(id=id)
     form = EditLandlordForm()
     if request.method == 'POST':
-        form = EditLandlordForm(request.POST , request.FILES)
+        form = EditLandlordForm(request.POST, request.FILES)
         if form.is_valid():
             username = form.cleaned_data['username']
             first_name = form.cleaned_data['first_name']
@@ -362,7 +415,7 @@ def edit_landlord_profile(request, id):
             password2 = form.cleaned_data['password_verification']
             avatar = request.FILES.get('avatar')
         if avatar:
-            landlord = Landlord.objects.get(user_id = id)
+            landlord = Landlord.objects.get(user_id=id)
             landlord.avatar = avatar
             landlord.save()
             avatar_added = True
@@ -394,7 +447,7 @@ def edit_landlord_profile(request, id):
                 invalid_contact_err = True
                 return render(request, 'spaces/edit_landlord_profile.html', locals())
 
-            landlord = landlord.objects.get(user_id = id)
+            landlord = landlord.objects.get(user_id=id)
             landlord.contact = contact
             landlord.save()
         else:
@@ -409,6 +462,7 @@ def edit_landlord_profile(request, id):
             no_pass_msg = True
         user.save()
     return render(request, 'spaces/edit_landlord_profile.html', locals())
+
 
 def add_house(request, id):
     form = AddHouseForm()
@@ -448,7 +502,7 @@ def add_house(request, id):
 
 
 def client_proposal(request):
-    
+
     if request.method == 'POST':
         form = ClientProposalForm(request.POST)
         if form.is_valid():
@@ -468,7 +522,7 @@ def client_proposal(request):
                 kind_desire=house_kind,
                 rooms_number_desire=house_rooms_number
             )
-            
+
             if client:
                 client.save()
                 return redirect('spaces:client_proposal')
@@ -490,22 +544,24 @@ def clientUpdateProposal(request, proposal_id):
             house_rooms_number = form.cleaned_data['house_rooms_number']
 
             #client = Client.objects.get(user_id=id)
-            client = Proposal.objects.get(id=proposal_id,client=request.user.client)
+            client = Proposal.objects.get(
+                id=proposal_id, client=request.user.client)
 
             if client:
-                client.area_desire=house_area
-                client.township_desire=house_township
-                client.rent_proposal=house_rent
-                client.deposit_proposal=house_deposit
-                client.kind_desire=house_kind
-                client.rooms_number_desire=house_rooms_number
+                client.area_desire = house_area
+                client.township_desire = house_township
+                client.rent_proposal = house_rent
+                client.deposit_proposal = house_deposit
+                client.kind_desire = house_kind
+                client.rooms_number_desire = house_rooms_number
                 client.save()
-                
+
                 return redirect('spaces:client_proposal')
 
 
 def clientRemoveProposal(request, proposal_id):
-    proposal = get_object_or_404(Proposal, id=proposal_id, client=request.user.client)
+    proposal = get_object_or_404(
+        Proposal, id=proposal_id, client=request.user.client)
     if proposal:
         proposal.delete()
         return redirect('spaces:client_proposal')
@@ -514,7 +570,7 @@ def clientRemoveProposal(request, proposal_id):
 def edit_house(request, id):
     form = AddHouseForm()
     house = House.objects.get(id=id)
-    
+
     if request.method == 'POST':
         form = AddHouseForm(request.POST, request.FILES)
         if form.is_valid():
@@ -547,7 +603,8 @@ def edit_house(request, id):
 
 
 def landlordRemoveHouse(request, house_id):
-    house = get_object_or_404(House, id=house_id, landlord=request.user.landlord)
+    house = get_object_or_404(
+        House, id=house_id, landlord=request.user.landlord)
     if house:
         house.delete()
         return redirect('spaces:landlord_houses', request.user.id)
@@ -558,37 +615,40 @@ def log_out(request):
     return redirect(reverse("spaces:signin"))
 
 
-def see_houses(request , id):
-    houses = House.objects.filter(landlord__user_id = id)
+def see_houses(request, id):
+    houses = House.objects.filter(landlord__user_id=id)
     if houses:
         no_house_err = False
     else:
         no_house_err = True
-    return render(request ,'spaces/landlord_houses.html' , locals())
+    return render(request, 'spaces/landlord_houses.html', locals())
 
 
 @login_required()
 def landlordStatistics(request, id):
     houses = []
     try:
-        deals = Deal.objects.filter(landlord = request.user.landlord , concluded = True)
+        deals = Deal.objects.filter(
+            landlord=request.user.landlord, concluded=True)
         for deal in deals:
             houses.append(deal.house)
     except:
         in_deals = None
     return render(request, 'spaces/landlord_statistics.html', locals())
-    
+
+
 @login_required()
 def clientStatistics(request, id):
     deals_done = None
-    return render(request ,'spaces/client_statistics.html' , locals())
+    return render(request, 'spaces/client_statistics.html', locals())
 
 
 @login_required()
 def landlordNotifications(request, id):
-    # On essai de récupérer tous les clients en négociation avec le propriétaire. 
+    # On essai de récupérer tous les clients en négociation avec le propriétaire.
     try:
-        in_deals = Deal.objects.filter(landlord=request.user.landlord, concluded=False)
+        in_deals = Deal.objects.filter(
+            landlord=request.user.landlord, concluded=False)
     except:
         in_deals = None
     # On éssai de récupérer tous les clients en chat avec le propriétaire.
@@ -597,38 +657,42 @@ def landlordNotifications(request, id):
             rooms = Room.objects.filter(user1=request.user)
         except:
             rooms = None
-        # Ici, on rassemble tous les utilisateurs en chat avec le propriétaire dans une liste pour le filtrage dans le template suivant 
+        # Ici, on rassemble tous les utilisateurs en chat avec le propriétaire dans une liste pour le filtrage dans le template suivant
         if rooms:
             users_in_rooms = []
             for room in rooms:
                 users_in_rooms.append(room.user2)
 
-    landlord = Landlord.objects.get(user_id = id)
-    landlord_houses = House.objects.filter(landlord = landlord)
- 
+    landlord = Landlord.objects.get(user_id=id)
+    landlord_houses = House.objects.filter(landlord=landlord)
+
     if landlord_houses != None:
         for landlord_house in landlord_houses:
             try:
-                proposals = Proposal.objects.filter(Q(rent_proposal = landlord_house.house_rent,
-                                            deposit_proposal=landlord_house.house_deposit,
-                                            area_desire__icontains=landlord_house.house_area,
-                                            township_desire__icontains=landlord_house.house_township)|
-                                            Q(rent_proposal__lte=landlord_house.house_rent + landlord_house.house_rent * 0.1,
-                                            rent_proposal__gte=landlord_house.house_rent - landlord_house.house_rent * 0.1,
-                                            deposit_proposal__lte=landlord_house.house_deposit + landlord_house.house_deposit * 0.1,
-                                            deposit_proposal__gte=landlord_house.house_deposit - landlord_house.house_deposit * 0.1,
-                                            area_desire__icontains=landlord_house.house_area,
-                                            township_desire__icontains=landlord_house.house_township))
+                proposals = Proposal.objects.filter(Q(rent_proposal=landlord_house.house_rent,
+                                                      deposit_proposal=landlord_house.house_deposit,
+                                                      area_desire__icontains=landlord_house.house_area,
+                                                      township_desire__icontains=landlord_house.house_township) |
+                                                    Q(rent_proposal__lte=landlord_house.house_rent + landlord_house.house_rent * 0.1,
+                                                      rent_proposal__gte=landlord_house.house_rent - landlord_house.house_rent * 0.1,
+                                                      deposit_proposal__lte=landlord_house.house_deposit +
+                                                      landlord_house.house_deposit * 0.1,
+                                                      deposit_proposal__gte=landlord_house.house_deposit -
+                                                      landlord_house.house_deposit * 0.1,
+                                                      area_desire__icontains=landlord_house.house_area,
+                                                      township_desire__icontains=landlord_house.house_township))
             except Exception as e:
                 raise e
 
     return render(request, 'spaces/landlord_notifications.html', locals())
-    
+
+
 @login_required()
 def clientNotifications(request, id):
     # On éssai de récupérer tous les propriétaires en négociation avec le client.
     try:
-        in_deals = Deal.objects.filter(client=request.user.client, concluded=False)
+        in_deals = Deal.objects.filter(
+            client=request.user.client, concluded=False)
     except:
         in_deals = None
     # On éssai de récupérer tous les propriétaires en chat avec le client.
@@ -646,20 +710,20 @@ def clientNotifications(request, id):
     houses = []
     proposals = Proposal.objects.filter(client=request.user.client)
     for client in proposals:
-        houses=House.objects.filter(Q(house_area__icontains=client.area_desire,
+        houses = House.objects.filter(Q(house_area__icontains=client.area_desire,
                                         house_township__icontains=client.township_desire,
                                         house_deposit=client.deposit_proposal,
-                                        house_rent=client.rent_proposal)|
-                                    Q(house_area__icontains=client.area_desire,
+                                        house_rent=client.rent_proposal) |
+                                      Q(house_area__icontains=client.area_desire,
                                         house_township__icontains=client.township_desire,
                                         house_deposit__lte=client.deposit_proposal + client.deposit_proposal * 0.1,
                                         house_deposit__gte=client.deposit_proposal - client.deposit_proposal * 0.1,
                                         house_rent__lte=client.rent_proposal + client.rent_proposal * 0.1,
-                                        house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1 ))
-    print(in_deals)    
+                                        house_rent__gte=client.rent_proposal - client.rent_proposal * 0.1))
+    print(in_deals)
     if houses == None:
         no_houses_error = True
-    return render(request ,'spaces/client_notifications.html' , locals())
+    return render(request, 'spaces/client_notifications.html', locals())
 
 
 def see_clients(request):
@@ -680,6 +744,7 @@ def see_clients(request):
     else:
         no_client_err = True"""
 
+
 def news(request):
     new_houses = []
     current_time = time.time()
@@ -687,11 +752,12 @@ def news(request):
     #today = date.today()
     all_houses = House.objects.all()
     for house in all_houses:
-        house_creation_timestamp = datetime.timestamp(house.house_creation_day) 
+        house_creation_timestamp = datetime.timestamp(house.house_creation_day)
         if house_creation_timestamp >= a_week_ago:
             new_houses.append(house)
 
-    return render(request , 'spaces/news.html' , locals())
+    return render(request, 'spaces/news.html', locals())
+
 
 def concluded_deal(request):
     deals = Deal.objects.filter(concluded=False)
@@ -709,3 +775,10 @@ def aborted(request, deal_id):
     deal = get_object_or_404(Deal, id=deal_id)
     deal.delete()
     return redirect('spaces:landlord_clients', request.user.id)
+
+
+@login_required()
+def seeProfile(request, id):
+    user = get_object_or_404(User, id=id)
+    form = EditClientForm()
+    return render(request, "spaces/editeProfile/edite_profile.html", locals())
