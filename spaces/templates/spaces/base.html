@@ -23,13 +23,18 @@
     <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet">
     <!--load all styles -->
 
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
     <!-- Our project just needs Font Awesome Solid + Brands -->
     <script defer src="{% static 'fontawesome/js/brands.js' %}"></script>
     <script defer src="{% static 'fontawesome/js/solid.js' %}"></script>
     <script defer src="{% static 'fontawesome/js/fontawesome.js' %}"></script>
 </head>
 
-<body style="background-color: #0B2944;">
+<body style="background-color: #0B2944;font-family: 'Roboto', sans-serif;">
     <header class="mb-auto masthead">
         <!-- Fixed navbar -->
         {% block navbar %}
@@ -73,7 +78,7 @@
         {% endblock %}
     </header>
 
-    <main role="main" style="min-height: 80vh;height: 80%;color: #000;">
+    <main role="main" style="color: #000;">
         <!-- Begin page content -->
         <div class="container">
             {% block content %}
