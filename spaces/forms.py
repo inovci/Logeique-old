@@ -1,5 +1,7 @@
 from django import forms
 
+CHOICES=[('client','client'),
+         ('landlord','propriétaire')]
 class SignUpForm(forms.Form):
     username = forms.CharField(
         label='Pseudo : ',
@@ -62,7 +64,8 @@ class SignUpForm(forms.Form):
             }
         )
     )
-    client = forms.BooleanField(
+    status = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+    """client = forms.BooleanField(
         label='Client : ',
         required=False,
         widget=forms.CheckboxInput(
@@ -87,7 +90,7 @@ class SignUpForm(forms.Form):
                 'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
             }
         )
-    )
+    )"""
     password = forms.CharField(
         label='Mot de passe : ',
         max_length=200,
