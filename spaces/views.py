@@ -305,31 +305,27 @@ def sign_in(request):
 
 
 @login_required()
-def see_profile(request, id):
+def see_client_profile(request, id):
     form = SearchForm()
     user = User.objects.get(id=id)
+    upper_classes = []
+    middle_classes = []
+    lower_classes = []
+    all_classes = House.objects.all()
+    for house in all_classes:
+        if house.house_rent >= 300000:
+            upper_classes.append(house)
+        elif 70000 <= house.house_rent < 300000:
+            middle_classes.append(house)
+        elif house.house_rent < 70000:
+            lower_classes.append(house)
+    return render(request, 'spaces/client_profile.html', locals())
 
-    try:
-        user.is_superuser == 0
-        try:
-            user.client.user_id != None
-            upper_classes = []
-            middle_classes = []
-            lower_classes = []
-            all_classes = House.objects.all()
-            for house in all_classes:
-                if house.house_rent >= 300000:
-                    upper_classes.append(house)
-                elif 70000 <= house.house_rent < 300000:
-                    middle_classes.append(house)
-                elif house.house_rent < 70000:
-                    lower_classes.append(house)
-            return render(request, 'spaces/client_profile.html', locals())
-        except:
-            user.landlord.user_id != None
-            return render(request, 'spaces/landlord_profile.html', locals())
-    except Exception as e:
-        raise e
+@login_required()
+def see_landlord_profile(request, id):
+    form = SearchForm()
+    user = User.objects.get(id=id)
+    return render(request, 'spaces/landlord_profile.html', locals())
 
 
 @login_required()
