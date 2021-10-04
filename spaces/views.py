@@ -135,8 +135,7 @@ def sign_up(request):
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
             contact = form.cleaned_data['contact']
-            client = form.cleaned_data['client']
-            landlord = form.cleaned_data['landlord']
+            status = form.cleaned_data['status']
             password1 = form.cleaned_data['password']
             password2 = form.cleaned_data['password_verification']
 
@@ -145,7 +144,7 @@ def sign_up(request):
                 return render(request, 'spaces/signup.html', locals())
 
             if password1 == password2:
-                if client:
+                if status == 'client':
                     if email:
                         for each_user in users:
                             each_user.email = each_user.email.lower()
@@ -196,7 +195,7 @@ def sign_up(request):
                         client = Client(user=user, contact=contact)
                         client.save()
 
-                elif landlord:
+                elif status == 'landlord':
                     if email:
                         for each_user in users:
                             each_user.email = each_user.email.lower()
@@ -264,9 +263,8 @@ def sign_in(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            client_check = form.cleaned_data['client']
-            landlord_check = form.cleaned_data['landlord']
-            if client_check:
+            status = form.cleaned_data['status']
+            if status == 'client':
                 try:
                     user_tempt = get_object_or_404(User, username=username)
                     client_user = get_object_or_404(
@@ -284,7 +282,7 @@ def sign_in(request):
                     user_tempt = None
                     error = True
 
-            elif landlord_check:
+            elif status == 'landlord':
                 try:
                     user_tempt = get_object_or_404(User, username=username)
                     landlord_user = get_object_or_404(
