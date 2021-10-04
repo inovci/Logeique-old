@@ -45,13 +45,7 @@
                     <div class="text-center form-group">
                         <div class="form-check form-check-inline">
                             <p style="font-weight: bold;font-size: 12px;">
-                                {{form.client.label}}
-                                {{form.client}}
-                            </p>
-
-                            <p style="font-weight: bold;font-size: 12px;">
-                                {{form.landlord.label}}
-                                {{form.landlord}}
+                                {{form.status}}
                             </p>
                         </div>
                     </div>
@@ -91,4 +85,5 @@
     </div>
     <div class="col-1 col-sm-2 col-md-3"></div>
 </div>
+{% block footer %}{% endblock %}
 {% endblock %}
