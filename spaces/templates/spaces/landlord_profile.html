@@ -63,7 +63,9 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    {% block customStyles %}
+        <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    {% endblock customStyles %}
     {% include "spaces/html_css/landlord_profile_css.html" %}
 </head>
 
