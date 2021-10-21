@@ -45,7 +45,12 @@
                     <div class="text-center form-group">
                         <div class="form-check form-check-inline">
                             <p style="font-weight: bold;font-size: 12px;">
-                                {{form.status}}
+                                {% for radio in form.status %}
+                                <label for="{{ radio.id_for_label }}">
+                                    {{ radio.choice_label }}
+                                    <span class="radio">{{ radio.tag }}</span>
+                                </label>
+                                {% endfor %}
                             </p>
                         </div>
                     </div>
@@ -60,27 +65,6 @@
                     Nouveau sur LOGEIQUE? <a href="{% url 'spaces:signup' %}">Créer un compte ici</a>
                 </p>
             </form>
-
-            <div class="text-center">
-                {% if client_user.is_authenticated %}
-                <p>
-                    Vous êtes connecté client {{ client_user.last_name }} !
-                </p>
-                <P>
-                    <a href="{% url 'spaces:client_profile' client_user.id %}" class="btn btn-lg btn-secondary">Allez à
-                        votre compte</a>
-                </P>
-                {% elif landlord_user.is_authenticated %}
-                <p>
-                    Vous êtes connecté propietaire {{ landlord_user.last_name }}!
-                </p>
-                <P>
-                    <a href=" {% url 'spaces:landlord_profile' landlord_user.id %}" class="btn btn-lg btn-secondary">
-                        Allez à votre compte
-                    </a>
-                </P>
-                {% endif %}
-            </div>
         </div>
     </div>
     <div class="col-1 col-sm-2 col-md-3"></div>
