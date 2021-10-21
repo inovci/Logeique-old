@@ -1,7 +1,9 @@
 from django import forms
 
-CHOICES=[('client','client'),
-         ('landlord','propriétaire')]
+CHOICES = [('client', 'Client'),
+           ('landlord', 'Propriétaire')]
+
+
 class SignUpForm(forms.Form):
     username = forms.CharField(
         label='Pseudo : ',
@@ -230,6 +232,7 @@ class EditClientForm(forms.Form):
         required=False
     )
 
+
 class EditLandlordForm(EditClientForm):
     deposit_proposal = None
     rent_proposal = None
@@ -327,6 +330,7 @@ class AddHouseForm(forms.Form):
         label='Image',
         required=False
     )
+
 
 class ClientProposalForm(AddHouseForm):
     house_available = None
