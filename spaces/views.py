@@ -287,7 +287,6 @@ def sign_in(request):
                         else:
                             error = True
                             return HttpResponseRedirect(reverse('spaces:signin'))
-
                 except Http404:
                     user_tempt = None
                     error = True
@@ -301,14 +300,24 @@ def sign_in(request):
                     if landlord_user:
                         landlord_user = authenticate(
                             username=username, password=password)
-
-                        if landlord_user:
+                        # On vérifie si le landlord_user existe et est authentifié et que son client existe.
+                        if landlord_user and landlord_user.is_authenticated and landlord_user.landlord:
+                            print("Authenticated: ",
+                                  landlord_user.is_authenticated)
+                            print("User: ", landlord_user)
+                            print("User landlord: ", landlord_user.landlord)
+                            # On connecte le landlord_user si il remplit les deux conditions ci-dessus.
                             login(request, landlord_user)
+                            # On redirige vers le compte du landlord_user.
+                            return redirect('spaces:client_profile', landlord_user.id)
+                        # On revient à la page de connexion lors d'une erreur.
                         else:
                             error = True
+                            return HttpResponseRedirect(reverse('spaces:signin'))
                 except Http404:
                     user_tempt = None
                     error = True
+                    return HttpResponseRedirect(reverse('spaces:signin'))
 
     return render(request, 'spaces/signin.html', locals())
 
