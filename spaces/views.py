@@ -309,7 +309,7 @@ def sign_in(request):
                             # On connecte le landlord_user si il remplit les deux conditions ci-dessus.
                             login(request, landlord_user)
                             # On redirige vers le compte du landlord_user.
-                            return redirect('spaces:client_profile', landlord_user.id)
+                            return redirect('spaces:landlord_profile', landlord_user.id)
                         # On revient à la page de connexion lors d'une erreur.
                         else:
                             error = True
