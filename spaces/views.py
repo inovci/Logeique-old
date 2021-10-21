@@ -22,6 +22,7 @@ from PIL import Image
 from search.forms import SearchForm
 import time
 from datetime import datetime
+from django.http import HttpResponseRedirect
 
 from .utilities import save_temp_profile_image_from_base64String
 
@@ -272,15 +273,25 @@ def sign_in(request):
                     if client_user:
                         client_user = authenticate(
                             username=username, password=password)
-
-                        if client_user:
+                        # On vérifie si le client_user existe et est authentifié et que son client existe.
+                        if client_user and client_user.is_authenticated and client_user.client:
+                            print("Authenticated: ",
+                                  client_user.is_authenticated)
+                            print("User: ", client_user)
+                            print("User client: ", client_user.client)
+                            # On connecte le client_user si il remplit les deux conditions ci-dessus.
                             login(request, client_user)
-
+                            # On redirige vers le compte du client_user.
+                            return redirect('spaces:client_profile', client_user.id)
+                        # On revient à la page de connexion lors d'une erreur.
                         else:
                             error = True
+                            return HttpResponseRedirect(reverse('spaces:signin'))
+
                 except Http404:
                     user_tempt = None
                     error = True
+                    return HttpResponseRedirect(reverse('spaces:signin'))
 
             elif status == 'landlord':
                 try:
@@ -318,6 +329,7 @@ def see_client_profile(request, id):
         elif house.house_rent < 70000:
             lower_classes.append(house)
     return render(request, 'spaces/client_profile.html', locals())
+
 
 @login_required()
 def see_landlord_profile(request, id):
