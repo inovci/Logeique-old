@@ -67,32 +67,6 @@ class SignUpForm(forms.Form):
         )
     )
     status = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
-    """client = forms.BooleanField(
-        label='Client : ',
-        required=False,
-        widget=forms.CheckboxInput(
-            attrs={
-                'class': 'form-check-input stick',
-                'onclick': 'active()',
-                'id': 'is_cl',
-                'type': 'radio',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
-            }
-        )
-    )
-    landlord = forms.BooleanField(
-        label='Propriétaire : ',
-        required=False,
-        widget=forms.CheckboxInput(
-            attrs={
-                'class': 'form-check-input stick',
-                'onclick': 'active()',
-                'id': 'is_la',
-                'type': 'radio',
-                'style': 'border-top: 0rem;border-left: 0rem;border-right: 0rem; font-size:15px;'
-            }
-        )
-    )"""
     password = forms.CharField(
         label='Mot de passe : ',
         max_length=200,
@@ -310,7 +284,6 @@ class AddHouseForm(forms.Form):
                 'class': 'form-check-input stick',
                 'onclick': 'active()',
                 'id': 'is_cl',
-                'type': 'radio'
             }
         )
     )
@@ -322,7 +295,6 @@ class AddHouseForm(forms.Form):
                 'class': 'form-check-input stick',
                 'onclick': 'active()',
                 'id': 'is_cl',
-                'type': 'radio'
             }
         )
     )
