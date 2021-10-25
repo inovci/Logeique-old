@@ -164,13 +164,13 @@
             {% for room in rooms %}
                 <li>
                 	<a href="{% url 'chat:room' room.id %}" class="clearfix">
-                    {% if user.client.avatar %}
-                		<img src="{{user.client.avatar.url}}" alt="" class="img-circle">
+                    {% if room.user2.client.avatar %}
+                		<img src="{{room.user2.client.avatar.url}}" alt="" class="img-circle">
                     {% else %}
                         <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
                     {% endif %}
                 		<div class="friend-name">	
-                			<strong>{{user.username}}</strong>
+                			<strong>{{room.user2.client.user.username}}</strong>
                 		</div>
                 		<div id="lastest-user-message-{{room.id}}" class="last-message text-muted"></div>
                 		<small class="time text-muted">Just now</small>
