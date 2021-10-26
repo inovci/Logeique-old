@@ -1,6 +1,12 @@
 {% extends "spaces/landlord_profile.html" %}
+{% load static %}
 
 {% block title %}notifications{% endblock %}
+
+{% block customStyles %}
+        <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+        <link href="{% static 'css/chatroom.css' %}" rel="stylesheet">
+{% endblock customStyles %}
 
 {% block navitem1 %}
     <a style="color: #fff;" class="nav-link" href="{% url 'spaces:landlord_profile' user.id %}">
@@ -155,7 +161,7 @@
 
     {% if rooms %}
     <h1>Salles de chat</h1>
-    div class="container bootstrap snippets bootdey">
+    <div class="container bootstrap snippets bootdey">
     <div class="row">
 		<div class="bg-white col-md-4 ">
             <!-- =============================================================== -->
