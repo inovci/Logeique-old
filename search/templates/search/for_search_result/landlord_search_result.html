@@ -1,0 +1,45 @@
+{% if context.landlords %}
+<div class="container">
+<div class="row ng-scope">
+    <div class="col-md-9 col-md-pull-3">
+        {% for landlord in context.landlords %}
+        <section class="search-result-item">
+            <a class="image-link" href="#"><img class="image" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+            </a>
+            <div class="search-result-item-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h4 class="search-result-item-heading"><a href="#">{{landlord.user.username}}</a></h4>
+                        <p class="info">Contact : {{landlord.contact}}</p>
+                        <p class="description">propriétaire actif depuis , {{landlord.user.date_joined}}</p>
+                    </div>
+                    <div class="col-sm-3 text-align-center">
+                        <p class="value3 mt-sm">$9, 700</p>
+                        <p class="fs-mini text-muted">PER WEEK</p><a class="btn btn-primary btn-info btn-sm" href="#">Voir details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endfor %}
+        <div class="text-align-center">
+            <ul class="pagination pagination-sm">
+                <li class="disabled"><a href="#">Prev</a>
+                </li>
+                <li class="active"><a href="#">1</a>
+                </li>
+                <li><a href="#">2</a>
+                </li>
+                <li><a href="#">3</a>
+                </li>
+                <li><a href="#">4</a>
+                </li>
+                <li><a href="#">5</a>
+                </li>
+                <li><a href="#">Next</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+{% endif %}

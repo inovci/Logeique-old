@@ -13,8 +13,10 @@
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     {% load static %}
+    {% block customStyles %}
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/sticky-footer-navbar.css' %}" rel="stylesheet">
+    {% endblock %}
     {% block lienBizard %}
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     {% endblock %}
