@@ -199,23 +199,28 @@ def search(request):
                 value_for_landlord
             ] 
             if values_array[0]:
+                all_checked = True
                 context = get_result(value)
             elif (values_array[1] and values_array[2]):
+                house_and_client_checked = True
                 context = get_result_two(value, 2, 3)
             elif (values_array[1] and values_array[3]):
+                house_and_landlord_checked = True
                 context = get_result_two (value, 2, 4)
             elif (values_array[2] and values_array[3]):
+                client_and_landlord_checked = True
                 context = get_result_two (value, 3, 4)
             elif values_array[1]:
+                house_checked = True
                 context = get_result(value, 2)
             elif values_array[2]:
+                client_checked = True
                 context = get_result(value, 3)
-                print(context)
-
             elif values_array[3]:
+                landlord_checked = True
                 context = get_result(value, 4)
-            
             else:
+                all_checked = True
                 context = get_result(value)
     return render(request, 'search/search_result.html', locals())
 
