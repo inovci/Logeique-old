@@ -112,6 +112,8 @@ def get_result_two(value , choice1 , choice2):
             houses_list = filter_house_objects1(value)
         except ValueError:
             houses_list = filter_house_objects2(value)
+
+        if not houses_list:
             houses = houses_list = []
         try:
             value = int(value)
