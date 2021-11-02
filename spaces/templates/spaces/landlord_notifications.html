@@ -1,6 +1,12 @@
 {% extends "spaces/landlord_profile.html" %}
+{% load static %}
 
 {% block title %}notifications{% endblock %}
+
+{% block customStyles %}
+        <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+        <link href="{% static 'css/chatroom.css' %}" rel="stylesheet">
+{% endblock customStyles %}
 
 {% block navitem1 %}
     <a style="color: #fff;" class="nav-link" href="{% url 'spaces:landlord_profile' user.id %}">
@@ -69,7 +75,7 @@
                                             <p class="m-b-10 f-w-600">Caution</p>
                                             <h6 class="text-muted f-w-400">{{proposal.deposit_proposal}} FCFA</h6>
                                         </div>
-                                        <div class="col-sm-12 text-center">
+                                        <div class="text-center col-sm-12">
                                             <form method="POST" action="{% url 'chat:checkviewLandlord' proposal.client.user proposal.id %}">
                                                 {% csrf_token %}
                                                 <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Négocier ?</button>
@@ -136,7 +142,7 @@
                                                 <p class="m-b-10 f-w-600">Caution</p>
                                                 <h6 class="text-muted f-w-400">{{proposal.deposit_proposal}} FCFA</h6>
                                             </div>
-                                            <div class="col-sm-12 text-center">
+                                            <div class="text-center col-sm-12">
                                                 <form method="POST" action="{% url 'chat:checkviewLandlord' proposal.client.user proposal.id %}">
                                                     {% csrf_token %}
                                                     <button style="border-radius: 1rem;" type="submit" class="btn btn-outline-dark"><span style="font-weight: bold;"><i class="fas fa-handshake"></i></span> Négocier ?</button>
@@ -154,7 +160,35 @@
     {% endif %}
 
     {% if rooms %}
-        <h1>Salles de chat</h1>
+    <h1>Salles de chat</h1>
+    <div class="container bootstrap snippets bootdey">
+    <div class="row">
+		<div class="bg-white col-md-4 ">
+            <!-- =============================================================== -->
+            <!-- member list -->
+            <ul class="friend-list">
+            {% for room in rooms %}
+                <li>
+                	<a href="{% url 'chat:room' room.id %}" class="clearfix">
+                    {% if room.user2.client.avatar %}
+                		<img src="{{room.user2.client.avatar.url}}" alt="" class="img-circle">
+                    {% else %}
+                        <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+                    {% endif %}
+                		<div class="friend-name">	
+                			<strong>{{room.user2.client.user.username}}</strong>
+                		</div>
+                		<div id="lastest-user-message-{{room.id}}" class="last-message text-muted"></div>
+                		<small class="time text-muted">Just now</small>
+                		<small class="chat-alert label label-danger">1</small>
+                	</a>
+                </li>
+            {% endfor %}               
+            </ul>
+		</div>
+    </div>
+    <!--
+        
         <div class="row">
             {% for room in rooms %}
                 <div class="col-4">
@@ -177,6 +211,7 @@
                         </div>
                     </a>
                 </div>
+                -->
 
                 <script type="text/javascript">                   
                     fetch(
@@ -213,7 +248,7 @@
                         });
                 </script>
             {% endfor %}
-        </div>
+        <!--</div>-->
     {% endif %}
 {% endblock %}
 

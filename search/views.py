@@ -58,12 +58,12 @@ def get_result(value, choice = 1):
         try:
             value = int(value)
             proposals_list =filter_proposal_objects1(value)
-            clients = filter_house_objects1(value)
+            clients = filter_client_objects(value)
             add_client_in_clients_list1(clients ,clients_list) 
             add_client_in_clients_list2(proposals_list , clients_list)
         except ValueError:
             proposals_list =filter_proposal_objects2(value)
-            clients = filter_house_objects2(value)
+            clients = filter_client_objects(value)
             add_client_in_clients_list1(clients ,clients_list) 
             add_client_in_clients_list2(proposals_list , clients_list)
                 #We will look for different clients registered which are looking for a particular house or with a particular name
@@ -112,6 +112,8 @@ def get_result_two(value , choice1 , choice2):
             houses_list = filter_house_objects1(value)
         except ValueError:
             houses_list = filter_house_objects2(value)
+
+        if not houses_list:
             houses = houses_list = []
         try:
             value = int(value)
@@ -162,11 +164,9 @@ def get_result_two(value , choice1 , choice2):
             add_client_in_clients_list2(proposals_list , clients_list)
         if not clients_list:
             clients = clients_list = []
-    #The case where landlord checkbox is selected
         try:
             value = int(value)
             landlords_list = filter_landlord_objects1(value)
-                #We will look for different landlords registered which own a particular house or with a particular name
         except ValueError:
             landlords_list = filter_landlord_objects2(value)
         if not landlords_list:
@@ -199,36 +199,37 @@ def search(request):
                 value_for_landlord
             ] 
             if values_array[0]:
+                all_checked = True
                 context = get_result(value)
-                print(context)
             elif (values_array[1] and values_array[2]):
+                house_and_client_checked = True
                 context = get_result_two(value, 2, 3)
             elif (values_array[1] and values_array[3]):
+                house_and_landlord_checked = True
                 context = get_result_two (value, 2, 4)
             elif (values_array[2] and values_array[3]):
+                client_and_landlord_checked = True
                 context = get_result_two (value, 3, 4)
             elif values_array[1]:
+                house_checked = True
                 context = get_result(value, 2)
             elif values_array[2]:
+                client_checked = True
                 context = get_result(value, 3)
             elif values_array[3]:
+                landlord_checked = True
                 context = get_result(value, 4)
-            
             else:
+                all_checked = True
                 context = get_result(value)
     return render(request, 'search/search_result.html', locals())
 
 def test(value):
-    clients =list(
-        Client.objects.filter(
-            Q(kind_desire__icontains=value)|
-            Q(user__username__icontains = value)|
-            Q(user__first_name__icontains = value)|
-            Q(user__last_name__icontains = value)
-        )
-    )
-    for client in clients:
-        print(client.user.username)
+    r = filter_house_objects1(value)
+    if r:
+        print(r)
+    if not r:
+        print("empty")
 def filter_landlord_objects1(value):
     landlords_list = list(
                 Landlord.objects.filter(
@@ -239,7 +240,7 @@ def filter_landlord_objects1(value):
                     Q(houses__house_area__icontains=value) |
                     Q(houses__house_rent=int(value))|
                     Q(houses__house_deposit=int(value))
-                )
+                ).distinct()
             )
     return landlords_list
 
@@ -251,7 +252,7 @@ def filter_landlord_objects2(value):
                    Q(user__last_name__icontains=value)|
                    Q(houses__house_township__icontains=value) |
                    Q(houses__house_area__icontains=value)
-                )
+                ).distinct()
             )
     return landlords_list
 def filter_house_objects1(value):
@@ -262,7 +263,7 @@ def filter_house_objects1(value):
                     Q(house_kind__icontains=value)|
                     Q(house_rent=int(value))|
                     Q(house_deposit=int(value))
-                )
+                ).distinct()
             )
     return houses_list
 
@@ -272,7 +273,7 @@ def filter_house_objects2(value):
                     Q(house_township__icontains=value) |
                     Q(house_area__icontains=value) |
                     Q(house_kind__icontains=value)
-                )
+                ).distinct()
             )
     return houses_list
 
@@ -285,7 +286,7 @@ def filter_proposal_objects1(value):
                 Q(rooms_number_desire=int(value)) |
                 Q(rent_proposal=int(value))|
                 Q(deposit_proposal=int(value))
-            )
+            ).disctinct()
         )
     return proposals_list
 def filter_proposal_objects2(value):
@@ -293,7 +294,7 @@ def filter_proposal_objects2(value):
                 Q(kind_desire__icontains=value) |
                 Q(area_desire__icontains = value)|
                 Q(township_desire__icontains = value)
-                 ))
+                 ).distinct())
     return proposals_list
 
 def filter_client_objects(value):
@@ -302,7 +303,7 @@ def filter_client_objects(value):
                 Q(user__username__icontains = value)|
                 Q(user__first_name__icontains=value)|
                 Q(user__last_name__icontains=value) 
-            )
+            ).distinct()
         )
     return clients
 

@@ -1,0 +1,29 @@
+{% if context.houses %}
+<section class="section">
+    <div class="container">
+
+        <div class="mt-4 port portfolio-masonry">
+            <div class="portfolioContainer row photo">
+                {% for house in context.houses %}
+                <div class="p-4 col-lg-4 ">
+                    <div class="item-box">
+                    {% if house.house_image %}
+                        <img class="item-container img-fluid" src="{{house.house_image.url}}" alt="work-img">
+                    {% else %}
+                      <img class="item-container img-fluid" src="https://via.placeholder.com/800x540/D3D3D3/000000"  alt="work-img">  
+                    {% endif %}
+                            <div class="item-mask">
+                                <div class="item-caption">
+                                    <p class="mb-0 text-dark">Propriétaire : {{house.landlord.user.username}} , au {{house.landlord.contact}}</p>
+                                    <h6 class="mt-1 text-dark text-uppercase">Type : {{house.house_kind}} dans le quartier : {{house.house_area}}.</h6>
+                                </div>
+                            </div>
+                    </div>
+                    <a href="#" class="btn btn-secondary">Voir details</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
