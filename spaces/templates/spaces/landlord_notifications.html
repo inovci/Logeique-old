@@ -177,18 +177,14 @@
 <h1>Salles de chat</h1>
 <div class="container bootstrap snippets bootdey">
     <div class="row">
-        <div class="bg-white col-md-4 ">
+        <div class="bg-white col-md-4 " style="border-radius: 5px;">
             <!-- =============================================================== -->
             <!-- member list -->
             <ul class="friend-list">
                 {% for room in rooms %}
                 <li>
                     <a href="{% url 'chat:room' room.id %}" class="clearfix">
-                        {% if room.user2.client.avatar %}
                         <img src="{{room.user2.client.avatar.url}}" alt="" class="img-circle">
-                        {% else %}
-                        <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
-                        {% endif %}
                         <div class="friend-name">
                             <strong>{{room.user2.client.user.username}}</strong>
                         </div>
@@ -232,7 +228,6 @@
                             console.log(error);
                         });
                 </script>
-                <hr>
                 {% endfor %}
             </ul>
         </div>
