@@ -1,3 +1,4 @@
+{% load static %}
 <div class="container">
   <div class="main-body">
       <!-- /Breadcrumb -->
@@ -21,6 +22,25 @@
           </div>
         </div>
         {% endfor %}
+        {% else %}
+          <section class="section">
+              <div class="container">
+              <div>
+              <img src = "{% static 'img/sorry.jpg' %}">
+              <span style = "color:white;">Désolé nous n'avons pas pu en trouver selon ce que vous cherchez </span>
+              </div>
+              <br>
+              <div>
+              <img src = "{% static 'img/thinking_person.jpg' %}">
+              <span style = "color:white;">Et si vous vous inscriviez pour qu'on puisse vous notifier si ya une maison de votre choix?</span>
+              </div>
+              <br>
+              <div>
+              <img src = "{% static 'img/welcoming.jpg' %}">
+              <span style = "color:white;">Déjà inscrit? Allez sur votre page pour facilter vos recherches et vos négotiations</span>
+              </div>
+              </div>
+          </section>
         {% endif %}
       </div>
   </div>

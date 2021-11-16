@@ -1,0 +1,180 @@
+STATUS_CHOICES = [('client', 'Client'),
+           ('landlord', 'Propriétaire')]
+
+TYPE_CHOICES = [('Vil' , 'Villa'),
+                ('Dup' , 'Duplex'),
+                ('Vilb' , 'Vila basse'),
+                ('app1' , 'Appartement 1 chambre salon'),
+                ('app2' , 'Appartement 2 chambres salon'),
+                ('app3' , 'Appartement 3 chambres salon'),
+                ('Stud' , 'Studio'),
+                ('Studa' , 'Studio Américain'),]
+
+TOWNSHIP_CHOICES = [
+    ('AB', 'ABOBO'),
+    ('AD', 'ADJAME'),
+    ('AN', 'ANYAMA'),
+    ('AT', 'ATTECOUBE'),
+    ('BI' , 'BINGERVILLE'),
+    ('CO', 'COCODY'),
+    ('KO', 'KOUMASSI'),
+    ('MA', 'MARCORY'),
+    ('PL', 'PLATEAU'),
+    ('PO', 'PORT-BOUET'),
+    ('SO', 'SONGON'),
+    ('TR', 'TREICHVILLE'),
+    ('YO', 'YOPOUGON')
+]
+
+ABOBO_AREA_CHOICES = [
+    ('Abb' , 'Abobo Baoulé'),
+    ('Abc' , 'Abobo Centre'),
+    ('Abd' , 'Abobo Dokoui'),
+    ('Abn' , 'Abobo Nord'),
+    ('Abs' , 'Abobo Sud'),
+    ('Abt' , 'Abobo Té'),
+    ('Agb' , 'Agbékoi'),
+    ('Ago' , 'Agouéto'),
+    ('Aké' , 'Akéikoi'),
+    ('Ano' , 'Anonkoua Kouté'),
+    ('Avo' , 'Avocatier'),
+    ('Col' , 'Colatier'),
+    ('Ken' , 'Kennedy Clouetcha'),
+    ('Ndo' , 'Ndotré'),
+    ('Pla' , 'Plaque'),
+    ('Sag' , 'Sagbé'),
+    ('Sog' , 'Sogephia'),
+    ('Ban' , 'Banco'),
+    ('Dji' , 'Djibi Village'),
+]
+ADJAME_AREA_CHOICES = [
+    ('MaI', 'Mairie I'),
+    ('MaII', 'Mairie II'),
+    ('Bro', 'Bromakoté'),
+    ('Adj', 'Adjamé Nord'),
+    ('L220', '220 logements'),
+    ('Hex', 'Habitat extension'),
+    ('Pal', 'Pallier'),
+    ('Mat', 'Marie Thérèse'),
+    ('Smi', 'Saint Michel'),
+    ('Veb', 'Village Ebrié'),
+    ('Dal', 'Dallas'),
+    ('Ind', 'Indénié'),
+    ('WiI', 'Williamsville I'),
+    ('WiII', 'Williamsville II'),
+    ('WiIII', 'Williamsville III'),
+    ('Sof', 'SODECI- FILTISAC'),
+    ('Mir', 'Mirador'),
+    ('Adn', ' Adjamé Nord-est'),
+    ('Qeb', 'Quartier Ebrié'),
+]
+
+ANYAMA_AREA_CHOICES = [
+    ('Att' , 'Attingué'),
+    ('Ako' , ' Akoupé-Zeudji'),
+    ('Aad' , 'Anyama-Adjamé'),
+    ('Ebi' , 'Ebimpé'),
+    ('All' , 'Allokoi'),
+    ('Ado' , 'Adonko'),
+    ('Aah' , 'Anyama Ahouabo'),
+]
+
+ATTECOUBE_AREA_CHOICES = [
+    ('Agb' , 'Agban Attié'),
+    ('At3' , 'Attécoubé 3'),
+    ('Dje' , 'Djéné Ecaré'),
+    ('Sae' , 'Santé Ecole'),
+    ('S3r1' , 'Santé 3 Résidentiel 1'),
+    ('S3r2' , 'Santé 3 Résidentiel 2'),
+    ('S3e' , 'Santé 3 Extension'),
+    ('Fro' , 'Fromager'),
+    ('Déi' , 'Déindé'),
+    ('Asa' , 'Asapsu'),
+    ('Awa' , 'Awa'),
+    ('Jp2' , 'Jean-Paul 2'),
+    ('Sca' , 'Santé Carrefour'),
+    ('Aké' , 'Akélié'),
+    ('Lac' , 'Lackman'),
+    ('Dou' , 'Douagoville'),
+    ('Cad' , 'Camp Douane'),
+    ('Jré' , 'Jérusalem Résidentiel'),
+    ('Jé1' , 'Jérusalem 1'),
+    ('Jé2' , 'Jérusalem 2'),
+    ('Jé3' , 'Jérusalem 3'),
+    ('Seb' , 'Sebroko'),
+    ('Lpa' , 'La Paix'),
+    ('Lag' , 'Lagune'),
+    ('Esp' , 'Espoir'),
+    ('Mos' , 'Mosquée'),
+    ('Sjo' , 'Saint-Joseph'),
+    ('Eco' , 'Ecole'),
+    ('Gbe' , 'Gbebouto'),
+    ('Cfo' , 'Cantonnement Forestier'),
+    ('Cf1' , 'Cité Fairmont 1'),
+    ('Cf2' , 'Cité Fairmont 2'),
+    ('Efo' , 'Ecole Forestière'),
+    ('Bid' , 'Bidjanté'),
+    ('Lok','Lokodjro'),
+    ('Adm' , 'Abobo-Doumé')
+]
+
+COCODY_AREA_CHOICES = [
+    ('IIpa' , 'II Plateaux Aghien'),
+    ('IIpcz' , 'II Plateaux carrefour ZOO '),
+    ('IIpbv' , 'II Plateaux Bassin du Vallon'),
+    ('Alos' , ' Angré les OSCARS'),
+    ('As9b' , 'Angré Star 9 B+'),
+    ('Asf' , ' Angré SCI Fandasso '),
+    ('Acl' , 'Angré cité Latrille'),
+    ('Acfg' , 'Angré château fin goudron'),
+    ('Cda' , 'Cocody Danga'),
+    ('Blok' , 'Blokosso'),
+    ('Sies' , 'Sicogi-Espérance'),
+]
+
+MARCORY_AREA_CHOICES = [
+    ('Abia' , 'Abia-Abety'),
+    ('Abik' , 'Abia-Koumassi'),
+    ('Adei' , 'Adeimin'),
+    ('Alio' , 'Aliodan'),
+    ('Anoum' , 'Anoumabo'),
+    ('Biét' , 'Biétry'),
+    ('Cham' , 'Champroux'),
+    ('Gnan' , 'Gnanzoua'),
+    ('Hibi' , 'Hibiscus'),
+    ('Jbm' , 'Jean-Baptiste Mockey'),
+    ('Kbf' , 'Kablan Brou Félix'),
+    ('Kra' , 'Konan Raphaël'),
+    ('Mko' , 'Marie Koré'),
+    ('Rési' , 'Résidentiel'),
+    ('Zon4' , 'Zone 4 C'),
+    ]
+
+KOUMASSI_AREA_CHOICES = [
+    ('Sko'  , 'SICOGI- Koumassi'),
+    ('Prk'  , 'Prodomo-Koumassi'),
+    ('Sopk'  , 'Sopim-Koumassi'),
+    ('Sogk'  , 'SOGEFIHA-Koumassi'),
+]
+
+TREICHVILLE_AREA_CHOICES = [
+    ('Apol' , 'Apollo'),
+    ('Arra' , ' Arras'),
+    ('Biaf' , ' Biafra'),
+    ('Bell' , 'Belleville'),
+]
+
+YOPOUGON_AREA_CHOICES = [
+    ('Béag' , 'Béago'),
+    ('Kouv' , 'Kouté village'),
+    ('Ayapb' , 'Ayakro-Petit Bouaké'),
+    ('Yopk' , 'Yopougon kouté'),
+    ('Niad' , 'Niangon Adjamé'),
+    ('Niat' , 'Niangon Attié'),
+    ('Adio' , 'Adioppodoumé'),
+    ('Nilo' , 'Niangon Lokoua'),
+    ('Ilbo' , 'ILES Boulay'),
+    ('Kofe' , 'Konan Ferrand'),
+    ('Azsi' , 'Azito-Sikasso'),
+    ('Yosa' , 'Yopougon Santé')
+]
