@@ -187,18 +187,14 @@
 <h1>Salles de Négociations</h1>
 <div class="container bootstrap snippets bootdey">
     <div class="row">
-        <div class="bg-white col-md-4 ">
+        <div class="bg-white col-md-4 " style="border-radius: 5px;">
             <!-- =============================================================== -->
             <!-- member list -->
             <ul class="friend-list">
                 {% for room in rooms %}
                 <li>
                     <a href="{% url 'chat:room' room.id %}" class="clearfix">
-                        {% if room.user1.landlord.avatar %}
                         <img src="{{room.user1.landlord.avatar.url}}" alt="" class="img-circle">
-                        {% else %}
-                        <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
-                        {% endif %}
                         <div class="friend-name">
                             <strong>{{room.user1.landlord.user.username}}</strong>
                         </div>
@@ -207,6 +203,41 @@
                         <small class="chat-alert label label-danger">1</small>
                     </a>
                 </li>
+
+                <script type="text/javascript">
+                    fetch(
+                        "http://127.0.0.1:8000/api/rooms/room-last-message/{{room.id}}/",
+                        {
+                            method: "GET",
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json"
+                            },
+                        }).then((response) => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                        })
+                        .then((data) => {
+                            const msg = document.getElementById("lastest-user-message-{{room.id}}");
+                            if (data.user == "{{request.user.id}}") {
+                                if (data.value.length <= 20) {
+                                    msg.innerHTML = "Vous: " + data.value;
+                                } else {
+                                    msg.innerHTML = "Vous: " + data.value.slice(0, 25) + '...';
+                                }
+                            } else {
+                                if (data.value.length <= 20) {
+                                    msg.innerHTML = data.value;
+                                } else {
+                                    msg.innerHTML = data.value.slice(0, 25) + '...';
+                                }
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                </script>
                 {% endfor %}
             </ul>
         </div>
@@ -235,40 +266,7 @@
                     </a>
                 </div> -->
 
-    <script type="text/javascript">
-        fetch(
-            "http://127.0.0.1:8000/api/rooms/room-last-message/{{room.id}}/",
-            {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-            }).then((response) => {
-                if (response.ok) {
-                    return response.json();
-                }
-            })
-            .then((data) => {
-                const msg = document.getElementById("lastest-user-message-{{room.id}}");
-                if (data.user == "{{request.user.id}}") {
-                    if (data.value.length <= 20) {
-                        msg.innerHTML = "Vous: " + data.value;
-                    } else {
-                        msg.innerHTML = "Vous: " + data.value.slice(0, 25) + '...';
-                    }
-                } else {
-                    if (data.value.length <= 20) {
-                        msg.innerHTML = data.value;
-                    } else {
-                        msg.innerHTML = data.value.slice(0, 25) + '...';
-                    }
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    </script>
+
     {% endfor %}
     <!--</div>-->
     {% endif %}
