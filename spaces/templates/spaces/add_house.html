@@ -52,18 +52,18 @@
                             <div class="col-sm-3">
 								<h6 class="mb-0">{{form.house_township.label}}</h6>
 							</div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-9 text-secondary" id = "add_house_township">
                                 {{form.house_township}}
 							</div>
 						</div>
-                        <div class="mb-3 row">
+                        <!--<div class="mb-3 row">
                             <div class="col-sm-3">
 								<h6 class="mb-0">{{form.house_area.label}}</h6>
 							</div>
 							<div class="col-sm-9 text-secondary">
                                 {{form.house_area}}
 							</div>
-						</div>
+						</div>-->
                         <div class="mb-3 row">
                             <div class="col-sm-3">
 								<h6 class="mb-0">{{form.house_rent.label}}</h6>
@@ -189,4 +189,9 @@
         <div class="col-md-3"></div>
     </div>
     -->
+    {% block js %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    {% endblock %}
 {% endblock %}
