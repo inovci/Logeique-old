@@ -3,23 +3,24 @@
 {% block title %}Statistiques Client{% endblock title %}
 
 {% block navitem1 %}
-    <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_profile' user.id %}">
-        <span data-feather="home"></span> ACCUEIL <span class="sr-only"></span>
-    </a>
+<a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_profile' user.id %}">
+    <span data-feather="home"></span> ACCUEIL <span class="sr-only"></span>
+</a>
 {% endblock navitem1 %}
 
 {% block navitem4 %}
-    <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:client_statistics' user.id %}">
-        <span data-feather="bar-chart-2">(current)</span>
-        Statistiques
-    </a>
+<a style="border-radius: 5px;" class="btn-outline-secondary nav-link active"
+    href="{% url 'spaces:client_statistics' user.id %}">
+    <span data-feather="bar-chart-2"></span>
+    Statistiques
+</a>
 {% endblock navitem4 %}
 
 {% block h1 %}Etudes pour décision{% endblock h1 %}
 
 {% block content %}
-    <h1>Vos satistiques</h1>
-    {% if deals_done is not None %}
-        <h3>Vos marchés conclus</h3>
-    {% endif %}
+<h1>Vos satistiques</h1>
+{% if deals_done is not None %}
+<h3>Vos marchés conclus</h3>
+{% endif %}
 {% endblock %}

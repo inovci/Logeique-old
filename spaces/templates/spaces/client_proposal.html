@@ -3,243 +3,326 @@
 {% block title %}Préférences clients{% endblock title %}
 
 {% block navitem1 %}
-    <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_profile' request.user.id %}">
-        <span data-feather="home"></span> ACCUEIL <span class="sr-only"></span>
-    </a>
+<a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_profile' request.user.id %}">
+    <span data-feather="home"></span> ACCUEIL <span class="sr-only"></span>
+</a>
 {% endblock navitem1 %}
 
 {% block navitem3 %}
-    <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:client_proposal' %}">
-        <span data-feather="plus">(current)</span>
-        Que désirez vous?
-    </a>
+<a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:client_proposal' %}">
+    <span data-feather="plus"></span>
+    Que désirez vous?
+</a>
 {% endblock navitem3 %}
 
 {% block h1 %}Attentes du client{% endblock h1 %}
 
 {% block content %}
 
-    <div>
-        <nav>
+<div>
+    <nav>
         <div class="mb-3 nav nav-pills" id="nav-tab" role="tablist">
-            <a class="nav-link active" id="nav-add-proposal-tab" data-toggle="tab" href="#nav-add-proposal" role="tab" aria-controls="nav-add-proposal" aria-selected="true">Faire une demande</a>
-            <a class="nav-link" id="nav-see-proposal-tab" data-toggle="tab" href="#nav-see-proposal" role="tab" aria-controls="nav-see-proposal" aria-selected="false">Voir demandes</a>
+            <a class="nav-link active" id="nav-add-proposal-tab" data-toggle="tab" href="#nav-add-proposal" role="tab"
+                aria-controls="nav-add-proposal" aria-selected="true">Faire une demande</a>
+            <a class="nav-link" id="nav-see-proposal-tab" data-toggle="tab" href="#nav-see-proposal" role="tab"
+                aria-controls="nav-see-proposal" aria-selected="false">Voir demandes</a>
         </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-add-proposal" role="tabpanel" aria-labelledby="nav-add-proposal-tab"  style="overflow-y: scroll;overflow-x: hidden;">
-                <div class="row" style="padding: 10px;">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="card" style="border: solid 0.1rem #c5bfbf;border-radius: 1rem;">
-                            <form style="padding: 3rem;" method="post" action="{% url 'spaces:client_proposal' %}" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_township.label}}</span></label>
-                                    <div class="col-sm-8">
-                                        {{form.house_township}}
-                                    </div>
-                                </div>
-                        
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_area.label}}</span></label>
-                                    <div class="col-sm-8">{{form.house_area}}</div>
-                                </div>
-                        
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_rent.label}}</span></label>
-                                    <div class="col-sm-8">{{form.house_rent}}</div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_deposit.label}}</span></label>
-                                    <div class="col-sm-8">{{form.house_deposit}}</div>
-                                </div>
-                        
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_kind.label}}</span></label>
-                                    <div class="col-sm-8">{{form.house_kind}}</div>
-                                </div>
-                        
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_rooms_number.label}}</span></label>
-                                    <div class="col-sm-8">{{form.house_rooms_number}}</div>
-                                </div>
-                                <div class="text-center"><input type="submit" style="width: 50%;border-radius: 1rem;" class="btn btn-outline-dark" value="Enregistrer" /></div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-md-3"></div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="nav-see-proposal" role="tabpanel" aria-labelledby="nav-see-proposal-tab" style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
-                <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
-                    <div class="row">
-                        {% for proposal in proposals %}
-                        <div class="col-md-4">
-                            <div class="card" style="width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
-                                <div class="card-body">
-                                    <div class="row" style="margin: 0;padding: 0;">
-                                        <div class="col-10"></div>
-                                        <div class="col-2">
-                                            <a href="#" data-toggle="modal" data-target="#For-delete-{{proposal.id}}" class="float-right card-link"><i class="fas fa-times"></i></a>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="form-group" style="margin: 0;padding: 0;">
-                                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Commune: </span><div class="col-6">{{proposal.township_desire}}</div></label>
-                                    </div>
-                            
-                                    <div class="form-group" style="margin: 0;padding: 0;">
-                                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Quartier: </span><div class="col-6">{{proposal.area_desire}}</div></label>
-                                    </div>
-                            
-                                    <div class="form-group" style="margin: 0;padding: 0;">
-                                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Prix: </span><div class="col-6">{{proposal.rent_proposal}}</div></label>
-                                    </div>
-                                    <div class="form-group" style="margin: 0;padding: 0;">
-                                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Caution: </span><div class="col-6">{{proposal.deposit_proposal}}</div></label>
-                                    </div>
-                            
-                                    <div class="form-group" style="margin: 0;padding: 0;">
-                                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Type: </span><div class="col-6">{{proposal.kind_desire}}</div></label>
-                                    </div>
-                            
-                                    <div class="form-group" style="margin: 0;padding: 0;">
-                                        <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Nombre de pièces: </span><div class="col-6">{{proposal.rooms_number_desire}}</div></label>
-                                    </div>
-                                    <hr>
-                                    <div class="text-center"><a href="#" data-toggle="modal" data-target="#ProposalModal-{{proposal.id}}" class="card-link for-chatter"><span aria-hidden="true"><i class="fas fa-pen"></i></span> Modifier</a></div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-add-proposal" role="tabpanel"
+            aria-labelledby="nav-add-proposal-tab" style="overflow-y: scroll;overflow-x: hidden;">
+            <div class="row" style="padding: 10px;">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="card" style="border: solid 0.1rem #c5bfbf;border-radius: 1rem;">
+                        <form style="padding: 3rem;" method="post" action="{% url 'spaces:client_proposal' %}"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label"><span
+                                        style="font-weight: bold;">{{form.house_township.label}}</span></label>
+                                <div class="col-sm-8">
+                                    {{form.house_township}}
                                 </div>
                             </div>
-                        </div>
-    
-                        <!-- Modal -->
-                        <div class="modal fade" id="For-delete-{{proposal.id}}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content" style="border-radius: 1rem;width: 100%;">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Vous allez suprime cette demande.</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="alert alert-danger" role="alert">
-                                        Voulez-vous vraiment surprimer cette maison?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="text-center"><a href="{% url 'spaces:client_remove_proposal' proposal.id %}" class="btn btn-danger"><span aria-hidden="true"><i class="fas fa-trash"></i></span> Suprimer</a></div>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="modal fade" id="ProposalModal-{{proposal.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content" style="border-radius: 1rem;width: 200%;">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"><span aria-hidden="true"><i class="fas fa-home"></i></span> Maison</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label"><span
+                                        style="font-weight: bold;">{{form.house_area.label}}</span></label>
+                                <div class="col-sm-8">{{form.house_area}}</div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label"><span
+                                        style="font-weight: bold;">{{form.house_rent.label}}</span></label>
+                                <div class="col-sm-8">{{form.house_rent}}</div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label"><span
+                                        style="font-weight: bold;">{{form.house_deposit.label}}</span></label>
+                                <div class="col-sm-8">{{form.house_deposit}}</div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label"><span
+                                        style="font-weight: bold;">{{form.house_kind.label}}</span></label>
+                                <div class="col-sm-8">{{form.house_kind}}</div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label"><span
+                                        style="font-weight: bold;">{{form.house_rooms_number.label}}</span></label>
+                                <div class="col-sm-8">{{form.house_rooms_number}}</div>
+                            </div>
+                            <div class="text-center"><input type="submit" style="width: 50%;border-radius: 1rem;"
+                                    class="btn btn-outline-dark" value="Enregistrer" /></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-see-proposal" role="tabpanel" aria-labelledby="nav-see-proposal-tab"
+            style="border: solid 0.1rem #CFD9DE;border-radius: 1rem;padding: 1rem 0 0 1rem;">
+            <div style="overflow-y: scroll;overflow-x: hidden;height: 500px;">
+                <div class="row">
+                    {% for proposal in proposals %}
+                    <div class="col-md-4">
+                        <div class="card" style="width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+                            <div class="card-body">
+                                <div class="row" style="margin: 0;padding: 0;">
+                                    <div class="col-10"></div>
+                                    <div class="col-2">
+                                        <a href="#" data-toggle="modal" data-target="#For-delete-{{proposal.id}}"
+                                            class="float-right card-link"><i class="fas fa-times"></i></a>
                                     </div>
-                                    <div class="modal-body" style="background-color: #fdfdfd;">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="card" style="width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
-                                                    <div class="card-body">
-                                                        <header style="font-weight: bold;">
-                                                            <div class="row">
-                                                                <div class="col-9"><h4>Anciennes données</h4></div>
-                                                                <div class="col-3"><span class="float-right" aria-hidden="true"><i class="fas fa-trash-alt"></i></span></div>
-                                                            </div>
-                                                        </header>
-                                                        <hr>
-                                                        <div class="form-group" style="margin: 1rem 0;padding: 0;">
-                                                            <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Commune: </span><div class="col-6">{{proposal.township_desire}}</div></label>
-                                                        </div>
-                                                
-                                                        <div class="form-group" style="margin: 1rem 0;padding: 0;">
-                                                            <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Quartier: </span><div class="col-6">{{proposal.area_desire}}</div></label>
-                                                        </div>
-                                                
-                                                        <div class="form-group" style="margin: 1rem 0;padding: 0;">
-                                                            <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Prix: </span><div class="col-6">{{proposal.rent_proposal}}</div></label>
-                                                        </div>
-                                                        <div class="form-group" style="margin: 1rem 0;padding: 0;">
-                                                            <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Caution: </span><div class="col-6">{{proposal.deposit_proposal}}</div></label>
-                                                        </div>
-                                                
-                                                        <div class="form-group" style="margin: 1rem 0;padding: 0;">
-                                                            <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Type: </span><div class="col-6">{{proposal.kind_desire}}</div></label>
-                                                        </div>
-                                                
-                                                        <div class="form-group" style="margin: 1rem 0;padding: 0;">
-                                                            <label for="" class="col-form-label row"><span style="font-weight: bold;" class="col-6">Nombre de pièces: </span><div class="col-6">{{proposal.rooms_number_desire}}</div></label>
-                                                        </div>
-                                                        <hr>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="card" style="width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
-                                                    <form class="card-body" method="post" action="{% url 'spaces:client_update_proposal' proposal.id %}" enctype="multipart/form-data">
-                                                        <header style="font-weight: bold;">
-                                                            <div class="row">
-                                                                <div class="col-9"><h4>Nouvelles données</h4></div>
-                                                                <div class="col-3"><span class="float-right" aria-hidden="true"><i class="fas fa-pen"></i></span></div>
-                                                            </div>
-                                                        </header>
-                                                        <hr>
-                                                        {% csrf_token %}
-                                                        <div class="form-group row">
-                                                            <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_township.label}}</span></label>
-                                                            <div class="col-sm-8">
-                                                                {{form.house_township}}
-                                                            </div>
-                                                        </div>
-                                                
-                                                        <div class="form-group row">
-                                                            <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_area.label}}</span></label>
-                                                            <div class="col-sm-8">{{form.house_area}}</div>
-                                                        </div>
-                                                
-                                                        <div class="form-group row">
-                                                            <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_rent.label}}</span></label>
-                                                            <div class="col-sm-8">{{form.house_rent}}</div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_deposit.label}}</span></label>
-                                                            <div class="col-sm-8">{{form.house_deposit}}</div>
-                                                        </div>
-                                    
-                                                        <div class="form-group row">
-                                                            <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_kind.label}}</span></label>
-                                                            <div class="col-sm-8">{{form.house_kind}}</div>
-                                                        </div>
-                                                
-                                                        <div class="form-group row">
-                                                            <label for="" class="col-sm-4 col-form-label"><span style="font-weight: bold;">{{form.house_rooms_number.label}}</span></label>
-                                                            <div class="col-sm-8">{{form.house_rooms_number}}</div>
-                                                        </div>
-                                                        <hr>
-                                                        <div class="text-center"><input type="submit" style="width: 50%;border-radius: 1rem;" class="btn btn-outline-dark" value="Editer" /></div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group" style="margin: 0;padding: 0;">
+                                    <label for="" class="col-form-label row"><span style="font-weight: bold;"
+                                            class="col-6">Commune: </span>
+                                        <div class="col-6">{{proposal.township_desire}}</div>
+                                    </label>
+                                </div>
+
+                                <div class="form-group" style="margin: 0;padding: 0;">
+                                    <label for="" class="col-form-label row"><span style="font-weight: bold;"
+                                            class="col-6">Quartier: </span>
+                                        <div class="col-6">{{proposal.area_desire}}</div>
+                                    </label>
+                                </div>
+
+                                <div class="form-group" style="margin: 0;padding: 0;">
+                                    <label for="" class="col-form-label row"><span style="font-weight: bold;"
+                                            class="col-6">Prix: </span>
+                                        <div class="col-6">{{proposal.rent_proposal}}</div>
+                                    </label>
+                                </div>
+                                <div class="form-group" style="margin: 0;padding: 0;">
+                                    <label for="" class="col-form-label row"><span style="font-weight: bold;"
+                                            class="col-6">Caution: </span>
+                                        <div class="col-6">{{proposal.deposit_proposal}}</div>
+                                    </label>
+                                </div>
+
+                                <div class="form-group" style="margin: 0;padding: 0;">
+                                    <label for="" class="col-form-label row"><span style="font-weight: bold;"
+                                            class="col-6">Type: </span>
+                                        <div class="col-6">{{proposal.kind_desire}}</div>
+                                    </label>
+                                </div>
+
+                                <div class="form-group" style="margin: 0;padding: 0;">
+                                    <label for="" class="col-form-label row"><span style="font-weight: bold;"
+                                            class="col-6">Nombre de pièces: </span>
+                                        <div class="col-6">{{proposal.rooms_number_desire}}</div>
+                                    </label>
+                                </div>
+                                <hr>
+                                <div class="text-center"><a href="#" data-toggle="modal"
+                                        data-target="#ProposalModal-{{proposal.id}}" class="card-link for-chatter"><span
+                                            aria-hidden="true"><i class="fas fa-pen"></i></span> Modifier</a></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="For-delete-{{proposal.id}}" tabindex="-1" aria-labelledby="modalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content" style="border-radius: 1rem;width: 100%;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Vous allez suprime cette demande.
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="alert alert-danger" role="alert">
+                                    Voulez-vous vraiment surprimer cette maison?
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="text-center"><a
+                                            href="{% url 'spaces:client_remove_proposal' proposal.id %}"
+                                            class="btn btn-danger"><span aria-hidden="true"><i
+                                                    class="fas fa-trash"></i></span> Suprimer</a></div>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Annuler</button>
                                 </div>
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
+
+                    <div class="modal fade" id="ProposalModal-{{proposal.id}}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content" style="border-radius: 1rem;width: 200%;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><span aria-hidden="true"><i
+                                                class="fas fa-home"></i></span> Maison</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="background-color: #fdfdfd;">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="card"
+                                                style="width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+                                                <div class="card-body">
+                                                    <header style="font-weight: bold;">
+                                                        <div class="row">
+                                                            <div class="col-9">
+                                                                <h4>Anciennes données</h4>
+                                                            </div>
+                                                            <div class="col-3"><span class="float-right"
+                                                                    aria-hidden="true"><i
+                                                                        class="fas fa-trash-alt"></i></span></div>
+                                                        </div>
+                                                    </header>
+                                                    <hr>
+                                                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                                                        <label for="" class="col-form-label row"><span
+                                                                style="font-weight: bold;" class="col-6">Commune:
+                                                            </span>
+                                                            <div class="col-6">{{proposal.township_desire}}</div>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                                                        <label for="" class="col-form-label row"><span
+                                                                style="font-weight: bold;" class="col-6">Quartier:
+                                                            </span>
+                                                            <div class="col-6">{{proposal.area_desire}}</div>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                                                        <label for="" class="col-form-label row"><span
+                                                                style="font-weight: bold;" class="col-6">Prix: </span>
+                                                            <div class="col-6">{{proposal.rent_proposal}}</div>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                                                        <label for="" class="col-form-label row"><span
+                                                                style="font-weight: bold;" class="col-6">Caution:
+                                                            </span>
+                                                            <div class="col-6">{{proposal.deposit_proposal}}</div>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                                                        <label for="" class="col-form-label row"><span
+                                                                style="font-weight: bold;" class="col-6">Type: </span>
+                                                            <div class="col-6">{{proposal.kind_desire}}</div>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-group" style="margin: 1rem 0;padding: 0;">
+                                                        <label for="" class="col-form-label row"><span
+                                                                style="font-weight: bold;" class="col-6">Nombre de
+                                                                pièces: </span>
+                                                            <div class="col-6">{{proposal.rooms_number_desire}}</div>
+                                                        </label>
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="card"
+                                                style="width: 100%;border: solid 0.1rem #CFD9DE;border-radius: 1rem;">
+                                                <form class="card-body" method="post"
+                                                    action="{% url 'spaces:client_update_proposal' proposal.id %}"
+                                                    enctype="multipart/form-data">
+                                                    <header style="font-weight: bold;">
+                                                        <div class="row">
+                                                            <div class="col-9">
+                                                                <h4>Nouvelles données</h4>
+                                                            </div>
+                                                            <div class="col-3"><span class="float-right"
+                                                                    aria-hidden="true"><i class="fas fa-pen"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </header>
+                                                    <hr>
+                                                    {% csrf_token %}
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-4 col-form-label"><span
+                                                                style="font-weight: bold;">{{form.house_township.label}}</span></label>
+                                                        <div class="col-sm-8">
+                                                            {{form.house_township}}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-4 col-form-label"><span
+                                                                style="font-weight: bold;">{{form.house_area.label}}</span></label>
+                                                        <div class="col-sm-8">{{form.house_area}}</div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-4 col-form-label"><span
+                                                                style="font-weight: bold;">{{form.house_rent.label}}</span></label>
+                                                        <div class="col-sm-8">{{form.house_rent}}</div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-4 col-form-label"><span
+                                                                style="font-weight: bold;">{{form.house_deposit.label}}</span></label>
+                                                        <div class="col-sm-8">{{form.house_deposit}}</div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-4 col-form-label"><span
+                                                                style="font-weight: bold;">{{form.house_kind.label}}</span></label>
+                                                        <div class="col-sm-8">{{form.house_kind}}</div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-4 col-form-label"><span
+                                                                style="font-weight: bold;">{{form.house_rooms_number.label}}</span></label>
+                                                        <div class="col-sm-8">{{form.house_rooms_number}}</div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="text-center"><input type="submit"
+                                                            style="width: 50%;border-radius: 1rem;"
+                                                            class="btn btn-outline-dark" value="Editer" /></div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
-    
+</div>
+
 {% endblock %}

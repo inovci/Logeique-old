@@ -4,133 +4,152 @@
 {% block title %}Modifier profil client{% endblock title %}
 
 {% block linkRel %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 {% endblock linkRel %}
 
 {% block linkRel2 %}
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-    <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet">
-    <link href="{% static 'css/editClientProfile.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet">
+<link href="{% static 'css/editClientProfile.css' %}" rel="stylesheet">
 {% endblock linkRel2 %}
 
 {% block navitem1 %}
-    <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_profile' user.id %}">
-        <span data-feather="home"></span> ACCUEIL <span class="sr-only"></span>
-    </a>
+<a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_profile' user.id %}">
+	<span data-feather="home"></span> ACCUEIL <span class="sr-only"></span>
+</a>
 {% endblock navitem1 %}
 
 {% block navitem2 %}
-    <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active" href="{% url 'spaces:edit_client_profile' user.id %}">
-        <span data-feather="user">(current)</span>
-        Modifier profil
-    </a>
+<a style="border-radius: 5px;" class="btn-outline-secondary nav-link active"
+	href="{% url 'spaces:edit_client_profile' user.id %}">
+	<span data-feather="user"></span>
+	Modifier profil
+</a>
 {% endblock navitem2 %}
 
 {% block h1 %}Modification de profil{% endblock h1 %}
 
 {% block content %}
 <div class="container">
-<div class="row gutters">
-	<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-		<div class="card h-100" style="color : white;">
-			<div class="card-body">
-				<div class="account-settings">
-					<div class="user-profile">
-						<div class="user-avatar">
-							{% if user.client.avatar %}
-								<img style="border-radius: 50%;" width="50%" src="{{user.client.avatar.url}}" alt="Image de {{user.username}}">
-							{% else %}
-                                <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
-                            {% endif %}
+	<div class="row gutters">
+		<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+			<div class="card h-100" style="color : white;">
+				<div class="card-body">
+					<div class="account-settings">
+						<div class="user-profile">
+							<div class="user-avatar">
+								{% if user.client.avatar %}
+								<img style="border-radius: 50%;" width="50%" src="{{user.client.avatar.url}}"
+									alt="Image de {{user.username}}">
+								{% else %}
+								<i class="fas fa-user-circle"
+									style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+								{% endif %}
+							</div>
+							<h5 class="user-name">{{user.username}}</h5>
+							<h6 class="user-email">{{user.email}}</h6>
 						</div>
-						<h5 class="user-name">{{user.username}}</h5>
-						<h6 class="user-email">{{user.email}}</h6>
-					</div>
-					<div class="about">
-						<h5 class="mb-2 text-primary">Compte client</h5>
-						<p>Actif depuis {{user.date_joined}}</p>
+						<div class="about">
+							<h5 class="mb-2 text-primary">Compte client</h5>
+							<p>Actif depuis {{user.date_joined}}</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-		<div class="card h-100" style="color : white;">
-			<div class="card-body">
-				<form method="post" action="{% url 'spaces:edit_client_profile' user.id %}" enctype="multipart/form-data">
-				{% csrf_token %}
-				<div class="row gutters">
-					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-						<h6 class="mb-3 text-primary">Details personnels</h6>
-					</div>
-					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-						<div class="form-group">
-							<label>{{form.username.label}}{% if no_username_msg %}<span style="color:yellow">inchangé</span>{% elif yes_username_msg %}<span style="color:green">changé</span>{% endif %}</label>
-							{{form.username}}
+		<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+			<div class="card h-100" style="color : white;">
+				<div class="card-body">
+					<form method="post" action="{% url 'spaces:edit_client_profile' user.id %}"
+						enctype="multipart/form-data">
+						{% csrf_token %}
+						<div class="row gutters">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<h6 class="mb-3 text-primary">Details personnels</h6>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label>{{form.username.label}}{% if no_username_msg %}<span
+											style="color:yellow">inchangé</span>{% elif yes_username_msg %}<span
+											style="color:green">changé</span>{% endif %}</label>
+									{{form.username}}
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label>{{form.first_name.label}}{% if no_first_name_msg %}<span
+											style="color:yellow">inchangé</span>{% elif yes_first_name_msg %}<span
+											style="color:green">changé</span>{% endif %}</label>
+									{{form.first_name}}
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label>{{form.last_name.label}}{% if no_last_name_msg %}<span
+											style="color:yellow">inchangé</span>{% elif yes_last_name_msg %}<span
+											style="color:green">changé</span>{% endif %}</label>
+									{{form.last_name}}
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label>{{form.contact.label}}{% if no_contact_msg %}<span
+											style="color:yellow">inchangé</span>{% elif yes_contact_msg %}<span
+											style="color:green">changé</span>{% endif %}</label>
+									{{form.contact}}
+								</div>
+							</div>
 						</div>
-					</div>
-					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-						<div class="form-group">
-							<label>{{form.first_name.label}}{% if no_first_name_msg %}<span style="color:yellow">inchangé</span>{% elif yes_first_name_msg %}<span style="color:green">changé</span>{% endif %}</label>
-							{{form.first_name}}
+						<div class="row gutters">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<h6 class="mb-3 text-primary">Addresse</h6>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label>{{form.email.label}}{% if no_email_msg %}<span
+											style="color:yellow">inchangé</span>{% elif yes_email_msg %}<span
+											style="color:green">changé</span>{% endif %}</label>
+									{{form.email}}
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label>{{form.password.label}}{% if no_pass_msg %}<span
+											style="color:yellow">inchangé</span>{% endif %}</label>
+									{{form.password}}
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label>{{form.password_verification.label}}{% if error_pass_no_match %}<span
+											style="color:red"> Erreur.</span>{% elif yes_pass_msg %}<span
+											style="color:green">changé</span>{% endif %}</label>
+									{{form.password_verification}}
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label>{{form.avatar.label}}{% if avatar_added_err %}<span
+											style="color:yellow">Aucun avatar ajouté.</span>{% elif avatar_added %}<span
+											style="color:green">ajouté</span>{% endif %}</label>
+									{{form.avatar}}
+								</div>
+							</div>
 						</div>
-					</div>
-					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-						<div class="form-group">
-							<label>{{form.last_name.label}}{% if no_last_name_msg %}<span style="color:yellow">inchangé</span>{% elif yes_last_name_msg %}<span style="color:green">changé</span>{% endif %}</label>
-							{{form.last_name}}
+						<div class="row gutters">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="text-right">
+									<input class="btn btn-primary" type="submit" value="Modifier" />
+								</div>
+							</div>
 						</div>
-					</div>
-					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-						<div class="form-group">
-							<label>{{form.contact.label}}{% if no_contact_msg %}<span style="color:yellow">inchangé</span>{% elif yes_contact_msg %}<span style="color:green">changé</span>{% endif %}</label>
-							{{form.contact}}
-						</div>
-					</div>
+					</form>
 				</div>
-				<div class="row gutters">
-					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-						<h6 class="mb-3 text-primary">Addresse</h6>
-					</div>
-					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-						<div class="form-group">
-							<label>{{form.email.label}}{% if no_email_msg %}<span style="color:yellow">inchangé</span>{% elif yes_email_msg %}<span style="color:green">changé</span>{% endif %}</label>
-							{{form.email}}
-						</div>
-					</div>
-					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-						<div class="form-group">
-							<label>{{form.password.label}}{% if no_pass_msg %}<span style="color:yellow">inchangé</span>{% endif %}</label>
-							{{form.password}}
-						</div>
-					</div>
-					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-						<div class="form-group">
-							<label>{{form.password_verification.label}}{% if error_pass_no_match %}<span style="color:red"> Erreur.</span>{% elif yes_pass_msg %}<span style="color:green">changé</span>{% endif %}</label>
-							{{form.password_verification}}
-						</div>
-					</div>
-					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-						<div class="form-group">
-							<label>{{form.avatar.label}}{% if avatar_added_err %}<span style="color:yellow">Aucun avatar ajouté.</span>{% elif avatar_added %}<span style="color:green">ajouté</span>{% endif %}</label>
-							{{form.avatar}}
-						</div>
-					</div>
-				</div>
-				<div class="row gutters">
-					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-						<div class="text-right">
-							<input class="btn btn-primary" type="submit" value="Modifier" />
-						</div>
-					</div>
-				</div>
-				</form>
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 <!--
     {% if error %}
