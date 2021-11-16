@@ -507,7 +507,7 @@ def add_house(request, id):
                 house_available=house_available,
                 house_to_sell=house_to_sell,
                 house_image=house_image,
-                house_township=house_townships
+                house_township=house_township
             )
             house.save()
             return redirect('spaces:landlord_houses', request.user.id)
