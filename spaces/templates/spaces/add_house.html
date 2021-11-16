@@ -23,83 +23,44 @@
             <div class="col-lg-4">
                 <div class="card" style="border-radius: 1rem;padding: 5px;border: solid 0.1em #c5bfbf;">
                     <div class="card-body">
-
-                        <form mmethod="post" action="{% url 'spaces:add_house' user.id %}"
-                            enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="mb-3 row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">{{form.house_township.label}}</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary" id="add_house_township">
-                                    {{form.house_township}}
-                                </div>
-                            </div>
-                            <!--<div class="mb-3 row">
-                            <div class="col-sm-3">
-								<h6 class="mb-0">{{form.house_area.label}}</h6>
-							</div>
-							<div class="col-sm-9 text-secondary">
-                                {{form.house_area}}
-							</div>
-						</div>-->
-                            <div class="mb-3 row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">{{form.house_rent.label}}</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{form.house_rent}}
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">{{form.house_deposit.label}}</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{form.house_deposit}}
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">{{form.house_kind.label}}</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{form.house_kind}}
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">{{form.house_rooms_number.label}}</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{form.house_rooms_number}}
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">{{form.house_available.label}}</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{form.house_available}}
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">{{form.house_to_sell.label}}</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{form.house_to_sell}}
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">{{form.house_image.label}}</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{form.house_image}}
-                                </div>
-                            </div>
-                            >>>>>>> 006b235aa7ac93ce998b4a6d9f7e5f2295784707
+                        <div class="text-center d-flex flex-column align-items-center">
+                            Votre maison s'affichera ici
+                        </div>
+                        <hr class="my-4">
+                        <ul class="list-group list-group-flush">
+                            <li class="flex-wrap list-group-item d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-twitter me-2 icon-inline text-info">
+                                        <path
+                                            d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                        </path>
+                                    </svg>Twitter</h6>
+                                <span class="text-secondary">@bootdey</span>
+                            </li>
+                            <li class="flex-wrap list-group-item d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-instagram me-2 icon-inline text-danger">
+                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                    </svg>Instagram</h6>
+                                <span class="text-secondary">bootdey</span>
+                            </li>
+                            <li class="flex-wrap list-group-item d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-facebook me-2 icon-inline text-primary">
+                                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+                                        </path>
+                                    </svg>Facebook</h6>
+                                <span class="text-secondary">bootdey</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -251,11 +212,8 @@
         <div class="col-md-3"></div>
     </div>
     -->
-            <<<<<<< HEAD {% endblock %}======={% block js %} <script
-                src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
                 integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
                 crossorigin="anonymous">
                 </script>
-                {% endblock %}
-                {% endblock %}
-                >>>>>>> 006b235aa7ac93ce998b4a6d9f7e5f2295784707
+            {% endblock %}
