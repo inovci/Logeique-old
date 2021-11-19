@@ -1,6 +1,6 @@
 from django import forms
 
-from .forms_constants import STATUS_CHOICES , TOWNSHIP_CHOICES , ABOBO_AREA_CHOICES ,ADJAME_AREA_CHOICES,ANYAMA_AREA_CHOICES ,ATTECOUBE_AREA_CHOICES , COCODY_AREA_CHOICES ,MARCORY_AREA_CHOICES ,KOUMASSI_AREA_CHOICES , TREICHVILLE_AREA_CHOICES , YOPOUGON_AREA_CHOICES , TYPE_CHOICES
+from .forms_constants import STATUS_CHOICES, TOWNSHIP_CHOICES, ABOBO_AREA_CHOICES, ADJAME_AREA_CHOICES, ANYAMA_AREA_CHOICES, ATTECOUBE_AREA_CHOICES, COCODY_AREA_CHOICES, MARCORY_AREA_CHOICES, KOUMASSI_AREA_CHOICES, TREICHVILLE_AREA_CHOICES, YOPOUGON_AREA_CHOICES, TYPE_CHOICES
 
 
 class SignUpForm(forms.Form):
@@ -65,7 +65,8 @@ class SignUpForm(forms.Form):
             }
         )
     )
-    status = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.RadioSelect)
+    status = forms.ChoiceField(
+        choices=STATUS_CHOICES, widget=forms.RadioSelect)
     password = forms.CharField(
         label='Mot de passe : ',
         max_length=200,
@@ -216,7 +217,7 @@ class AddHouseForm(forms.Form):
         max_length=50,
         label='Commune : ',
         widget=forms.Select(
-            choices = TOWNSHIP_CHOICES,
+            choices=TOWNSHIP_CHOICES,
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Commune de la maison',
@@ -228,7 +229,7 @@ class AddHouseForm(forms.Form):
         max_length=50,
         label='Quartiers Abobo : ',
         widget=forms.Select(
-            choices  = ABOBO_AREA_CHOICES , 
+            choices=ABOBO_AREA_CHOICES,
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Quartier de la maison',
@@ -240,7 +241,7 @@ class AddHouseForm(forms.Form):
         max_length=50,
         label='Quartiers Attecoube : ',
         widget=forms.Select(
-            choices  = ATTECOUBE_AREA_CHOICES , 
+            choices=ATTECOUBE_AREA_CHOICES,
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Quartier de la maison',
@@ -264,7 +265,7 @@ class AddHouseForm(forms.Form):
         max_length=50,
         label='Quartiers cocody : ',
         widget=forms.Select(
-            choices  = COCODY_AREA_CHOICES , 
+            choices=COCODY_AREA_CHOICES,
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Quartier de la maison',
@@ -276,7 +277,7 @@ class AddHouseForm(forms.Form):
         max_length=50,
         label='Quartiers Koumassi : ',
         widget=forms.Select(
-            choices  = KOUMASSI_AREA_CHOICES , 
+            choices=KOUMASSI_AREA_CHOICES,
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Quartier de la maison',
@@ -288,7 +289,7 @@ class AddHouseForm(forms.Form):
         max_length=50,
         label='Quartiers Marcory : ',
         widget=forms.Select(
-            choices  = MARCORY_AREA_CHOICES , 
+            choices=MARCORY_AREA_CHOICES,
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Quartier de la maison',
@@ -336,7 +337,7 @@ class AddHouseForm(forms.Form):
         max_length=50,
         label='Quartiers Attecoube : ',
         widget=forms.Select(
-            choices  = TREICHVILLE_AREA_CHOICES , 
+            choices=TREICHVILLE_AREA_CHOICES,
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Quartier de la maison',
@@ -348,7 +349,7 @@ class AddHouseForm(forms.Form):
         max_length=50,
         label='Quartiers Yopougon : ',
         widget=forms.Select(
-            choices  = YOPOUGON_AREA_CHOICES , 
+            choices=YOPOUGON_AREA_CHOICES,
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Quartier de la maison',
@@ -356,7 +357,7 @@ class AddHouseForm(forms.Form):
             }
         )
     )
-    
+
     house_rent = forms.IntegerField(
         label='Prix : ',
         widget=forms.TextInput(
@@ -381,7 +382,7 @@ class AddHouseForm(forms.Form):
         max_length=50,
         label='Type : ',
         widget=forms.Select(
-            choices = TYPE_CHOICES,
+            choices=TYPE_CHOICES,
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Type de maison',
@@ -431,3 +432,7 @@ class ClientProposalForm(AddHouseForm):
     house_available = None
     house_to_sell = None
     house_image = None
+
+
+class ImageForm(forms.Form):
+    file = forms.ImageField()
