@@ -31,38 +31,6 @@ max_width = 304
 extensions = ['PNG', 'JPG']
 
 
-def crop_image(request, *args, **kwargs):
-    payload = {}
-    user = request.user
-    if request.POST and user.is_authenticated:
-        try:
-            imageString = request.POST.get('avatar')
-            url = save_temp_profile_image_from_base64String(imageString, user)
-            img = cv2.imread(url)
-
-            cropX = int(float(str(request.POST.get('cropX'))))
-            cropY = int(float(str(request.POST.get('cropY'))))
-            cropWidth = int(float(str(request.POST.get('cropWidth'))))
-            cropHeight = int(float(str(request.POST.get('cropHeight'))))
-
-            if cropX < 0:
-                cropX = 0
-            if cropY < 0:
-                cropY = 0
-            crop_img = img[cropY:cropY + cropHeight, cropX:cropX + cropWidth]
-            cv2.imwrite(url, crop_img)
-            user.client.avatar.delete()
-            user.client.avatar.save("avatar.png", files.File(open(url, "rb")))
-            user.save()
-            payload['result'] = "success"
-            payload['cropped_profile_image'] = user.client.avatar.url
-            os.remove(url)
-        except Exception as e:
-            payload['result'] = "error"
-            payload['exception'] = str(e)
-    return HttpResponse(json.dumps(payload), content_type="application/json")
-
-
 def adjusted_size(width, height):
     if width > max_width or height > max_height:
         if width > height:
@@ -826,15 +794,3 @@ def seeLandlordProfile(request):
     else:
         print(form.errors)
     return render(request, "spaces/editeProfile/for_landlord_profile.html", locals())
-
-
-@login_required()
-def comeBackToHome(request):
-    if request.user.is_authenticated:
-        user = get_object_or_404(User, id=request.user.id)
-        try:
-            client = get_object_or_404(Client, user=user)
-            return redirect('spaces:client_profile', client.id)
-        except:
-            landlord = get_object_or_404(Landlord, user=user)
-            return redirect('spaces:landlord_profile', landlord.id)
