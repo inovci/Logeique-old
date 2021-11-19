@@ -107,19 +107,13 @@
                 <nav id="sidebarMenu" style="height: 100vh;background-color: #2a2a2b;">
                     <div class="pt-3">
                         <div class="text-center">
-                            {% if user.landlord.avatar %}
-                            <img style="border-radius: 50%;" width="50%" src="{{user.landlord.avatar.url}}"
-                                alt="Image de {{user.username}}">
-                            <div>
-                                <p style="color: #1CE;font-size: 18px;">Monsieur {{request.user.last_name}}</p>
-                            </div>
-                            {% else %}
-                            <i class="fas fa-user-circle"
-                                style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
-                            <div>
-                                <p style="color: #1CE;font-size: 18px;">Monsieur {{request.user.last_name}}</p>
-                            </div>
-                            {% endif %}
+                            <a href="{% url 'spaces:seeLandlordProfile' %}">
+                                <img style="border-radius: 50%;" width="50%" src="{{user.landlord.avatar.url}}"
+                                    alt="Image de {{user.username}}">
+                                <div>
+                                    <p style="color: #1CE;font-size: 18px;">Monsieur {{request.user.last_name}}</p>
+                                </div>
+                            </a>
                         </div>
 
                         <ul class="nav flex-column" style="width: 100%;">
