@@ -63,23 +63,21 @@
                     <div id="alert-box"></div>
                     <div class="user-profile">
                         <div id="image-box" class="user-avatar">
-                            {% if request.user.client.avatar %}
                             <img id="image" style="border-radius: 50%;" width="25%"
-                                src="{{request.user.client.avatar.url}}" alt="Image de {{request.user.username}}">
+                                src="{{request.user.landlord.avatar.url}}" alt="Image de {{request.user.username}}">
                             <div>
                                 <p style="color: #1CE;font-size: 18px;">Monsieur {{request.user.last_name}}</p>
                             </div>
-                            {% else %}
-                            <i class="fas fa-user-circle"
-                                style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
-                            {% endif %}
                         </div>
+                    </div>
+                    <div>
+                        <a href="{% url 'spaces:landlord_profile' request.user.id %}">Retour</a>
                     </div>
                 </div>
                 <hr>
                 <div class="text-center">
                     <form id="image-form" style="padding: 3rem;" method="post"
-                        action="{% url 'spaces:seeProfile' request.user.id %}" enctype="multipart/form-data">
+                        action="{% url 'spaces:seeLandlordProfile' %}" enctype="multipart/form-data">
                         <p>
                         <div>{{form.avatar.label}}{% if avatar_added_err %}<span style="color:yellow">Aucun avatar
                                 ajouté.</span>{% elif avatar_added %}<span style="color:green">ajouté</span>{% endif %}
