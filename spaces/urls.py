@@ -8,8 +8,10 @@ urlpatterns = [
     path('signup', views.sign_up, name="signup"),
     path('signin/', views.sign_in, name="signin"),
     path('logout/', views.log_out, name="logout"),
-    path('client/profile/<int:id>', views.see_client_profile, name="client_profile"),
-    path('landlord/profile/<int:id>', views.see_landlord_profile, name="landlord_profile"),
+    path('client/profile/<int:id>',
+         views.see_client_profile, name="client_profile"),
+    path('landlord/profile/<int:id>',
+         views.see_landlord_profile, name="landlord_profile"),
     path('client/profile/edit/<int:id>',
          views.edit_client_profile, name="edit_client_profile"),
     path('landlord/profile/edit/<int:id>',
@@ -37,5 +39,8 @@ urlpatterns = [
     path('deal/', views.concluded_deal, name='concluded_deal'),
     path('deal-concluded/<int:deal_id>', views.concluded, name="concluded"),
     path('deal-aborted/<int:deal_id>', views.aborted, name="aborted"),
-    path('your-profile/<int:id>', views.seeProfile, name="seeProfile")
+    path('client-profile/',
+         views.seeClientProfile, name="seeClientProfile"),
+    path('landlord-profile/',
+         views.seeLandlordProfile, name="seeLandlordProfile")
 ]

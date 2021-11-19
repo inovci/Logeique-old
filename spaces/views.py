@@ -3,7 +3,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from .forms import SignUpForm, SignInForm, EditClientForm, EditLandlordForm, AddHouseForm, ClientProposalForm
+from .forms import SignUpForm, SignInForm, EditClientForm, EditLandlordForm, AddHouseForm, ClientProposalForm, ImageForm
 from django.contrib.auth.models import User
 from .models import Client, Landlord, House, Deal, Proposal
 from chat.models import Message, Room
@@ -793,7 +793,48 @@ def aborted(request, deal_id):
 
 
 @login_required()
-def seeProfile(request, id):
-    user = get_object_or_404(User, id=id)
-    form = EditClientForm()
-    return render(request, "spaces/editeProfile/edite_profile.html", locals())
+def seeClientProfile(request):
+    user = get_object_or_404(User, id=request.user.id)
+    form = ImageForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        file = request.FILES.get('file')
+        try:
+            client = get_object_or_404(Client, user=user)
+            client.avatar = file
+            client.save()
+            return redirect('spaces:seeClientProfile')
+        except Exception as e:
+            raise e
+    else:
+        print(form.errors)
+    return render(request, "spaces/editeProfile/for_client_profile.html", locals())
+
+
+@login_required()
+def seeLandlordProfile(request):
+    user = get_object_or_404(User, id=request.user.id)
+    form = ImageForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        file = request.FILES.get('file')
+        try:
+            landlord = get_object_or_404(Landlord, user=user)
+            landlord.avatar = file
+            landlord.save()
+            return redirect('spaces:seeLandlordProfile')
+        except Exception as e:
+            raise e
+    else:
+        print(form.errors)
+    return render(request, "spaces/editeProfile/for_landlord_profile.html", locals())
+
+
+@login_required()
+def comeBackToHome(request):
+    if request.user.is_authenticated:
+        user = get_object_or_404(User, id=request.user.id)
+        try:
+            client = get_object_or_404(Client, user=user)
+            return redirect('spaces:client_profile', client.id)
+        except:
+            landlord = get_object_or_404(Landlord, user=user)
+            return redirect('spaces:landlord_profile', landlord.id)
