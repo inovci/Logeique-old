@@ -5,64 +5,72 @@
   <link href="{% static 'emoji-picker-main/lib/css/emoji.css' %}" rel="stylesheet">
 {% endblock %}
 -->
-<div class="chat-board">
+<div class="chat-board" style="position: relative;">
   {% block display %}
-    <div style="padding: 0 5px;" class="d-flex justify-content-between">
-      <div>Discussion avec {% if request.user.landlord %} {{ room.user2.last_name }} {% elif request.user.client %} {{ room.user1.last_name }} {% endif %}</div>
+  <div style="padding: 0 5px;" class="d-flex justify-content-between">
+    <div>Discussion avec {% if request.user.landlord %} {{ room.user2.last_name }} {% elif request.user.client %} {{
+      room.user1.last_name }} {% endif %}</div>
 
-      <div>
-        {% if request.user.landlord %}
+    <div>
+      {% if request.user.landlord %}
 
-          <a href="#"  class="btn btn-primary">Marché Conclus</a>
-        {% endif %}
-      </div>
+      <a href="#" class="btn btn-primary">Marché Conclus</a>
+      {% endif %}
     </div>
+  </div>
 
-    <div style="height: 500px;">
-      <div id='chat-items' class="mycontainer darker" style="overflow-y: scroll;overflow-x: hidden;max-height: 95%;background: #DDDDF7;border: none;">
-        {% for message in messages %}
-          {% if message.user == request.user %}
-            <div class='d-flex justify-content-end'>
-              <div class="mycontainer" style="background-color: #474B7B;color: #fff;border-radius: 20px 0 20px 20px;max-width: 70%;">
-                <p style="font-size: 15px;">{{message.value}}</p>
-                <span class="text-white time-right" style="font-size: 10px;">{{message.date}}</span>
-              </div>
-            </div>
-          {% else %}
-            <div class="d-flex justify-content-start">
-              <div class="mycontainer" style="background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;max-width: 70%;">
-                <p style="font-size: 15px;">{{message.value}}</p>
-                <span class="time-right" style="font-size: 10px;">{{message.date}}</span>
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
+  <div style="height: 80vh;border: solid transparent 1px;">
+    <div id='chat-items' class="mycontainer darker"
+      style="overflow-y: scroll;overflow-x: hidden;max-height: 95%;background: #DDDDF7;border: none;">
+      {% for message in messages %}
+      {% if message.user == request.user %}
+      <div class='d-flex justify-content-end'>
+        <div class="mycontainer"
+          style="background-color: #474B7B;color: #fff;border-radius: 20px 0 20px 20px;max-width: 70%;">
+          <p style="font-size: 15px;">{{message.value}}</p>
+          <span class="text-white time-right" style="font-size: 10px;">{{message.date}}</span>
+        </div>
       </div>
+      {% else %}
+      <div class="d-flex justify-content-start">
+        <div class="mycontainer"
+          style="background-color: #303841;color: #fff;border-radius: 0 20px 20px 20px;max-width: 70%;">
+          <p style="font-size: 15px;">{{message.value}}</p>
+          <span class="time-right" style="font-size: 10px;">{{message.date}}</span>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
     </div>
-  {% endblock display %}
-</div>
+  </div>
 
-<div style="position: absolute;min-width: 100%;">
   {% block form %}
-    <form id="form" method="POST">
-      {% csrf_token %}
-      <!--
+  <form id="form" method="POST">
+    {% csrf_token %}
+    <!--
       <p class="lead emoji-picker-container">
         <input type="text" class="form-control" name="message" id="chat-message-input" data-emoji-input="unicode" data-emojiable="true"/>
       </p>
       -->
-      <input style="border: solid 0.1rem #CFD9DE;" class="form-control" type="text" name="message" id="chat-message-input" data-emoji-input="unicode" data-emojiable="true" rows="4" cols="50"/>
-      <!--
+    <input style="border: solid 0.1rem #CFD9DE;" class="form-control" type="text" name="message" id="chat-message-input"
+      data-emoji-input="unicode" data-emojiable="true" rows="4" cols="50" placeholder="Type your message" />
+    <!--
       <input type="hidden" value="Envoyez" id="chat-message-submit" class="btn btn-secondary btn-sm"/>
       -->
-    </form>
+  </form>
   {% endblock form %}
+
+  {% endblock display %}
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"
+  integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script defer src="{% static 'js/moment-with-locales.min.js' %}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+  integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script defer src="{% static 'js/moment.min.js' %}"></script>
 
 <script type="text/javascript">
@@ -80,7 +88,7 @@
     wsStart = 'wss://'
   }
 
-  function scrollToEnd(){
+  function scrollToEnd() {
     var chatList = document.getElementById("chat-items");
     chatList.scrollTop = chatList.scrollHeight;
   }
@@ -90,7 +98,7 @@
 
   var socket = new WebSocket(endpoint)
 
-  socket.onmessage = function(e) {
+  socket.onmessage = function (e) {
     var chatDataMsg = JSON.parse(e.data)
 
     if (chatDataMsg.username === "{{request.user.username}}") {
@@ -106,12 +114,12 @@
     scrollToEnd();
   }
 
-  socket.onopen = function(e) {
+  socket.onopen = function (e) {
     console.log("Open: ", e)
-    fromData.submit(function(event){
+    fromData.submit(function (event) {
       event.preventDefault()
       var msgText = msgInput.val()
-      var finalData  = {
+      var finalData = {
         'message': msgText
       }
       socket.send(JSON.stringify(finalData));
@@ -120,11 +128,11 @@
     })
   }
 
-  socket.onerror = function(e) {
+  socket.onerror = function (e) {
     console.log("Error: ", e)
   }
 
-  socket.onclose = function(e) {
+  socket.onclose = function (e) {
     console.log("Close: ", e)
   }
   /*

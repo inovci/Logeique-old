@@ -1,283 +1,333 @@
 <!doctype html>
 <html lang="en">
-  {% load static %}
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load static %}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet"> <!--load all styles -->
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
-    <!-- Our project just needs Font Awesome Solid + Brands -->
-    <script defer src="{% static 'fontawesome/js/brands.js' %}"></script>
-    <script defer src="{% static 'fontawesome/js/solid.js' %}"></script>
-    <script defer src="{% static 'fontawesome/js/fontawesome.js' %}"></script>
+  <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet">
+  <!--load all styles -->
 
-    <!-- For Our Emoji -->
-    <link rel="stylesheet" type="text/css" href="{% static 'emoji/emojionearea.css' %}">
-    {% block chat_link %}{% endblock %}
+  <!-- Our project just needs Font Awesome Solid + Brands -->
+  <script defer src="{% static 'fontawesome/js/brands.js' %}"></script>
+  <script defer src="{% static 'fontawesome/js/solid.js' %}"></script>
+  <script defer src="{% static 'fontawesome/js/fontawesome.js' %}"></script>
 
-    <title>Chat interface</title>
+  <!-- For Our Emoji -->
+  <link rel="stylesheet" type="text/css" href="{% static 'emoji/emojionearea.css' %}">
+  {% block chat_link %}{% endblock %}
 
-    {% include "chat/html_css/discuss_css.html" %}
-    {% include "chat/js/discuss_js.html" %}
+  <title>Chat interface</title>
 
-    <style type="text/css">
-      .mycontainer {
-        border: 2px solid #dedede;
-        background-color: #f1f1f1;
-        border-radius: 5px;
-        padding: 10px;
-        margin: 10px 0;
-      }
+  {% include "chat/html_css/discuss_css.html" %}
+  {% include "chat/js/discuss_js.html" %}
 
-      .darker {
-        border-color: #ccc;
-        background-color: #ddd;
-      }
+  <style type="text/css">
+    .mycontainer {
+      border: 2px solid #dedede;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 10px 0;
+    }
 
-      .mycontainer::after {
-        content: "";
-        clear: both;
-        display: table;
-      }
+    .darker {
+      border-color: #ccc;
+      background-color: #ddd;
+    }
 
-      .mycontainer img {
-        float: left;
-        max-width: 60px;
-        width: 100%;
-        margin-right: 20px;
-        border-radius: 50%;
-      }
+    .mycontainer::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
 
-      .mycontainer img.right {
-        float: right;
-        margin-left: 20px;
-        margin-right:0;
-      }
+    .mycontainer img {
+      float: left;
+      max-width: 60px;
+      width: 100%;
+      margin-right: 20px;
+      border-radius: 50%;
+    }
 
-      .time-right {
-        float: right;
-        color: #aaa;
-      }
+    .mycontainer img.right {
+      float: right;
+      margin-left: 20px;
+      margin-right: 0;
+    }
 
-      .time-left {
-        float: left;
-        color: #999;
-      }
+    .time-right {
+      float: right;
+      color: #aaa;
+    }
 
-      hr {
-        color: #fff;
-        background-color: #fff;
-        overflow: visible;
-        text-align: center;
-      }
-    </style>
+    .time-left {
+      float: left;
+      color: #999;
+    }
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
-  </head>
-  <body style="position: relative;height: 100%;font-family: Arial, Helvetica, sans-serif;">
-    <header class="rounded shadow">
-      <div style="background-color: #5D5B8D;">
-        <nav class="navbar navbar-light">
-          <div>
-            {% if request.user.landlord %}
-              <a style="text-decoration: overline;color: #fff;" href="{% url 'spaces:landlord_profile' request.user.id %}" class="navbar-brand">Logeique</a>
-            {% elif request.user.client %}
-              <a style="text-decoration: overline;color: #fff;" href="{% url 'spaces:client_profile' request.user.id %}" class="navbar-brand">Logeique</a>
-            {% endif %}
-          </div>
-          
-          <ul class="ml-auto nav">
-            <li class="nav-item">
-              {% if request.user.landlord %}
-                <a style="color: #fff;" class="nav-link active" href="{% url 'spaces:landlord_profile' request.user.id %}">Accueil</a>
-              {% elif request.user.client %}
-                <a style="color: #fff;" class="nav-link active" href="{% url 'spaces:client_profile' request.user.id %}">Accueil</a>
-              {% endif %}
-            </li>
-            <li class="nav-item">
-              <a style="color: #fff;" class="nav-link" href="#">FAQ</a>
-            </li>
-            <li class="nav-item">
-              <a style="color: #fff;" class="nav-link" href="#">Compte</a>
-            </li>
-          </ul>
-          <i class="fas fa-user-circle"></i>
-        </nav>
-      </div>
-    </header>
-    
-    <main style="background-color: #f0f0f0; overflow-x: hidden;">
-      <div class="row" style="padding: 0;margin: 0;">
-        <div class="col-3" style="min-height: 90vh;background-color: #3B395E;">
-          <div style="padding: 5px;" class="text-center text-white">
-            <div class="card-img-top">
-              {% if request.user.landlord.avatar %}
-                <img style="border-radius: 50%;" width="100px" height="100px" src="{{request.user.landlord.avatar.url}}" alt="Image de {{request.user.username}}">
-              {% elif request.user.client.avatar %}
-                <img style="border-radius: 50%;" width="100px" height="100px" src="{{request.user.client.avatar.url}}" alt="Image de {{request.user.username}}">
-              {% else %}
-                <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
-              {% endif %}
-            </div>
-            <p>{{request.user.last_name}} {{request.user.first_name}}</p>
-            <p style="color: #1CE;">
-              Votre statut: {% if request.user.landlord %} Propriétaire {% elif request.user.client %} Client {% endif %}
-            </p>
-          </div>
-          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <!-- On affiche les utilisateurs receveurs des rooms -->
-            {% if request.user.landlord %}
-              <!-- Ici on affiche les les utilisateurs receveurs du landlord -->
-              {% for room in rooms %}
-                <a style="margin: 0.1rem 0.5rem;text-decoration: none;background-color: #5D5B8D;border-radius: 2rem;" class="row" href="{% url 'chat:room' room.id %}">
-                  <div class="col-3">
-                    {% if room.user2.client.avatar %}
-                      <img style="border-radius: 50%;margin: 5px;" width="50px" height="50px" src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
-                    {% else %}
-                      <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
-                    {% endif %}
-                  </div>
-                  <div class="col-9">
-                    <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">
-                      {{room.user2.last_name}}
-                    </div>
-                    <div class="text-white" style="font-size: 15px;">
-                      <p id="lastest-user-message-{{room.id}}"></p>
-                    </div>
-                  </div>
-                </a>
+    hr {
+      color: #fff;
+      background-color: #fff;
+      overflow: visible;
+      text-align: center;
+    }
 
-                <script type="text/javascript">                   
-                  fetch(
-                    "http://127.0.0.1:8000/api/rooms/room-last-message/{{room.id}}/", 
-                    {
-                      method: "GET",
-                      headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
-                      },
-                    }).then((response) => {
-                        if (response.ok) {
-                          return response.json();
-                        }
-                      })
-                      .then((data) => {
-                        const msg = document.getElementById("lastest-user-message-{{room.id}}");
-                        if (data.user == "{{request.user.id}}") {
-                          if (data.value.length <= 20) {
-                            msg.innerHTML = "Vous: " + data.value;
-                          } else {
-                            msg.innerHTML = "Vous: " + data.value.slice(0, 25) + '...';
-                          }
-                        } else {
-                          if (data.value.length <= 20) {
-                            msg.innerHTML = data.value;
-                          } else {
-                            msg.innerHTML = data.value.slice(0, 25) + '...';
-                          }
-                        }
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
-                </script>
-              {% endfor %}
-            {% elif request.user.client %}
-              <!-- Ici on affiche les les utilisateurs receveurs du client -->
-              {% for room in rooms %}
-                <a style="margin: 0.1rem 0.5rem;text-decoration: none;background-color: #5D5B8D;border-radius: 2rem;" class="row" href="{% url 'chat:room' room.id %}">
-                  <div class="col-3">
-                    {% if room.user1.landlord.avatar %}
-                      <img style="border-radius: 50%;margin: 5px;" width="50px" height="50px" src="{{room.user1.landlord.avatar.url}}" alt="Image de {{room.user1.username}}">
-                    {% else %}
-                      <i class="fas fa-user-circle" style="font-size: 3rem; color: cornflowerblue;margin: 2px;"></i>
-                    {% endif %}
-                  </div>
-                  <div class="col-9">
-                    <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">
-                      {{room.user1.last_name}}
-                    </div>
-                    <div class="text-white" style="font-size: 15px;">
-                      <p id="lastest-user-message-{{room.id}}"></p>
-                    </div>
-                  </div>
-                </a>
+    .users {
+      padding: 0;
+    }
 
-                <script type="text/javascript">                   
-                  fetch(
-                    "http://127.0.0.1:8000/api/rooms/room-last-message/{{room.id}}/", 
-                    {
-                      method: "GET",
-                      headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
-                      },
-                    }).then((response) => {
-                        if (response.ok) {
-                          return response.json();
-                        }
-                      })
-                      .then((data) => {
-                        const msg = document.getElementById("lastest-user-message-{{room.id}}");
-                        if (data.user == "{{request.user.id}}") {
-                          if (data.value.length <= 20) {
-                            msg.innerHTML = "Vous: " + data.value;
-                          } else {
-                            msg.innerHTML = "Vous: " + data.value.slice(0, 25) + '...';
-                          }
-                        } else {
-                          if (data.value.length <= 20) {
-                            msg.innerHTML = data.value;
-                          } else {
-                            msg.innerHTML = data.value.slice(0, 25) + '...';
-                          }
-                        }
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
-                </script>
-              {% endfor %}
-            {% endif %}
-            <a style="margin: 0 0.5rem;" href="{% url 'spaces:logout' %}" class="nav-link" href="#">Déconnexion</a>
-          </div>
+    .users .person {
+      position: relative;
+      width: 100%;
+      cursor: pointer;
+      border-bottom: 1px solid #f0f4f8;
+    }
+
+    .users .person:hover {
+      background-color: #ffffff;
+      /* Fallback Color */
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#e9eff5), to(#ffffff));
+      /* Saf4+, Chrome */
+      background-image: -webkit-linear-gradient(right, #e9eff5, #ffffff);
+      /* Chrome 10+, Saf5.1+, iOS 5+ */
+      background-image: -moz-linear-gradient(right, #1f4972, #393e77);
+      /* FF3.6 */
+      background-image: -ms-linear-gradient(right, #e9eff5, #ffffff);
+      /* IE10 */
+      background-image: -o-linear-gradient(right, #e9eff5, #ffffff);
+      /* Opera 11.10+ */
+      background-image: linear-gradient(right, #e9eff5, #ffffff);
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body style="position: relative;height: 100%;font-family: Arial, Helvetica, sans-serif;">
+  <header class="rounded shadow">
+    <div style="background-color: #5D5B8D;">
+      <nav class="navbar navbar-light">
+        <div>
+          {% if request.user.landlord %}
+          <a style="text-decoration: overline;color: #fff;" href="{% url 'spaces:landlord_profile' request.user.id %}"
+            class="navbar-brand">Logeique</a>
+          {% elif request.user.client %}
+          <a style="text-decoration: overline;color: #fff;" href="{% url 'spaces:client_profile' request.user.id %}"
+            class="navbar-brand">Logeique</a>
+          {% endif %}
         </div>
-        <div class="col-9" style="background-color: #DCDCF6;">
-          <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-              <div style="position: relative;">
-                {% include "chat/for_room/chat.html" %}
+
+        <ul class="ml-auto nav">
+          <li class="nav-item">
+            {% if request.user.landlord %}
+            <a style="color: #fff;" class="nav-link active"
+              href="{% url 'spaces:landlord_profile' request.user.id %}">Accueil</a>
+            {% elif request.user.client %}
+            <a style="color: #fff;" class="nav-link active"
+              href="{% url 'spaces:client_profile' request.user.id %}">Accueil</a>
+            {% endif %}
+          </li>
+          <li class="nav-item">
+            <a style="color: #fff;" class="nav-link" href="#">FAQ</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: #fff;" class="nav-link" href="#">Compte</a>
+          </li>
+          <li class="nav-item">
+            <a style="margin: 0 0.5rem;color: #fff;" href="{% url 'spaces:logout' %}" class="nav-link">Déconnexion</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main style="background-color: #f0f0f0; overflow: hidden;">
+    <div class="row" style="padding: 0;margin: 0;">
+      <div class="col-3" style="min-height: 92vh;background-color: #3B395E;">
+        <div style="padding: 5px;" class="text-center text-white">
+          <div class="card-img-top">
+            {% if request.user.landlord.avatar %}
+            <img style="border-radius: 50%;" width="100px" height="100px" src="{{request.user.landlord.avatar.url}}"
+              alt="Image de {{request.user.username}}">
+            {% elif request.user.client.avatar %}
+            <img style="border-radius: 50%;" width="100px" height="100px" src="{{request.user.client.avatar.url}}"
+              alt="Image de {{request.user.username}}">
+            {% else %}
+            <i class="fas fa-user-circle" style="font-size: 6rem; color: cornflowerblue;padding: 2px;"></i>
+            {% endif %}
+          </div>
+          <p>{{request.user.last_name}} {{request.user.first_name}}</p>
+          <p style="color: #1CE;">
+            Votre statut: {% if request.user.landlord %} Propriétaire {% elif request.user.client %} Client {% endif %}
+          </p>
+        </div>
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <!-- On affiche les utilisateurs receveurs des rooms -->
+          {% if request.user.landlord %}
+          <!-- Ici on affiche les les utilisateurs receveurs du landlord -->
+          <ul class="users" style="height: 60vh;overflow-y: scroll;overflow-x: hidden;">
+            {% for room in rooms %}
+            <li>
+              <a style="margin: 0.1rem 0.5rem;text-decoration: none;background-color: #5D5B8D;border-radius: 2rem;"
+                class="row person" href="{% url 'chat:room' room.id %}">
+                <div class="col-3">
+                  <img style="border-radius: 50%;margin: 5px;" width="50px" height="50px"
+                    src="{{room.user2.client.avatar.url}}" alt="Image de {{room.user2.username}}">
+                  <span class="status busy"></span>
+                </div>
+                <div class="col-9">
+                  <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">
+                    {{room.user2.last_name}}
+                  </div>
+                  <div class="text-white" style="font-size: 15px;">
+                    <p id="lastest-user-message-{{room.id}}"></p>
+                  </div>
+                </div>
+              </a>
+
+              <script type="text/javascript">
+                fetch(
+                  "http://127.0.0.1:8000/api/rooms/room-last-message/{{room.id}}/",
+                  {
+                    method: "GET",
+                    headers: {
+                      "Accept": "application/json",
+                      "Content-Type": "application/json"
+                    },
+                  }).then((response) => {
+                    if (response.ok) {
+                      return response.json();
+                    }
+                  })
+                  .then((data) => {
+                    const msg = document.getElementById("lastest-user-message-{{room.id}}");
+                    if (data.user == "{{request.user.id}}") {
+                      if (data.value.length <= 20) {
+                        msg.innerHTML = "Vous: " + data.value;
+                      } else {
+                        msg.innerHTML = "Vous: " + data.value.slice(0, 25) + '...';
+                      }
+                    } else {
+                      if (data.value.length <= 20) {
+                        msg.innerHTML = data.value;
+                      } else {
+                        msg.innerHTML = data.value.slice(0, 25) + '...';
+                      }
+                    }
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              </script>
+            </li>
+            {% endfor %}
+          </ul>
+
+          {% elif request.user.client %}
+          <!-- Ici on affiche les les utilisateurs receveurs du client -->
+          {% for room in rooms %}
+          <a style="margin: 0.1rem 0.5rem;text-decoration: none;background-color: #5D5B8D;border-radius: 2rem;"
+            class="row" href="{% url 'chat:room' room.id %}">
+            <div class="col-3">
+              <img style="border-radius: 50%;margin: 5px;" width="50px" height="50px"
+                src="{{room.user1.landlord.avatar.url}}" alt="Image de {{room.user1.username}}">
+            </div>
+            <div class="col-9">
+              <div class="text-white" style="padding-top: 0.2rem;font-size: 16px;">
+                {{room.user1.last_name}}
+              </div>
+              <div class="text-white" style="font-size: 15px;">
+                <p id="lastest-user-message-{{room.id}}"></p>
               </div>
             </div>
+          </a>
+
+          <script type="text/javascript">
+            fetch(
+              "http://127.0.0.1:8000/api/rooms/room-last-message/{{room.id}}/",
+              {
+                method: "GET",
+                headers: {
+                  "Accept": "application/json",
+                  "Content-Type": "application/json"
+                },
+              }).then((response) => {
+                if (response.ok) {
+                  return response.json();
+                }
+              })
+              .then((data) => {
+                const msg = document.getElementById("lastest-user-message-{{room.id}}");
+                if (data.user == "{{request.user.id}}") {
+                  if (data.value.length <= 20) {
+                    msg.innerHTML = "Vous: " + data.value;
+                  } else {
+                    msg.innerHTML = "Vous: " + data.value.slice(0, 25) + '...';
+                  }
+                } else {
+                  if (data.value.length <= 20) {
+                    msg.innerHTML = data.value;
+                  } else {
+                    msg.innerHTML = data.value.slice(0, 25) + '...';
+                  }
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          </script>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-9" style="background-color: #DCDCF6;width: 100%;position: relative;">
+        <div class="tab-content" id="v-pills-tabContent">
+          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            {% include "chat/for_room/chat.html" %}
           </div>
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+  <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+    crossorigin="anonymous"></script>
 
-    <!-- For Our Emoji -->
-    <script src="{% static 'emoji/emojionearea.js' %}"></script>
+  <!-- For Our Emoji -->
+  <script src="{% static 'emoji/emojionearea.js' %}"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     -->
 
-    <script type="text/javascript">
-      $('body').scrollspy({ target: '#navbar-example' })
-    </script>
-  </body>
+  <script type="text/javascript">
+    $('body').scrollspy({ target: '#navbar-example' })
+  </script>
+</body>
+
 </html>
