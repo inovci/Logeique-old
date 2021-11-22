@@ -74,6 +74,11 @@
             padding: 0.5rem 1rem;
             border-radius: 1rem;
         }
+
+        .nav-item:hover {
+            background-color: rgb(73, 73, 73);
+            border-radius: 0.3rem;
+        }
     </style>
     <!-- Custom styles for this template -->
     {% block customStyles %}
@@ -95,7 +100,7 @@
         </button>
         <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
         <ul class="px-3 navbar-nav">
-            <li class="nav-item text-nowrap">
+            <li class="text-nowrap">
                 <a style="color: black;" class="nav-link" href="{% url 'spaces:logout' %}">Se deconnecter</a>
             </li>
         </ul>
