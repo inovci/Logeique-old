@@ -21,6 +21,7 @@
 
     <!-- For fontawesome -->
     <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <!--load all styles -->
 
     <!-- Google fonts -->
@@ -40,17 +41,6 @@
     <link rel="stylesheet" href="{% static 'cropper-master/dist/cropper.min.css' %}">
     <script src="{% static 'cropper-master/dist/cropper.min.js' %}"></script>
     </script>
-
-    <style>
-        img {
-            max-width: 100%;
-            /* This rule is very important, please do not ignore this! */
-        }
-
-        .not-visible {
-            display: none;
-        }
-    </style>
 </head>
 
 <body style="background-color: #272E48;font-family: 'Roboto', sans-serif;">
@@ -63,15 +53,19 @@
                     <div id="alert-box"></div>
                     <div class="user-profile">
                         <div id="image-box" class="user-avatar">
-                            <img id="image" style="border-radius: 50%;" width="25%"
+                            <img id="image" class="img-responsive" style="border-radius: 50%;" width="25%"
                                 src="{{request.user.client.avatar.url}}" alt="Image de {{request.user.username}}">
+                            <a href="#" title="#" class="editImage">
+                                <i class="fa fa-camera"></i>
+                            </a>
                             <div>
                                 <p style="color: #1CE;font-size: 18px;">Monsieur {{request.user.last_name}}</p>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <a href="{% url 'spaces:client_profile' request.user.id %}">Retour</a>
+                        <a type="button" class="btn btn-primary"
+                            href="{% url 'spaces:client_profile' request.user.id %}">Retour</a>
                     </div>
                 </div>
                 <hr>
@@ -83,7 +77,7 @@
                                 ajouté.</span>{% elif avatar_added %}<span style="color:green">ajouté</span>{% endif %}
                         </div>
                         {% csrf_token %}
-                        {{form.as_p}}
+                        <i class="fa fa-fw fa-camera"></i>{{form.as_p}}
                         </p>
                         <button type="submit" class="btn btn-outline-primary mt-3 not-visible"
                             id="confirm-btn">Edite</button>
