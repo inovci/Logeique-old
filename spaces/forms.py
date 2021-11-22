@@ -435,4 +435,12 @@ class ClientProposalForm(AddHouseForm):
 
 
 class ImageForm(forms.Form):
-    file = forms.ImageField()
+    file = forms.ImageField(
+        label='Change Photo ',
+        widget=forms.FileInput(
+            attrs={
+                'class': '',
+                'type': 'file'
+            }
+        )
+    )
