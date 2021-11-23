@@ -36,7 +36,7 @@
     <script defer src="{% static 'fontawesome/js/fontawesome.js' %}"></script>
 </head>
 
-<body style="background-color: #0B2944;font-family: 'Roboto', sans-serif; margin-top : 0">
+<body style="background-color: #fff;font-family: 'Roboto', sans-serif; margin-top : 0">
     <header class="mb-auto masthead">
         <!-- Fixed navbar -->
         {% block navbar %}
@@ -115,7 +115,7 @@
         $('.collapse').collapse()
     </script>
     <script>
-    const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+        const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
         const check_tout = document.querySelector('#tout');
         const choix = document.querySelectorAll('.stick');
 
@@ -123,26 +123,26 @@
             if (check_tout.checked === true) {
                 check_tout.checked = false;
                 this.checked = true;
-            } 
+            }
         }
         function handleCheck(e) {
             if (choix[0].checked === true && choix[1].checked === true && choix[2].checked === true) {
                 for (let i = 0; i < choix.length; i++) {
-                    choix[i].checked = false;   
+                    choix[i].checked = false;
                 }
                 check_tout.checked = true;
-            } 
-            else if (check_tout.checked === true){
+            }
+            else if (check_tout.checked === true) {
                 for (let i = 0; i < choix.length; i++) {
-                    choix[i].checked = false;   
+                    choix[i].checked = false;
                 }
-                
+
             }
         }
 
         checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
-</script>
-{% endblock %}
+    </script>
+    {% endblock %}
 </body>
 
 </html>

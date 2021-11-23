@@ -1,59 +1,61 @@
-<div class="row" style="margin-top: 8rem;">
-    <div class="col-1 col-sm-2 col-md-3"></div>
-    <div class="col-10 col-sm-8 col-md-6 card" style="padding: 4rem 2rem;border-radius: 1rem;background-color: #F6F8FA;">
-        <div class="container text-center">
-            <div>
-                <h1 id="">
-                    Bonjour, LOGEIQUE
-                </h1>
-                <p id="">
-                    Facilitez vous le choix de votre futur maison.
-                </p>
-            </div>
-        </div>
-
-        <div class="text-center">
-            <form class="align-self-center" method='GET' action="{% url 'search:search' %}">
-                <p>
-                    {{form.query.label}}
-                    {{form.query}}
-                </p>
-
-                <div class="form-check form-check-inline">
-                    <p>
-                        {{form.query_for_all.label}}
-                        {{form.query_for_all}}
-                    </p>
-
-                    <p>
-                        {{form.query_for_house.label}}
-                        {{form.query_for_house}}
-                    </p>
-
-                    <p>
-                        {{form.query_for_client.label}}
-                        {{form.query_for_client}}
-                    </p>
-
-                    <p>
-                        {{form.query_for_lanlord.label}}
-                        {{form.query_for_lanlord}}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" style="margin-top: 12rem;">
+        <div class="card shadow-lg p-3 mb-5 bg-white roundeds"
+            style="padding: 4rem 2rem;border-radius: 1rem;background-color: #F6F8FA;">
+            <div class="container text-center">
+                <div>
+                    <h1 id="">
+                        Bonjour, LOGEIQUE
+                    </h1>
+                    <p id="">
+                        Facilitez vous le choix de votre futur maison.
                     </p>
                 </div>
-            </form>  
+            </div>
+
+            <div class="text-center">
+                <form class="align-self-center" method='GET' action="{% url 'search:search' %}">
+                    <p>
+                        {{form.query.label}}
+                        {{form.query}}
+                    </p>
+
+                    <div class="form-check form-check-inline">
+                        <p style="font-weight: bold;">
+                            {{form.query_for_all.label}}
+                            {{form.query_for_all}}
+                        </p>
+
+                        <p style="font-weight: bold;">
+                            {{form.query_for_house.label}}
+                            {{form.query_for_house}}
+                        </p>
+
+                        <p style="font-weight: bold;">
+                            {{form.query_for_client.label}}
+                            {{form.query_for_client}}
+                        </p>
+
+                        <p style="font-weight: bold;">
+                            {{form.query_for_lanlord.label}}
+                            {{form.query_for_lanlord}}
+                        </p>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="col-1 col-sm-2 col-md-3"></div>
+    <div class="col-md-3"></div>
 </div>
 <script>
-function active(){
-    query_for_all = getElementById("tout");
-    query_for_client = getElementById("cli");
-    query_for_house = getElementById("hou");
-    query_for_landlord = getElementById("lan");
-}
-function isChecked(){
-    
-}
+    function active() {
+        query_for_all = getElementById("tout");
+        query_for_client = getElementById("cli");
+        query_for_house = getElementById("hou");
+        query_for_landlord = getElementById("lan");
+    }
+    function isChecked() {
+
+    }
 </script>
-        
