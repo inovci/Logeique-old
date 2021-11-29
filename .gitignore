@@ -3,8 +3,8 @@ migrations/
 *.log
 *.pot
 *.pyc
-logeique2/__pycache__
-__pycache__
+logeique2/__pycache__/
+__pycache__/
 db.sqlite3
 media
 
