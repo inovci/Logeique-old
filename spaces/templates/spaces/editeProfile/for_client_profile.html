@@ -41,6 +41,17 @@
     <link rel="stylesheet" href="{% static 'cropper-master/dist/cropper.min.css' %}">
     <script src="{% static 'cropper-master/dist/cropper.min.js' %}"></script>
     </script>
+
+    <style>
+        img {
+            max-width: 100%;
+            /* This rule is very important, please do not ignore this! */
+        }
+
+        .not-visible {
+            display: none;
+        }
+    </style>
 </head>
 
 <body style="background-color: #272E48;font-family: 'Roboto', sans-serif;">
