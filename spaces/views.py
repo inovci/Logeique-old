@@ -12,12 +12,6 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 import re
 import os
-from django.core.files.storage import default_storage, FileSystemStorage
-from django.core import files
-import cv2
-import json
-import base64
-import requests
 from PIL import Image
 from search.forms import SearchForm
 import time
