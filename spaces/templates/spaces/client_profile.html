@@ -133,7 +133,7 @@
                                 {% block navitem1 %}
                                 <a style="border-radius: 5px;color: #fff;" class="btn-outline-secondary nav-link active"
                                     href="{% url 'spaces:client_profile' user.id %}">
-                                    <span data-feather="home"></span> ACCUEIL <span class="sr-only">(current)</span>
+                                    ACCUEIL
                                 </a>
                                 {% endblock navitem1 %}
                             </li>
@@ -141,7 +141,6 @@
                                 {% block navitem2 %}
                                 <a style="color: #fff;" class="nav-link"
                                     href="{% url 'spaces:edit_client_profile' user.id %}">
-                                    <span data-feather="user"></span>
                                     Modifier profil
                                 </a>
                                 {% endblock navitem2 %}
@@ -149,7 +148,6 @@
                             <li class="nav-item">
                                 {% block navitem3 %}
                                 <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_proposal' %}">
-                                    <span data-feather="plus"></span>
                                     Que désirez vous?
                                 </a>
                                 {% endblock navitem3 %}
@@ -158,7 +156,6 @@
                                 {% block navitem4 %}
                                 <a style="color: #fff;" class="nav-link"
                                     href="{% url 'spaces:client_statistics' user.id %}">
-                                    <span data-feather="bar-chart-2"></span>
                                     Statistiques
                                 </a>
                                 {% endblock navitem4 %}
@@ -167,7 +164,6 @@
                                 {% block navitem5 %}
                                 <a style="color: #fff;" class="nav-link"
                                     href="{% url 'spaces:client_notifications' user.id %}">
-                                    <span data-feather="bell"></span>
                                     Négociations
                                 </a>
                                 {% endblock navitem5 %}

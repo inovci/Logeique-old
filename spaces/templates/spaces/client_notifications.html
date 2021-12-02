@@ -16,14 +16,13 @@
 
 {% block navitem1 %}
 <a style="color: #fff;" class="nav-link" href="{% url 'spaces:client_profile' request.user.id %}">
-    <span data-feather="home"></span> ACCUEIL <span class="sr-only"></span>
+    ACCUEIL
 </a>
 {% endblock navitem1 %}
 
 {% block navitem5 %}
 <a style="border-radius: 5px;" class="btn-outline-secondary nav-link active"
     href="{% url 'spaces:client_notifications' request.user.id %}">
-    <span data-feather="bell"></span>
     Négociations
 </a>
 {% endblock navitem5 %}
