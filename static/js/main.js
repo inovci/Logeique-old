@@ -20,6 +20,7 @@ input.addEventListener(
         imageBox.innerHTML = `<img src="${url}" id="image" width="500px">`;
 
         var $image = $('#image');
+        console.log($image);
 
         $image.cropper({
             aspectRatio: 9 / 9,

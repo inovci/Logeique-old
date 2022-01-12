@@ -12,7 +12,7 @@ class Client(models.Model):
         User, on_delete=models.CASCADE, related_name='client')
     contact = models.CharField(max_length=50)
     avatar = models.ImageField(
-        null=True, blank=True, upload_to="img/avatars/", default="img/avatars/default-user-img.png")
+        null=True, blank=True, upload_to="img/avatars/", default="img/avatars/default-img-user.png")
 
     class Meta():
         ordering = ['user', 'contact']
@@ -42,7 +42,7 @@ class Landlord(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='landlord')
     contact = models.CharField(max_length=50)
-    avatar = models.ImageField(null=True, blank=True, upload_to="img/avatars/")
+    avatar = models.ImageField(null=True, blank=True, upload_to="img/avatars/", default="img/avatars/default-img-user.png")
     clients = models.ManyToManyField(
         Client, related_name="landlords", through="Deal")
 
